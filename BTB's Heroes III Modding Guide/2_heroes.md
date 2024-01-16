@@ -1,4 +1,4 @@
-## 2. HEROES
+# 2. HEROES
 
 Everything about editing hero classes (i.e. Knight, Cleric, Ranger, etc.) is done via the HcTraits.txt
 file inside the H3bitmap.lod archive. This includes their base attributes, attribute growth, secondary
@@ -328,9 +328,9 @@ to 256-color bitmaps and the first color will always be treated as a transparenc
 Experience requirements are set values up until level 12 (see table below), beyond which the requirement
 for each successive level increases by 20% from the one prior:
 
-Level 1: 279C88		Level 4: 279C8E		Level 7: 279C94		Level 10: 279C9A
-Level 2: 279C8A		Level 5: 279C90		Level 8: 279C96		Level 11: 279C9C
-Level 3: 279C8C		Level 6: 279C92		Level 9: 279C98		Level 12: 279C9E
+    Level 1: 279C88		Level 4: 279C8E		Level 7: 279C94		Level 10: 279C9A
+    Level 2: 279C8A		Level 5: 279C90		Level 8: 279C96		Level 11: 279C9C
+    Level 3: 279C8C		Level 6: 279C92		Level 9: 279C98		Level 12: 279C9E
 
 This formula can be rewritten to something a lot more customizable - including a hard level cap of your
 choosing - that also takes up much less space. The level code consists of three very similar blocks, all
