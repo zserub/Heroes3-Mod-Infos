@@ -1,6 +1,6 @@
 ## 1. INTRODUCTION
 
-	--- SHAMELESS SELF-PROMOTION ---
+SHAMELESS SELF-PROMOTION
 
 [http://ngplus.net/index.php?/files/file/56-another-heroes-3-mod-ah3m/](http://ngplus.net/index.php?/files/file/56-another-heroes-3-mod-ah3m/)
 
@@ -39,7 +39,7 @@ file possible. The unofficial "Horn of the Abyss" patch is based on the structur
 and so will also work... sort of. HotA externally patches a lot of things covered by this
 guide with .dll files and so will undo many changes that you make to them.
 
-	   --- THIS GUIDE MAKES ABSOLUTELY NO GUARANTEE ABOUT EDITING HOTA ---
+>THIS GUIDE MAKES ABSOLUTELY NO GUARANTEE ABOUT EDITING HOTA
 
 [https://sites.google.com/site/heroes3hd/](https://sites.google.com/site/heroes3hd/)
 
