@@ -88,36 +88,36 @@ doesn't seem to be any logical reason why it should (not that you would WANT to 
 
 Regarding the asterisks above...
 
->BYTE 2, BIT 1 (01)
->Only used on Remove Obstacle; not sure what it actually does.
+`BYTE 2, BIT 1 (01)`
+Only used on Remove Obstacle; not sure what it actually does.
 
->BYTE 2, BIT 6 (20)
->Only used on Titan's Bolt. Indicates an artifact-only spell, and is presumably related to preventing it from appearing via other means (i.e. mage guilds, shrines, tomes).
+`BYTE 2, BIT 6 (20)`
+Only used on Titan's Bolt. Indicates an artifact-only spell, and is presumably related to preventing it from appearing via other means (i.e. mage guilds, shrines, tomes).
 
->BYTE 2, BIT 7 (40)
->Used on (Earth/Air/Fire) Shield, Counterstrike, Anti-Magic, Magic Mirror, and all magic resist spells.
+`BYTE 2, BIT 7 (40)`
+Used on (Earth/Air/Fire) Shield, Counterstrike, Anti-Magic, Magic Mirror, and all magic resist spells.
 Seems to indicate a defensive/buff spell, but is missing from several of them (i.e. Stoneskin).
 
->BYTE 2, BIT 8 (80)
->Used on Magic Arrow, Ice Bolt, Frost Ring, Fireball, Lightning/Titan Bolt, Implosion, and Meteor Shower.
+`BYTE 2, BIT 8 (80)`
+Used on Magic Arrow, Ice Bolt, Frost Ring, Fireball, Lightning/Titan Bolt, Implosion, and Meteor Shower.
 This is one of three AI flags for spells which deal damage (see below).
 
->BYTE 3, BIT 1 (01)
->Used on Chain Lightning and Inferno. The second AI flag for damage spells, seemingly to indicate a spell
+`BYTE 3, BIT 1 (01)`
+Used on Chain Lightning and Inferno. The second AI flag for damage spells, seemingly to indicate a spell
 with an area of effect. Unsure why Fireball, Frost Ring, and Meteor Shower use the above flag instead.
 
->BYTE 3, BIT 2 (02)
->Used on Death Ripple, Destroy Undead, and Armageddon. This is the third AI direct damage spell flag.
+`BYTE 3, BIT 2 (02)`
+Used on Death Ripple, Destroy Undead, and Armageddon. This is the third AI direct damage spell flag.
 
->BYTE 3, BIT 3 (04)
->Used on most spells which affect units and deal no damage except for the below and Sacrifice.
+`BYTE 3, BIT 3 (04)`
+Used on most spells which affect units and deal no damage except for the below and Sacrifice.
 
->BYTE 3, BIT 4 (08)
->Used on Hypnotize, Animate Dead/Resurrection, and summon spells. This flag appears to have something to
+`BYTE 3, BIT 4 (08)`
+Used on Hypnotize, Animate Dead/Resurrection, and summon spells. This flag appears to have something to
 do with gaining ownership/control of a unit stack.
 
->BYTE 3, BIT 5 (10)
->Used only on Earthquake, Summon Boat, Water Walk, Fly, Dimension Door, and Town Portal. Would appear to
+`BYTE 3, BIT 5 (10)`
+Used only on Earthquake, Summon Boat, Water Walk, Fly, Dimension Door, and Town Portal. Would appear to
 indicate an adventure map spell, except we already have a flag for that. Also unsure why Earthquake has
 it set (possibly a bug) or what, if anything, this flag is actually used for.
 
@@ -1163,12 +1163,12 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
 
     19CB82 > 01	; default landing page to Air Magic instead of "all spells"
     19CB87 > 00	; ""
-    
+
     19E24C > 20	; spells sorted by (unskilled) cost instead of alphabetically
     19E24F > 20	; ""
     19E2A6 > 20	; ""
     19E2AD > 20	; ""
-    
+
     ---------	-------------------------------------------------------------------------
     19D81F~27	; DISABLE "ALL SPELLS" TAB (ON CLICK)
     ---------	-------------------------------------------------------------------------
@@ -1177,87 +1177,87 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
     40		inc eax			; ""
     8B CF		mov ecx,edi		; ""
     D3 E0		shl eax,cl		; "" (19D828~30 is 9h free space)
-    
+
     ---------	-------------------------------------------------------------------------
     19CD75~8D	; DISABLE "ALL SPELLS" TAB (ON CTRL+UP/DOWN) & COMBINE MAP/COMBAT SPELLS
     ---------	-------------------------------------------------------------------------
     50		push eax		; (displaced code)
     E8 B586F4FF	call 4E5430		; ""
     EB 11		jmp 59CD8E		; frees space: 19CD7D~8D
-    
+
     6A 04		push 04			; load water magic instead of all spells
     6A 02		push 02			; ""
     EB 04		jmp 59CD87		; -> (cleanup)
-    
+
     6A 01		push 01			; load air magic instead of all spells
     6A 00		push 00			; ""
-    
+
     5F		pop edi			; (cleanup)
     58		pop eax			; ""
     C3		ret			; return
     90 90 90 90	nop			; -
-    
+
     19D5A9 > E8 D5F7FFFF ; (choose one) CTRL+Up on air magic does nothing
     19D5A9 > E8 CFF7FFFF ; (choose one) CTRL+Up on air magic -> water magic
-    
+
     19D5E7 > E8 91F7FFFF ; (choose one) CTRL+Down on water magic does nothing
     19D5E7 > E8 97F7FFFF ; (choose one) CTRL+Down on water magic -> air magic
-    
+
     ---------	-------------------------------------------------------------------------
     19CF97~E	; UNCONDENSE SPELL LIST
     ---------	-------------------------------------------------------------------------
     E9 2085F4FF	jmp 4E54BC		; -> free space (titan's bolt/armageddon checks)
     8B 4D C4	mov ecx,[ebp-3C]	; moved to after jump so we can use ECX there
-    
+
     ----------	-------------------------------------------------------------------------
     0E54BA~513	; (EXPANDED SPACE - OVERWRITES CHECKS FOR TITAN'S BOLT/ARMAGEDDON)
     ----------	-------------------------------------------------------------------------
     EB 58		jmp 4E5514		; frees space: 0E54BC~513
-    
+
     E8 747F0B00	call 59D435		; -> free space (right click table)
     83 FF 16	cmp edi,16		; end of spell list?
     77 48 		ja 4E550E		; if yes -> exit
-    
+
     80BFADCE590000	cmp byte[edi+59CEAD],00	; check for empty slot
     75 0C		jne 4E54DB		; if no -> lea eax,[edi-02]
     FF 05 283B6700	inc [673B28]		; leave current slot blank
     FF 45 E0	inc [ebp-20]		; ""
     47		inc edi			; ""
     EB D0		jmp 4E54AB		; -> [next spell slot] (hop to long jump)
-    
+
     8D 47 FE	lea eax,[edi-02]	; prepare EAX to get spell ID
     2B 05 283B6700	sub eax,[673B28]	; ""
     6B C0 0C	imul eax,eax,0C		; ""
     8B 04 18	mov eax,[eax+ebx]	; EAX = spell ID
     83 F8 45	cmp eax,45		; is this a valid spell/do we have any left?
     77 1F		ja 4E550E		; if no -> exit
-    
+
     8B 0D A87F6800	mov ecx,[687FA8]	; ECX = spell index
     6B C0 11	imul eax,eax,11		; EAX = data range
     8B 44 C1 20	mov eax,[ecx+eax*8+20]	; EAX = spell cost (unskilled)
     3A 87 ADCE5900	cmp al,[edi+59CEAD]	; does this spell go in this slot?
     75 CB		jne 4E54CF		; if no -> leave current slot blank
-    
+
     B8 ABAAAA2A	mov eax,2AAAAAAB	; (displaced code)
     E9 8E7A0B00	jmp 59CF9C		; -> [continue]
     E9 597D0B00	jmp 59D26C		; -> [exit]
     90		nop			; -
-    
+
     0E54AB > E9 DC7A0B00 ; next spell slot
-    
+
     --------	-------------------------------------------------------------------------
     19D331~6	; CHECK FOR MORE SPELLS AFTER RUNNING "CLEAR SPELL SLOT" ROUTINE
     --------	-------------------------------------------------------------------------
     E9 0F010000	jmp 59D445		; -> free space (right click table)
-    
+
     19D2B5 > EB 7A	; hop to long jump above
-    
+
     ---------	-------------------------------------------------------------------------
     19D42C~7A	; (INLINE EDIT - USES RIGHT CLICK TABLE SPACE)
     ---------	-------------------------------------------------------------------------
     31 C0		xor eax,eax		; optimized code
     FF24BDFCDD5900	jmp dword[edi*4+59DDFC]	; ""
-    
+
     FF 05 013B6700	inc [673B01]		; set "temp" flag
     53		push ebx		; store EBX
     57		push edi		; store EDI
@@ -1265,19 +1265,19 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
     5F 		pop edi			; retrieve EDI
     5B		pop ebx			; retrieve EBX
     C3		ret			; return
-    
+
     A0 013B6700	mov al,[673B01]		; AL = "temp" flag
     3C 01		cmp al,01		; is flag set? (if yes, we're not done yet)
     75 07		jne 59D455		; if no -> displaced code
     FF 0D 013B6700	dec [673B01]		; unset "temp" flag
     C3		ret			; return
-    
+
     83 FB 60	cmp ebx,60		; (displaced code)
     0F8C 19FEFFFF	jl 59D277		; ""
     C605283B670000	mov byte [673B28],00	; reset "temp" variable we used earlier
     E9 50FEFFFF	jmp 59D2BA		; -> [continue]
     90 90 90 90 90	nop			; ""
-    
+
     31 C0		xor eax,eax		; EAX = EDI (see jump table pointers below)
     40		inc eax			; (A)
     40		inc eax			; (9)
@@ -1289,7 +1289,7 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
     40		inc eax			; -
     40		inc eax			; -
     40		inc eax			; (1)
-    
+
     19D41C > 52    ; (EDI = A)
     19DDFC > 77    ; (EDI = 4)
     19DE00 > 76    ; (EDI = 5)
@@ -1301,7 +1301,7 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
     19DE18 > 72    ; (EDI = 9)
     19DE1C > 7B    ; (EDI = 0)
     19DE20 > 7A    ; (EDI = 1)
-    
+
     ---------	-------------------------------------------------------------------------
     19CE9D~C4	; SPELL COST LIST (OVERWRITES ANOTHER "ALL SPELLS" TAB CHECK)
     ---------	-------------------------------------------------------------------------
@@ -1310,7 +1310,7 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
     80 48 16 06	or byte [eax+16],06	; ""
     8B 56 70	mov edx,[esi+70]	; ""
     EB 2C		jmp 59CEDB		; frees space: 19CEAF~DA
-    
+
     00		; (blank)
     01		; Spell Cost = 1
     02		; Spell Cost = 2
@@ -1333,7 +1333,7 @@ Titan's Thunder for the purposes of spell costs (expert level for Armageddon, 0 
     00		; (blank)
     1E		; Spell Cost = 30
     00		; (blank - 19CEC5~DA is free space)
-    
+
     19CFD4 > 84 E4 90 ; needed for water magic to show up correctly (~~~I forget why)
     19CFDE > 90 90	  ; ""
 
