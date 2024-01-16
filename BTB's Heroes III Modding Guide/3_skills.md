@@ -1,4 +1,4 @@
-# 2. SKILLS
+# 3. SKILLS
 
 The effectiveness of most secondary skills can be edited in the .exe file in a table starting at 23E998.
 Each skill occupies 16 bytes consisting of 4 DWORD (4-byte) values: one value each for unskilled, basic,
