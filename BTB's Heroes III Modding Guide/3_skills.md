@@ -1428,8 +1428,8 @@ a lookup table at the tail end of the code for unit IDs above 70, which includes
 
 Finally, as opposed (or in addition) to a discount for surrendering, let's look at the Diplomacy skill
 providing a discount for recruiting units from external dwellings. The below code will use the values at
-23EA38~47 for the discount. We left an allowance in the join formula edit above to keep the surrender
-discount; you can remove it and just have this one by setting 0E4802~8 to 8B 15 38 EA 63 00 90.
+23EA38\~47 for the discount. We left an allowance in the join formula edit above to keep the surrender
+discount; you can remove it and just have this one by setting 0E4802\~8 to 8B 15 38 EA 63 00 90.
 
     ------		-------------------------------------------------------------------------
     0A8975		; DIPLOMACY REDUCES UNIT COSTS FROM EXTERNAL DWELLINGS
