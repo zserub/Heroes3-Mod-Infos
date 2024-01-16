@@ -77,7 +77,7 @@ the actual code, and so the instruction at 0CF627 will be 81 C9 00 0C 04 01.
 
 (You'll also have to axe the shitcanned skill as a starting bonus from campaigns or from any maps where
 it's specifically offered as a quest reward from Seer's Huts or from events, but you knew that already.)
-
+<br>
 
 ## SKILL SPECIALTIES
 
@@ -332,6 +332,7 @@ For the free space, we'll be using some of what we freed up with the Logistics c
     6B D2 03	imul edx,edx,03		; EDX * 3 (75% penalty reduction)
     C3		ret			; return
 
+---------------------
 
 ### LUCK & MORALE
 
@@ -800,7 +801,7 @@ includes undead units, so you can't raise Skeletons from other Skeletons; if you
     076FC9 > 00	; removes minimum of 1
 
 
-~~~total formula rewrite simplifies to a 1:1 ratio of slain units to revival
+total formula rewrite simplifies to a 1:1 ratio of slain units to revival
 thus, killing 60 peasants with Basic Necromancy (10%) will give 6 skeletons
 the only caveat is that there is no accomodation for the few units with less HP than Skeletons
 which tend to appear in very large numbers (Peasants specifically),
@@ -2062,7 +2063,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     5E		pop esi			; ""
     E8 03811600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
     89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
-    
+
     ---------	-------------------------------------------------------------------------
     0404EE~FF	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS PETRIFY
     ---------	-------------------------------------------------------------------------
@@ -2071,7 +2072,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     E8 2A7F1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
     89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
     90 90 90 90	nop			; -
-    
+
     ---------	-------------------------------------------------------------------------
     040385~96	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS FEAR
     ---------	-------------------------------------------------------------------------
@@ -2080,7 +2081,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     E8 93801600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
     89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
     90 90 90 90	nop			; -
-    
+
     ---------	-------------------------------------------------------------------------
     04032D~36	; "" (MOVES MIND RESISTANCE CHECK TO PREVENT FALSE POSITIVES)
     ---------	-------------------------------------------------------------------------
@@ -2089,7 +2090,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     31 C9		xor ecx,ecx		; ""
     41		inc ecx			; ""
     90		nop 			; -
-    
+
     ---------	-------------------------------------------------------------------------
     17421C~36	; (EXPANDED SPACE - OVERWRITES WISDOM QUEST CHECK)
     ---------	-------------------------------------------------------------------------
@@ -2100,7 +2101,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     0F85 7EC0ECFF	jne 4402AE		; if yes -> [exit]
     6A 64		push 64			; (displaced/optimized code)
     E9 FBC0ECFF	jmp 440332		; return
-    
+
     ---------	-------------------------------------------------------------------------
     0402A0~D	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS AGING
     ---------	-------------------------------------------------------------------------
@@ -2108,7 +2109,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     5E		pop esi			; ""
     E8 78811600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
     89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
-    
+
     ---------	-------------------------------------------------------------------------
     0405A4~B5	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS POISON
     ---------	-------------------------------------------------------------------------
@@ -2117,7 +2118,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     E8 747E1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
     89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
     90 90 90 90	nop			; -
-    
+
     ---------	-------------------------------------------------------------------------
     040618~2A	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS PARALYZE
     ---------	-------------------------------------------------------------------------
@@ -2126,7 +2127,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     E8 007E1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
     89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
     90 90 90 90	nop			; -
-    
+
     --------	-------------------------------------------------------------------------
     1A8420~D	; (EXPANDED SPACE - OVERWRITES CURSED GROUND/RECANTER'S CLOAK)
     --------	-------------------------------------------------------------------------
@@ -2136,20 +2137,20 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     5E		pop esi			; ""
     FF 05 023B6700	inc [673B02]		; set "temp" flag
     C3		ret			; return
-    
+
     --------	-------------------------------------------------------------------------
     1A1393~9	; DO NOT APPLY RESISTED STATUS
     --------	-------------------------------------------------------------------------
     E9 96700000	jmp 5A842E		; -> free space (Cursed Ground/Recanter's Cloak)
     51		push ecx		; (displaced code)
     90		nop			; -
-    
+
     --------	-------------------------------------------------------------------------
     1A18D7~D	; ""
     --------	-------------------------------------------------------------------------
     31 C9		xor ecx,ecx		; (displaced code)
     E9 606B0000	jmp 5A843E		; -> free space (Cursed Ground/Recanter's Cloak)
-    
+
     ---------	-------------------------------------------------------------------------
     1A842E~47	; (EXPANDED SPACE - OVERWRITES CURSED GROUND/RECANTER'S CLOAK)
     ---------	-------------------------------------------------------------------------
@@ -2160,7 +2161,7 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     8B 45 1C	mov eax,[ebp+1C]	; (displaced code)
     E9 528FFFFF	jmp 5A1398		; -> [continue]
     90 90		nop			; -
-    
+
     ----------	-------------------------------------------------------------------------
     1A8EC8~F03	; BATTLE TEXT FOR RESISTED STATUSES
     ----------	-------------------------------------------------------------------------
@@ -2182,9 +2183,9 @@ being beneficial. The below code will inform the player whenever Resistance bloc
     E9 DF000000 	jmp 5A8FDD		; -> [continue]
     E8 3660FFFF	call 59EF39		; -> free space (Recanter's Cloak)
     90		nop 			; -
-    
+
     1A8CDA > 07	; update jump pointer
-    
+
     ---------	-------------------------------------------------------------------------
     19EF39~4F	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
     ---------	-------------------------------------------------------------------------
