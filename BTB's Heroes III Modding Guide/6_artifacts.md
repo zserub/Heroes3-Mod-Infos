@@ -1,4 +1,4 @@
-# 7. Artifacts
+# 6. Artifacts
 
 The ArTraits.txt file in the H3bitmap.lod archive allows you to edit the value, class (treasure, minor,
 major, relic, etc.) equipment slot, and descriptions of artifacts. Most of their effects are hard-coded

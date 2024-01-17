@@ -91,9 +91,9 @@ Kilgor		Xeron
 
 ---------------------------------------------------------------------------------------------------------
 
-00 = Pikeman              0E = Centaur             1C = Gremlin
-01 = Halberdier           0F = Centaur Captain     1D = Master Gremlin
-02 = Archer               10 = Dwarf               1E = Stone Gargoyle
+00 = Pikeman              0E = Centaur              1C = Gremlin
+01 = Halberdier           0F = Centaur Captain      1D = Master Gremlin
+02 = Archer               10 = Dwarf                1E = Stone Gargoyle
 03 = Marksman             11 = Battle Dwarf         1F = Obsidian Gargoyle
 04 = Griffin              12 = Wood Elf             20 = Stone Golem
 05 = Royal Griffin        13 = Grand Elf            21 = Iron Golem
@@ -233,24 +233,23 @@ Kilgor		Xeron
 01 = Mage Guild 2       0A = Village Hall       13 = Horde A (Upg.)     24 = Tier 7 Dwelling
 02 = Mage Guild 3       0B = Town Hall          18 = Horde B (Base)     25 = Tier 1 Upgrade
 03 = Mage Guild 4       0C = City Hall          19 = Horde B (Upg.)     26 = Tier 2 Upgrade
-04 = Mage Guild 5       0D = Capitol            1E = Tier 1 Dwelling   27 = Tier 3 Upgrade
-05 = Tavern             0E = Marketplace        1F = Tier 2 Dwelling   28 = Tier 4 Upgrade
-06 = Shipyard           0F = Resource Silo      20 = Tier 3 Dwelling   29 = Tier 5 Upgrade
-07 = Fort               10 = Blacksmith         21 = Tier 4 Dwelling   2A = Tier 6 Upgrade
-08 = Citadel            1A = Grail              22 = Tier 5 Dwelling   2B = Tier 7 Upgrade
+04 = Mage Guild 5       0D = Capitol            1E = Tier 1 Dwelling    27 = Tier 3 Upgrade
+05 = Tavern             0E = Marketplace        1F = Tier 2 Dwelling    28 = Tier 4 Upgrade
+06 = Shipyard           0F = Resource Silo      20 = Tier 3 Dwelling    29 = Tier 5 Upgrade
+07 = Fort               10 = Blacksmith         21 = Tier 4 Dwelling    2A = Tier 6 Upgrade
+08 = Citadel            1A = Grail              22 = Tier 5 Dwelling    2B = Tier 7 Upgrade
 
 11 = (...)              15 = (...)              16 = (...)              17 = (...)
 --------------------    --------------------    --------------------    --------------------
 Lighthouse              Stables                Order of the Sword      Wall of Knowledge
-Mystic Pond             Fountain of Fortune    Treasury               Order of Fire
-Artifact Merchants      Lookout Tower          Library                Battle Scholar Academy
-Cover of Darkness       Brimstone Stormclouds  Castle Gate            Hall of Valhalla
-Escape Tunnel           Necromancy Amplifier   Skeleton Transformer   ----------------
-Cage of Warlords        Mana Vortex            Portal of Summoning    ----------------
-----------------        Freelancer's Guild      Ballista Yard         ----------------
-----------------        Glyphs of Fear         Blood Obelisk          ----------------
-----------------        Magic University       -------------          ----------------
-
+Mystic Pond             Fountain of Fortune    Treasury                Order of Fire
+Artifact Merchants      Lookout Tower          Library                 Battle Scholar Academy
+Cover of Darkness       Brimstone Stormclouds  Castle Gate             Hall of Valhalla
+Escape Tunnel           Necromancy Amplifier   Skeleton Transformer    ----------------
+Cage of Warlords        Mana Vortex            Portal of Summoning     ----------------
+----------------        Freelancer's Guild      Ballista Yard          ----------------
+----------------        Glyphs of Fear         Blood Obelisk           ----------------
+----------------        Magic University       -------------           ----------------
 
 ```
 
