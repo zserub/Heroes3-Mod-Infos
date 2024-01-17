@@ -41,61 +41,26 @@
 | Ladybird of Luck                         | 0E3B43                  | 0DCF19                  |
 
 ## Skill-Boosting Artifacts
-| NECROMANCY        |                   |
-|-------------------|-------------------|
-| Amulet            | 0E3FAE            |
-| Cowl              | 0E3FF4            |
-| Boots             | 0E403A            |
-| Garniture         | 0E49B9            |
-| Surcoat           | 0E49FF            |
-| Boots             | 0E4A46            |
-|||
-| 05% Bonus         | 0E3FE7            |
-| 10% Bonus         | 0E402D            |
-| 15% Bonus         | 0E4074            |
+| NECROMANCY        |                   || RESISTANCE        |                   |
+|-------------------|-------------------|-|-------------------|-------------------|
+| Amulet            | 0E3FAE            || Amulet            | 0E3FAE            |
+| Cowl              | 0E3FF4            || Cowl              | 0E3FF4            |
+| Boots             | 0E403A            || Boots             | 0E403A            |
+| Garniture         | 0E49B9            || Garniture         | 0E49B9            |
+| Surcoat           | 0E49FF            || Surcoat           | 0E49FF            |
+| Boots             | 0E4A46            || Boots             | 0E4A46            |
+||||||
+| 05% Bonus         | 0E3FE7            || 05% Bonus         | 0E49F2            |
+| 10% Bonus         | 0E402D            || 10% Bonus         | 0E4A38            |
+| 15% Bonus         | 0E4074            || 15% Bonus         | 0E4A80            |
 
-| RESISTANCE        |                   |
-|-------------------|-------------------|
-| Amulet            | 0E3FAE            |
-| Cowl              | 0E3FF4            |
-| Boots             | 0E403A            |
-| Garniture         | 0E49B9            |
-| Surcoat           | 0E49FF            |
-| Boots             | 0E4A46            |
-|||
-| 05% Bonus         | 0E49F2            |
-| 10% Bonus         | 0E4A38            |
-| 15% Bonus         | 0E4A80            |
 
-| RESISTANCE        |                   |
-|-------------------|-------------------|
-| Amulet            | 0E3FAE            |
-| Cowl              | 0E3FF4            |
-| Boots             | 0E403A            |
-| Garniture         | 0E49B9            |
-| Surcoat           | 0E49FF            |
-| Boots             | 0E4A46            |
-|||
-| 05% Bonus         | 0E49F2            |
-| 10% Bonus         | 0E4A38            |
-| 15% Bonus         | 0E4A80            |
-
-| ARCHERY           |                   |
-|-------------------|-------------------|
-| Bow               | 0E443D            |
-| Bowstring         | 0E4483            |
-| Arrows            | 0E44CA            |
-|||
-| 05% Bonus         | 0E4476            |
-| 10% Bonus         | 0E44BC            |
-| 15% Bonus         | 0E4504            |
-
-| EAGLE EYE         |                   |
-|-------------------|-------------------|
-| Bird              | 0E46FD            |
-| Watchman          | 0E4743            |
-| Emblem            | 0E478A            |
-|||
-| 05% Bonus         | 0E4736            |
-| 10% Bonus         | 0E477C            |
-| 15% Bonus         | 0E47C4            |
+| ARCHERY           |                   || EAGLE EYE         |                   |
+|-------------------|-------------------|-|-------------------|-------------------|
+| Bow               | 0E443D            || Bird              | 0E46FD            |
+| Bowstring         | 0E4483            || Watchman          | 0E4743            |
+| Arrows            | 0E44CA            || Emblem            | 0E478A            |
+||||||
+| 05% Bonus         | 0E4476            || 05% Bonus         | 0E4736            |
+| 10% Bonus         | 0E44BC            || 10% Bonus         | 0E477C            |
+| 15% Bonus         | 0E4504            || 15% Bonus         | 0E47C4            |
