@@ -2,7 +2,8 @@
 Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" guide.
 
 &nbsp;[UNIT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_table.md) &nbsp;&nbsp;&nbsp;
-[SKILL TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/skill_table.md)
+[SKILL TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/skill_table.md) &nbsp;&nbsp;&nbsp;
+[ARTIFACT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/artifact_table.md)
 
 ## BTB's Heroes III Modding Guide
 
@@ -15,3 +16,5 @@ Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" 
 [4. Spells](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/4_spells.md)
 
 [5. Units](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/5_units.md)
+
+[6. Artifacts](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/6_artifacts.md)
