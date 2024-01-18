@@ -4,16 +4,21 @@ Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" 
 ## Online sources:
 
 [Heroes Community forum - Modding/Scripting](http://heroescommunity.com/viewthread.php3?TID=32519)
+
 [Easiest ERM script tutorial](http://heroescommunity.com/viewthread.php3?TID=46589)
+
 [Front-end modding](http://heroescommunity.com/viewthread.php3?TID=39062)
+
 [Archer's repo](https://github.com/Archer30/Erm-Scripts)
+
 [ERM-Help (RU)](https://h3era.github.io/ERM-Help/)
 
 ## Repository
 
 &nbsp;[UNIT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_table.md) &nbsp;&nbsp;&nbsp;
 [SKILL TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/skill_table.md) &nbsp;&nbsp;&nbsp;
-[ARTIFACT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/artifact_table.md)
+[ARTIFACT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/artifact_table.md) &nbsp;&nbsp;&nbsp;
+[ID References](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/0_IDreferences.md)
 
 ## BTB's Heroes III Modding Guide
 
@@ -28,6 +33,12 @@ Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" 
 [5. Units](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/5_units.md)
 
 [6. Artifacts](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/6_artifacts.md)
+
+[7. Buildings](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/7_buildings.md)
+
+[8. Map Locations](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/8_maplocations.md)
+
+[ID References](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/0_IDreferences.md)
 
 <br>
 
