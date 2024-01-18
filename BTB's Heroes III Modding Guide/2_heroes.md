@@ -122,8 +122,7 @@ handled mostly through two arrays in the .exe: one for most of their data and on
 
 ---------------------------------------------------------------------------------------------
 
-				HERO DATA (92 bytes)
-				--------------------
+## HERO DATA (92 bytes)
 
         BYTE 01: Gender				BYTE 37: 1st unit ID
         BYTE 05: Race				BYTE 41: 2nd unit ID *OR* war machine
@@ -157,8 +156,7 @@ him by default in new maps, do the same thing in the map editor (188BFA: -> 01).
 
 -----------------------------------------------------------------------------------------------
 
-			      HERO SPECIALTIES (28 bytes)
-			      ---------------------------
+## HERO SPECIALTIES (28 bytes)
 
 		BYTE 01: Specialty type
 
@@ -322,9 +320,9 @@ any instances of it in your image (usually just a pixel or two) with the closest
 Note that the above information is applicable to any kind of graphics editing, such as creating your own
 hero portraits. Feel free to edit any images you find, simply bearing in mind that they must be reduced
 to 256-color bitmaps and the first color will always be treated as a transparency layer.
+--------------
 
-
-### EXPERIENCE & LEVELS
+## EXPERIENCE & LEVELS
 
 Experience requirements are set values up until level 12 (see table below), beyond which the requirement
 for each successive level increases by 20% from the one prior:

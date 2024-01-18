@@ -30,6 +30,8 @@ I formatted BTB's guide for easier use.
 
 ### [2. Heroes](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/2_heroes.md)
 
+- [Hero data](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/2_heroes.md#hero-data-92-bytes)
+- [Hero specialties](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/2_heroes.md#hero-specialties-28-bytes)
 - [Experience & Levels](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/2_heroes.md#experience--levels)
 
 ### [3. Skills](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/3_skills.md)
