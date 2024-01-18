@@ -4,17 +4,17 @@ The effectiveness of most secondary skills can be edited in the .exe file in a t
 Each skill occupies 16 bytes consisting of 4 DWORD (4-byte) values: one value each for unskilled, basic,
 advanced, and expert levels. The offsets for each skill in this table are as follows:
 
-    Luck		23E998		Offense		23E9F8		Learning	23EA58
-    Leadership	23E9A8		Armorer		23EA08		Logistics	23EA68
-    Necromancy	23E9B8		Estates		23EA18		Sorcery		23EA78
-    Mysticism	23E9C8		Eagle Eye	23EA28		Intelligence	23EA88
-    Scouting	23E9D8		Diplomacy	23EA38		First Aid	23EA98
-    Archery		23E9E8		Resistance	23EA48		Artillery	23B810
+	Luck		23E998		Offense		23E9F8		Learning	23EA58
+	Leadership	23E9A8		Armorer		23EA08		Logistics	23EA68
+	Necromancy	23E9B8		Estates		23EA18		Sorcery		23EA78
+	Mysticism	23E9C8		Eagle Eye	23EA28		Intelligence	23EA88
+	Scouting	23E9D8		Diplomacy	23EA38		First Aid	23EA98
+	Archery		23E9E8		Resistance	23EA48		Artillery	23B810
 
 Most of the above skills use percentages rather than static values. Some examples:
 
-    05% - CD CC 4C 3D	10% - CD CC CC 3D	15% - 9A 99 19 3E	20% - CD CC 4C 3E
-    25% - 00 00 80 3E	30% - 9A 99 99 3E	40% - CD CC CC 3E	50% - 00 00 00 3F
+	05% - CD CC 4C 3D	10% - CD CC CC 3D	15% - 9A 99 19 3E	20% - CD CC 4C 3E
+	25% - 00 00 80 3E	30% - 9A 99 99 3E	40% - CD CC CC 3E	50% - 00 00 00 3F
 
 To calculate different percentages, go to - [https://gregstoll.com/~gregstoll/floattohex/](https://gregstoll.com/~gregstoll/floattohex/)
 and enter the desired decimal-format percentage (i.e. 0.10) into the "float value" field.
@@ -47,33 +47,33 @@ Witch Huts, and Universities (Leadership and Necromancy are banned by default fr
 not from Scholars). You can mitigate this to some degree by manually editing every map to ban the skill
 in question, but the more elegant and thorough solution is to ban them in the game code.
 
-    --------	-------------------------------------------------------------------------
-    0C25B3~A	; REMOVE SKILLS FROM THE GAME
-    --------	-------------------------------------------------------------------------
-    E8 6FD00000	call 4CF627		; -> free space
-    89 4D C0	mov [ebp-40],ecx	; store banned skill list
+	--------	-------------------------------------------------------------------------
+	0C25B3~A	; REMOVE SKILLS FROM THE GAME
+	--------	-------------------------------------------------------------------------
+	E8 6FD00000	call 4CF627		; -> free space
+	89 4D C0	mov [ebp-40],ecx	; store banned skill list
 
-    --------	-------------------------------------------------------------------------
-    0CF627~F	; (EXPANDED SPACE - UNUSED IN ORIGINAL GAME)
-    --------	-------------------------------------------------------------------------
-    81 C9 XXXXXXXX	or ecx,XXXXXXXX		; set banned skills (bitset; see below)
-    31 F6		xor esi,esi		; (displaced code)
-    C3		    ret			; return
+	--------	-------------------------------------------------------------------------
+	0CF627~F	; (EXPANDED SPACE - UNUSED IN ORIGINAL GAME)
+	--------	-------------------------------------------------------------------------
+	81 C9 XXXXXXXX	or ecx,XXXXXXXX		; set banned skills (bitset; see below)
+	31 F6		xor esi,esi		; (displaced code)
+	C3		ret			; return
 
 The value of "XXXXXXXX" is a bitset, meaning that we add the below values for each of the skills that we
 want to ban. For example, axing Ballistics, Eagle Eye, Scholar, and Intelligence will give us a value of
 01040C00 (400 + 800 + 40000 + 1000000). We then break it up into bytes (01 04 0C 00) and reverse them in
 the actual code, and so the instruction at 0CF627 will be 81 C9 00 0C 04 01.
 
-    01 = Pathfinding	10 = Diplomacy		100 = Mysticism		1000 = Necromancy
-    02 = Archery		20 = Navigation		200 = Luck		2000 = Estates
-    04 = Logistics		40 = Leadership		400 = Ballistics	4000 = Fire Magic
-    08 = Scouting		80 = Wisdom		800 = Eagle Eye		8000 = Air Magic
+	01 = Pathfinding	10 = Diplomacy		100 = Mysticism		1000 = Necromancy
+	02 = Archery		20 = Navigation		200 = Luck		2000 = Estates
+	04 = Logistics		40 = Leadership		400 = Ballistics	4000 = Fire Magic
+	08 = Scouting		80 = Wisdom		800 = Eagle Eye		8000 = Air Magic
 
-    10000 = Water Magic	100000 = Artillery	1000000 = Intelligence	----------------
-    20000 = Earth Magic	200000 = Learning	2000000 = Sorcery	----------------
-    40000 = Scholar		400000 = Offense	4000000 = Resistance	----------------
-    80000 = Tactics		800000 = Armorer	8000000 = First Aid	----------------
+	10000 = Water Magic	100000 = Artillery	1000000 = Intelligence	----------------
+	20000 = Earth Magic	200000 = Learning	2000000 = Sorcery	----------------
+	40000 = Scholar		400000 = Offense	4000000 = Resistance	----------------
+	80000 = Tactics		800000 = Armorer	8000000 = First Aid	----------------
 
 (You'll also have to axe the shitcanned skill as a starting bonus from campaigns or from any maps where
 it's specifically offered as a quest reward from Seer's Huts or from events, but you knew that already.)
@@ -105,25 +105,25 @@ our floating point value, while the EB 04 means "don't process the next 4 bytes"
 an instruction and the game would crash if it tried to interpret it as such. We can then reference this
 value by taking the address and converting it to a DWORD pointer, as seen on the table below.
 
-		Skill		Bonus%	  ADD -> NOP  (DWORD PTR)  4D -> 45
-		-----------------------------------------------------------
-		Archery		0E4420	    0E4424   (26 44 4E 00)  0E442B
-		Armorer		0E45C9	    0E45CD   (CF 45 4E 00)  0E45D4
-		Diplomacy	0E483C	    0E4840   (42 48 4E 00)  0E4847
-		Eagle Eye	0E46E0	    0E46E4   (E6 46 4E 00)  0E46EB
-		Estates		0E464F	    0E4653   (55 46 4E 00)  0E465A
-		First Aid	0E4BD9	    0E4BDD   (DF 4B 4E 00)  0E4BE4
-		Intelligence	0E4B69	    0E4B6D   (6F 4B 4E 00)  0E4B74
-		Leadership	0E3C81	    0E3C85   (87 3C 4E 00)  0E3C8C
-		Learning	0E4AF9	    0E4AFD   (FF 4A 4E 00)  0E4B04
-		Logistics	0E4F1E	    0E4F22   (24 4F 4E 00)  0E4F29
-		Luck		0E3A2B	    0E3A2F   (31 3A 4E 00)  0E3A36
-		Mysticism	0E41FE	    0E4202   (04 42 4E 00)  0E4209
-		Necromancy	0E3F92	    0E3F96   (98 3F 4E 00)  0E3F9D
-		Offense		0E4569	    0E456D   (6F 45 4E 00)  0E4574
-		Resistance	0E499C	    0E49A0   (A2 49 4E 00)  0E49A7
-		Scouting	0E432E	    0E4332   (34 43 4E 00)  0E4339
-		Sorcery		0E5B61	    0E5B65   (67 5B 4E 00)  0E5B6C
+| Skill        | Bonus%  | ADD -> NOP | DWORD PTR | 4D -> 45 |
+|--------------|---------|------------|-----------|----------|
+| Archery      | 0E4420  | 0E4424    | 26 44 4E 00 | 0E442B  |
+| Armorer      | 0E45C9  | 0E45CD    | CF 45 4E 00 | 0E45D4  |
+| Diplomacy    | 0E483C  | 0E4840    | 42 48 4E 00 | 0E4847  |
+| Eagle Eye    | 0E46E0  | 0E46E4    | E6 46 4E 00 | 0E46EB  |
+| Estates      | 0E464F  | 0E4653    | 55 46 4E 00 | 0E465A  |
+| First Aid    | 0E4BD9  | 0E4BDD    | DF 4B 4E 00 | 0E4BE4  |
+| Intelligence | 0E4B69  | 0E4B6D    | 6F 4B 4E 00 | 0E4B74  |
+| Leadership   | 0E3C81  | 0E3C85    | 87 3C 4E 00 | 0E3C8C  |
+| Learning     | 0E4AF9  | 0E4AFD    | FF 4A 4E 00 | 0E4B04  |
+| Logistics    | 0E4F1E  | 0E4F22    | 24 4F 4E 00 | 0E4F29  |
+| Luck         | 0E3A2B  | 0E3A2F    | 31 3A 4E 00 | 0E3A36  |
+| Mysticism    | 0E41FE  | 0E4202    | 04 42 4E 00 | 0E4209  |
+| Necromancy   | 0E3F92  | 0E3F96    | 98 3F 4E 00 | 0E3F9D  |
+| Offense      | 0E4569  | 0E456D    | 6F 45 4E 00 | 0E4574  |
+| Resistance   | 0E499C  | 0E49A0    | A2 49 4E 00 | 0E49A7  |
+| Scouting     | 0E432E  | 0E4332    | 34 43 4E 00 | 0E4339  |
+| Sorcery      | 0E5B61  | 0E5B65    | 67 5B 4E 00 | 0E5B6C  |
 
 
 Moving on, there are a handful of skills on the above list where this new approach is still undesirable.
@@ -148,33 +148,33 @@ unused movement points from the previous turn. The below code will restore 4 spe
 movement points are unused, 3 spell points for 50-74%, 2 for 25-49%, or else just 1. Note that this will
 be in addition to what Mysticism provides, so the "unskilled" value at 23E9C8 should be set to 0.
 
-    ----------	-------------------------------------------------------------------------
-    0E41F5~218	; MANA REGENERATION FOR UNUSED MOVEMENT POINTS
-    ----------	-------------------------------------------------------------------------
-    8B 57 4D	mov edx,[edi+4D]	; EDX = unspent movement
-    8B 4F 49	mov ecx,[edi+49]	; ECX = maximum movement
-    D1 F9		sar ecx,1		; ECX / 2
-    39 CA		cmp edx,ecx		; 50% or more left over?
-    7D 08		jnl 4E4209		; if yes -> ECX / 2 (further down)
-    D1 F9		sar ecx,1		; ECX / 2
-    39 CA		cmp edx,ecx		; 25% or more left over?
-    7D 0D		jnl 4E4214		; if yes -> +2 spell points
-    EB 0C		jmp 4E4215		; +1 spell point
+	----------	-------------------------------------------------------------------------
+	0E41F5~218	; MANA REGENERATION FOR UNUSED MOVEMENT POINTS
+	----------	-------------------------------------------------------------------------
+	8B 57 4D	mov edx,[edi+4D]	; EDX = unspent movement
+	8B 4F 49	mov ecx,[edi+49]	; ECX = maximum movement
+	D1 F9		sar ecx,1		; ECX / 2
+	39 CA		cmp edx,ecx		; 50% or more left over?
+	7D 08		jnl 4E4209		; if yes -> ECX / 2 (further down)
+	D1 F9		sar ecx,1		; ECX / 2
+	39 CA		cmp edx,ecx		; 25% or more left over?
+	7D 0D		jnl 4E4214		; if yes -> +2 spell points
+	EB 0C		jmp 4E4215		; +1 spell point
 
-    D1 F9		sar ecx,1		; ECX / 2
-    6B C9 03	imul ecx,03		; ECX * 3
-    39 CA		cmp edx,ecx		; 75% or more left over?
-    7C 01		jl 4E4213		; if no -> +3 spell points
+	D1 F9		sar ecx,1		; ECX / 2
+	6B C9 03	imul ecx,03		; ECX * 3
+	39 CA		cmp edx,ecx		; 75% or more left over?
+	7C 01		jl 4E4213		; if no -> +3 spell points
 
-    43		inc ebx			; +4 spell points
-    43		inc ebx			; +3 spell points
-    43		inc ebx			; +2 spell points
-    43		inc ebx			; +1 spell point
-    90 90 90	nop			; -
+	43		inc ebx			; +4 spell points
+	43		inc ebx			; +3 spell points
+	43		inc ebx			; +2 spell points
+	43		inc ebx			; +1 spell point
+	90 90 90	nop			; -
 
-    0E41EB > 09	; shortened jump
-    0E41E5 > 0F	; ""
-    0E41D0 > 24	; ""
+	0E41EB > 09	; shortened jump
+	0E41E5 > 0F	; ""
+	0E41D0 > 24	; ""
 
 Next up is Estates, which is basically the same problem we had with Mysticism just to a lesser degree.
 The fix is, again, pretty simple: we just multiply the hero's level by the desired amount after loading
@@ -203,34 +203,33 @@ to movement regardless of army composition, it allows armies with slower units t
 are comprised only of faster units. The below example sets a minimum unit speed of 6 at basic Logistics,
 7 for advanced, and 8 for expert - or 8, 9, and 10, respectively, for specialists. Base movement costs
 according to an army's slowest unit can be edited in Movement.txt from the h3bitmap.lod archive.
+	----------	---------------------------------------------------------------------
+	0E4ECE~F0C	; LOGISTICS TO INCREASE MINIMUM SPEED INSTEAD OF A FLAT BONUS
+	----------	---------------------------------------------------------------------
+	8A 83 CB000000	mov al,[ebx+CB]		; EAX = Logistics skill
+	0F BE D0	movsx edx,al		; EDX = EAX (EDX will be our minimum speed)
 
-    ----------	---------------------------------------------------------------------
-    0E4ECE~F0C	; LOGISTICS TO INCREASE MINIMUM SPEED INSTEAD OF A FLAT BONUS
-    ----------	---------------------------------------------------------------------
-    8A 83 CB000000	mov al,[ebx+CB]		; EAX = Logistics skill
-    0F BE D0	movsx edx,al		; EDX = EAX (EDX will be our minimum speed)
+	84 C0		test al,al		; do we have Logistics?
+	7E 20		jle 4E4EFB		; if no -> "ECX = slowest unit"
 
-    84 C0		test al,al		; do we have Logistics?
-    7E 20		jle 4E4EFB		; if no -> "ECX = slowest unit"
+	8B 43 1A	mov eax,[ebx+1A]	; EAX = hero ID
+	8B 0D 809C6700	mov ecx,[679C80]	; ECX = specialty index
+	8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
+	8D 04 C1	lea eax,[ecx+eax*8]	; ""
+	83 38 00	cmp [eax],00		; skill specialist?
+	75 09		jne 4E4EF7		; if no -> "EDX+5"
+	83 78 04 02	cmp [eax+04],02		; Logistics specialist?
+	75 03		jne 4E4EF7		; if no -> "EDX+5"
+	83 C2 02	add edx,02		; EDX+2
+	83 C2 05	add edx,05		; EDX+5
 
-    8B 43 1A	mov eax,[ebx+1A]	; EAX = hero ID
-    8B 0D 809C6700	mov ecx,[679C80]	; ECX = specialty index
-    8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
-    8D 04 C1	lea eax,[ecx+eax*8]	; ""
-    83 38 00	cmp [eax],00		; skill specialist?
-    75 09		jne 4E4EF7		; if no -> "EDX+5"
-    83 78 04 02	cmp [eax+04],02		; Logistics specialist?
-    75 03		jne 4E4EF7		; if no -> "EDX+5"
-    83 C2 02	add edx,02		; EDX+2
-    83 C2 05	add edx,05		; EDX+5
+	8B 4D FC	mov ecx,[ebp-04]	; ECX = slowest unit
+	39 D1		cmp ecx,edx		; is ECX greater than Logistics minimum (EDX)?
+	7F 02		jg 4E4F03		; if no -> "EDI = base movement points"
+	8B CA		mov ecx,edx		; Slowest unit = logistics minimum
 
-    8B 4D FC	mov ecx,[ebp-04]	; ECX = slowest unit
-    39 D1		cmp ecx,edx		; is ECX greater than Logistics minimum (EDX)?
-    7F 02		jg 4E4F03		; if no -> "EDI = base movement points"
-    8B CA		mov ecx,edx		; Slowest unit = logistics minimum
-
-    8B3C8DE88A6900	mov edi,[ecx*4+698AE8]	; EDI = base movement points
-    EB 3A		jmp 4E4F47		; continue (0E4F0D~46 is free space)
+	8B3C8DE88A6900	mov edi,[ecx*4+698AE8]	; EDI = base movement points
+	EB 3A		jmp 4E4F47		; continue (0E4F0D~46 is free space)
 
 >(NOTE: the values at 23EA68 will no longer be used)
 
@@ -241,39 +240,39 @@ their turn in a town. The free space we use for this comes from the code which a
 the type 1 unit specialties to factor into movement point calculation. This exception was inconsistent
 with how the rules behaved, since movement point calculation otherwise ignores speed bonuses.
 
-    ---------	-------------------------------------------------------------------------
-    0E4E39~8A	; IN-TOWN MOVEMENT BASED ON FASTEST UNIT (OVERWRITES UNIT SPECIALTY)
-    ---------	-------------------------------------------------------------------------
-    83 7B 0C 62	cmp [ebx+0C],62		; is hero in a town?
-    75 04		jne 4E4E43		; if no -> (shifted code A)
-    83 6D FC 11	sub [ebp-04],11		; compare against minimum speed instead of max
-    8B 45 08	mov eax,[ebp+08]	; (shifted code A)
-    8B 30		mov esi,[eax]		; ""
-    83 FE FF	cmp esi,-01		; ""
-    74 2A		je 4E4E77		; ""
-    A1 B0476700	mov eax,[6747B0]	; ""
-    8D0CF500000000	lea ecx,[esi*8]		; ""
-    29 F1		sub ecx,esi		; ""
-    8D 14 8E	lea edx,[esi+ecx*4]	; ""
-    8B 7C 90 50	mov edi,[eax+edx*4+50]	; ""
+	---------	-------------------------------------------------------------------------
+	0E4E39~8A	; IN-TOWN MOVEMENT BASED ON FASTEST UNIT (OVERWRITES UNIT SPECIALTY)
+	---------	-------------------------------------------------------------------------
+	83 7B 0C 62	cmp [ebx+0C],62		; is hero in a town?
+	75 04		jne 4E4E43		; if no -> (shifted code A)
+	83 6D FC 11	sub [ebp-04],11		; compare against minimum speed instead of max
+	8B 45 08	mov eax,[ebp+08]	; (shifted code A)
+	8B 30		mov esi,[eax]		; ""
+	83 FE FF	cmp esi,-01		; ""
+	74 2A		je 4E4E77		; ""
+	A1 B0476700	mov eax,[6747B0]	; ""
+	8D0CF500000000	lea ecx,[esi*8]		; ""
+	29 F1		sub ecx,esi		; ""
+	8D 14 8E	lea edx,[esi+ecx*4]	; ""
+	8B 7C 90 50	mov edi,[eax+edx*4+50]	; ""
 
-    83 7B 0C 62	cmp [ebx+0C],62		; is hero in a town?
-    75 07		jne 4E4E6F		; if no -> check for slowest unit
-    3B 7D FC	cmp edi,[ebp-04]	; is this this fastest unit thus far?
-    7E 0A		jle 4E4E77		; if no -> (shifted code B)
-    EB 05		jmp 4E4E74		; -> update army speed
+	83 7B 0C 62	cmp [ebx+0C],62		; is hero in a town?
+	75 07		jne 4E4E6F		; if no -> check for slowest unit
+	3B 7D FC	cmp edi,[ebp-04]	; is this this fastest unit thus far?
+	7E 0A		jle 4E4E77		; if no -> (shifted code B)
+	EB 05		jmp 4E4E74		; -> update army speed
 
-    3B 7D FC	cmp edi,[ebp-04]	; is this this slowest unit thus far?
-    7D 03		jge 4E4E77		; if no -> (shifted code B)
-    89 7D FC	mov [ebp-04],edi	; update army speed
-    8B 4D 08	mov ecx,[ebp+08]	; (shifted code B)
-    8B 45 F8	mov eax,[ebp-08]	; ""
-    83 C1 04	add ecx,04		; ""
-    48		    dec eax			; ""
-    89 4D 08	mov [ebp+08],ecx	; ""
-    89 45 F8	mov [ebp-08],eax	; ""
-    75 BA		jne 4E4E43		; -> (loop to check all units)
-    EB 43		jmp 4E4ECE		; -> [continue] 0E4E8B~CD is free
+	3B 7D FC	cmp edi,[ebp-04]	; is this this slowest unit thus far?
+	7D 03		jge 4E4E77		; if no -> (shifted code B)
+	89 7D FC	mov [ebp-04],edi	; update army speed
+	8B 4D 08	mov ecx,[ebp+08]	; (shifted code B)
+	8B 45 F8	mov eax,[ebp-08]	; ""
+	83 C1 04	add ecx,04		; ""
+	48		dec eax			; ""
+	89 4D 08	mov [ebp+08],ecx	; ""
+	89 45 F8	mov [ebp-08],eax	; ""
+	75 BA		jne 4E4E43		; -> (loop to check all units)
+	EB 43		jmp 4E4ECE		; -> [continue] 0E4E8B~CD is free
 
 
 Pathfinding is handled through a table similar to the one for skills which states the base movement cost
@@ -296,41 +295,41 @@ from the Admiral's Hat to achieve this - we'll go over how to remove artifacts f
 since this removes the only thing that the hat has going for it and puts it in a more reasonable place.
 For the free space, we'll be using some of what we freed up with the Logistics change above.
 
-    ---------	-------------------------------------------------------------------------
-    0A0CD3~E8	; NAVIGATION REDUCES BOARDING PENALTY (OVERWRITES ADMIRAL'S HAT)
-    ---------	-------------------------------------------------------------------------
-    8A 86 CE000000	mov al,[esi+CE]		; AL = Navigation skill
-    84 C0		test al,al		; do we have Navigation?
-    74 2B		je 4A0D08		; if no -> [full penalty]
-    8B 4E 49	mov ecx,[esi+49]	; ECX = maximum movement points
-    8B 56 4D	mov edx,[esi+4D]	; EDX = current movement points
-    E8 25420400	call 4E4F0D		; -> free space (Logistics)
-    90		nop			; -
+	---------	-------------------------------------------------------------------------
+	0A0CD3~E8	; NAVIGATION REDUCES BOARDING PENALTY (OVERWRITES ADMIRAL'S HAT)
+	---------	-------------------------------------------------------------------------
+	8A 86 CE000000	mov al,[esi+CE]		; AL = Navigation skill
+	84 C0		test al,al		; do we have Navigation?
+	74 2B		je 4A0D08		; if no -> [full penalty]
+	8B 4E 49	mov ecx,[esi+49]	; ECX = maximum movement points
+	8B 56 4D	mov edx,[esi+4D]	; EDX = current movement points
+	E8 25420400	call 4E4F0D		; -> free space (Logistics)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    09E30F~24	; NAVIGATION REDUCES UNBOARDING PENALTY (OVERWRITES ADMIRAL'S HAT)
-    ---------	-------------------------------------------------------------------------
-    8A 86 CE000000	mov al,[esi+CE]		; AL = Navigation skill
-    84 C0		test al,al		; do we have Navigation?
-    74 27		je 49E340		; if no -> [full penalty]
-    8B 7E 49	mov edi,[esi+49]	; EDI = maximum movement points
-    8B 56 4D	mov edx,[esi+4D]	; EDX = current movement points
-    E8 E96B0400	call 4E4F0D		; -> free space (Logistics)
-    90		nop			; -
+	---------	-------------------------------------------------------------------------
+	09E30F~24	; NAVIGATION REDUCES UNBOARDING PENALTY (OVERWRITES ADMIRAL'S HAT)
+	---------	-------------------------------------------------------------------------
+	8A 86 CE000000	mov al,[esi+CE]		; AL = Navigation skill
+	84 C0		test al,al		; do we have Navigation?
+	74 27		je 49E340		; if no -> [full penalty]
+	8B 7E 49	mov edi,[esi+49]	; EDI = maximum movement points
+	8B 56 4D	mov edx,[esi+4D]	; EDX = current movement points
+	E8 E96B0400	call 4E4F0D		; -> free space (Logistics)
+	90		nop			; -
 
-    09E32A > 55	; use EDX for current movement instead of ECX
+	09E32A > 55	; use EDX for current movement instead of ECX
 
-    ---------	-------------------------------------------------------------------------
-    0E4F0D~1C	; (EXPANDED SPACE - OVERWRITES OLD LOGISTICS SPECIALTY)
-    ---------	-------------------------------------------------------------------------
-    3C 03		cmp al,03		; Expert Navigation?
-    74 0B		je 4E4F1C		; if yes, -> return (100% penalty reduction)
-    D1 EA		shr edx,1		; EDX / 2
-    3C 01		cmp al,01		; Basic Navigation?
-    74 05 		je 4E4F1C		; if yes -> return (50% penalty reduction)
-    D1 EA		shr edx,1		; EDX / 2
-    6B D2 03	imul edx,edx,03		; EDX * 3 (75% penalty reduction)
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	0E4F0D~1C	; (EXPANDED SPACE - OVERWRITES OLD LOGISTICS SPECIALTY)
+	---------	-------------------------------------------------------------------------
+	3C 03		cmp al,03		; Expert Navigation?
+	74 0B		je 4E4F1C		; if yes, -> return (100% penalty reduction)
+	D1 EA		shr edx,1		; EDX / 2
+	3C 01		cmp al,01		; Basic Navigation?
+	74 05 		je 4E4F1C		; if yes -> return (50% penalty reduction)
+	D1 EA		shr edx,1		; EDX / 2
+	6B D2 03	imul edx,edx,03		; EDX * 3 (75% penalty reduction)
+	C3		ret			; return
 
 ---------------------
 
@@ -348,123 +347,123 @@ attacks, 04153A/041541 for melee) and the divisor (03F66C for ranged attacks, 04
 With that out of the way, let's look at making Luck and Leadership hero specialists. The nature of these
 skills makes them poor candidates for a scaling bonus, so we go with a flat one instead.
 
-    --------	-------------------------------------------------------------------------
-    0E3A19~E	; LUCK SPECIALTY
-    --------	-------------------------------------------------------------------------
-    83 45 0C XX	add [ebp+0C],XX		; +XX luck
-    EB 27		jmp 4E3A46		; -> [continue] (0E3A1F~45 is free)
+	--------	-------------------------------------------------------------------------
+	0E3A19~E	; LUCK SPECIALTY
+	--------	-------------------------------------------------------------------------
+	83 45 0C XX	add [ebp+0C],XX		; +XX luck
+	EB 27		jmp 4E3A46		; -> [continue] (0E3A1F~45 is free)
 
-    ----------	-------------------------------------------------------------------------
-    0DD195~222	; "" (R-CLICK)
-    ----------	-------------------------------------------------------------------------
-    8A 83 D2000000	mov al,[ebx+D2]		; AL = hero's Luck
-    3C 01		cmp al,01		; basic Luck?
-    75 08		jne 4DD1A7		; if no -> advanced?
-    8B 15 D0536A00	mov edx,[6A53D0]	; ArrayTxt, line 75
-    EB 16		jmp 4DD1BD		; -> text
+	----------	-------------------------------------------------------------------------
+	0DD195~222	; "" (R-CLICK)
+	----------	-------------------------------------------------------------------------
+	8A 83 D2000000	mov al,[ebx+D2]		; AL = hero's Luck
+	3C 01		cmp al,01		; basic Luck?
+	75 08		jne 4DD1A7		; if no -> advanced?
+	8B 15 D0536A00	mov edx,[6A53D0]	; ArrayTxt, line 75
+	EB 16		jmp 4DD1BD		; -> text
 
-    3C 02		cmp al,02		; advanced Luck?
-    75 08		jne 4DD1B3		; if no -> expert?
-    8B 15 D4536A00	mov edx,[6A53D4]	; ArrayTxt, line 76
-    EB 0A		jmp 4DD1BD		; -> text
+	3C 02		cmp al,02		; advanced Luck?
+	75 08		jne 4DD1B3		; if no -> expert?
+	8B 15 D4536A00	mov edx,[6A53D4]	; ArrayTxt, line 76
+	EB 0A		jmp 4DD1BD		; -> text
 
-    3C 03		cmp al,03		; expert Luck?
-    75 67		jne 4DD21E		; if no -> [continue]
-    8B 15 D8536A00	mov edx,[6A53D8]	; ArrayTxt, line 77
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 CDE0F3FF	call 41B2A0		; ""
-    0FBE83D2000000	movsx eax,[ebx+D2]	; EAX = hero's Luck
-    8B048598E96300	mov eax,[eax*4+63E998]	; EAX = luck bonus
-    01 45 F0	add [ebp-10],eax	; add luck bonus
+	3C 03		cmp al,03		; expert Luck?
+	75 67		jne 4DD21E		; if no -> [continue]
+	8B 15 D8536A00	mov edx,[6A53D8]	; ArrayTxt, line 77
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 CDE0F3FF	call 41B2A0		; ""
+	0FBE83D2000000	movsx eax,[ebx+D2]	; EAX = hero's Luck
+	8B048598E96300	mov eax,[eax*4+63E998]	; EAX = luck bonus
+	01 45 F0	add [ebp-10],eax	; add luck bonus
 
-    8B 0D 809C6700	mov ecx,[679C80]	; ECX = specialty index
-    8B 43 1A	mov eax,[ebx+1A]	; EAX = hero ID
-    8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
-    8D 04 C1	lea eax,[ecx+eax*8]	; ""
-    83 38 00	cmp [eax],00		; skill specialist?
-    75 26		jne 4DD21E		; if no -> [continue]
-    83 78 04 09	cmp [eax+04],09		; Luck specialist?
-    75 20		jne 4DD21E		; if no -> [continue]
-    8B 15 F4556A00	mov edx,[6A55F4]	; ArrayTxt, line 8
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 86E0F3FF	call 41B2A0		; ""
-    83 45 F0 XX	add [ebp-10],XX		; add XX to luck bonus
-    E9 8C000000	jmp 4DD2AF		; -> [continue] (0DD223~AE is free space)
+	8B 0D 809C6700	mov ecx,[679C80]	; ECX = specialty index
+	8B 43 1A	mov eax,[ebx+1A]	; EAX = hero ID
+	8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
+	8D 04 C1	lea eax,[ecx+eax*8]	; ""
+	83 38 00	cmp [eax],00		; skill specialist?
+	75 26		jne 4DD21E		; if no -> [continue]
+	83 78 04 09	cmp [eax+04],09		; Luck specialist?
+	75 20		jne 4DD21E		; if no -> [continue]
+	8B 15 F4556A00	mov edx,[6A55F4]	; ArrayTxt, line 8
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 86E0F3FF	call 41B2A0		; ""
+	83 45 F0 XX	add [ebp-10],XX		; add XX to luck bonus
+	E9 8C000000	jmp 4DD2AF		; -> [continue] (0DD223~AE is free space)
 
-    ---------	-------------------------------------------------------------------------
-    0E3C6F~73	; LEADERSHIP SPECIALTY
-    ---------	-------------------------------------------------------------------------
-    83 C3 XX	add ebx,XX		; +XX morale
-    EB 2A		jmp 4E3C9E		; -> [continue] (0E3C74~9D is free space)
+	---------	-------------------------------------------------------------------------
+	0E3C6F~73	; LEADERSHIP SPECIALTY
+	---------	-------------------------------------------------------------------------
+	83 C3 XX	add ebx,XX		; +XX morale
+	EB 2A		jmp 4E3C9E		; -> [continue] (0E3C74~9D is free space)
 
-    ----------	-------------------------------------------------------------------------
-    0DC9C4~A51	; "" (R-CLICK)
-    ----------	-------------------------------------------------------------------------
-    8A 83 CF000000	mov al,[ebx+CF]		; AL = hero's Leadership
-    3C 01		cmp al,01		; basic Leadership?
-    75 08		jne 4DC9D6		; if no -> advanced?
-    8B 15 74586A00	mov edx,[6A5874]	; ArrayTxt, line 106
-    EB 16		jmp 4DC9EC		; -> text
+	----------	-------------------------------------------------------------------------
+	0DC9C4~A51	; "" (R-CLICK)
+	----------	-------------------------------------------------------------------------
+	8A 83 CF000000	mov al,[ebx+CF]		; AL = hero's Leadership
+	3C 01		cmp al,01		; basic Leadership?
+	75 08		jne 4DC9D6		; if no -> advanced?
+	8B 15 74586A00	mov edx,[6A5874]	; ArrayTxt, line 106
+	EB 16		jmp 4DC9EC		; -> text
 
-    3C 02		cmp al,02		; expert Leadership?
-    75 08		jne 4DC9E2		; if no -> expert?
-    8B 15 78586A00	mov edx,[6A5878]	; ArrayTxt, line 107
-    EB 0A		jmp 4DC9EC		; -> text
+	3C 02		cmp al,02		; expert Leadership?
+	75 08		jne 4DC9E2		; if no -> expert?
+	8B 15 78586A00	mov edx,[6A5878]	; ArrayTxt, line 107
+	EB 0A		jmp 4DC9EC		; -> text
 
-    3C 03		cmp al,03		; master Leadership?
-    75 67		jne 4DCA4D		; if no -> [continue]
-    8B 15 7C586A00	mov edx,[6A587C]	; ArrayTxt, line 108
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 9EE8F3FF	call 41B2A0		; ""
-    0FBE83CF000000	movsx eax,[ebx+CF]	; EAX = hero's Leadership
-    8B0485A8E96300	mov eax,[eax*4+63E9A8]	; EAX = morale bonus
-    01 45 F0	add [ebp-10],eax	; add morale bonus
+	3C 03		cmp al,03		; master Leadership?
+	75 67		jne 4DCA4D		; if no -> [continue]
+	8B 15 7C586A00	mov edx,[6A587C]	; ArrayTxt, line 108
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 9EE8F3FF	call 41B2A0		; ""
+	0FBE83CF000000	movsx eax,[ebx+CF]	; EAX = hero's Leadership
+	8B0485A8E96300	mov eax,[eax*4+63E9A8]	; EAX = morale bonus
+	01 45 F0	add [ebp-10],eax	; add morale bonus
 
-    8B 0D 809C6700	mov ecx,[679C80]	; ECX = specialty index
-    8B 43 1A	mov eax,[ebx+1A]	; EAX = hero ID
-    8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
-    8D 04 C1	lea eax,[ecx+eax*8]	; ""
-    83 38 00	cmp [eax],00		; skill specialist?
-    75 26		jne 4DCA4D		; if no -> [continue]
-    83 78 04 06	cmp [eax+04],06		; Leadership specialist?
-    75 20		jne 4DCA4D		; if no -> [continue]
-    8B 15 185F6A00	mov edx,[6A5F18]	; ArrayTxt, line 16
-    83 C9 FF	or ecx,-01		; ""
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 57E8F3FF	call 41B2A0		; ""
-    83 45 F0 XX	add [ebp-10],XX		; add XX to morale bonus
-    E9 8C000000	jmp 4DCADE		; -> [continue] (0DCA52~DD is free space)
+	8B 0D 809C6700	mov ecx,[679C80]	; ECX = specialty index
+	8B 43 1A	mov eax,[ebx+1A]	; EAX = hero ID
+	8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
+	8D 04 C1	lea eax,[ecx+eax*8]	; ""
+	83 38 00	cmp [eax],00		; skill specialist?
+	75 26		jne 4DCA4D		; if no -> [continue]
+	83 78 04 06	cmp [eax+04],06		; Leadership specialist?
+	75 20		jne 4DCA4D		; if no -> [continue]
+	8B 15 185F6A00	mov edx,[6A5F18]	; ArrayTxt, line 16
+	83 C9 FF	or ecx,-01		; ""
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 57E8F3FF	call 41B2A0		; ""
+	83 45 F0 XX	add [ebp-10],XX		; add XX to morale bonus
+	E9 8C000000	jmp 4DCADE		; -> [continue] (0DCA52~DD is free space)
 
 Of note are the calls above to lines 8 and 16 in ArrayTxt to denote Luck and Leadership specialties in
 the list of modifiers. These are text descriptors for luck and morale that are unused in HD mod. Lines
@@ -478,204 +477,204 @@ of values rather than an exact one. The below code will establish an easily-modi
 can be adjusted to whatever specifications you wish; in this example, we will be doubling the bonus cap
 from 3 to 6 and using each graphic to represent a range of 2 (1~2, 3~4, and 5~6, respectively).
 
-    ---------	-------------------------------------------------------------------------
-    051AED~F2	; MODIFIED MORALE DISPLAY (ADVENTURE MAP STATUS WINDOW)
-    ---------	-------------------------------------------------------------------------
-    E8 4296FFFF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	---------	-------------------------------------------------------------------------
+	051AED~F2	; MODIFIED MORALE DISPLAY (ADVENTURE MAP STATUS WINDOW)
+	---------	-------------------------------------------------------------------------
+	E8 4296FFFF	call 44B134		; -> free space (unnecessary luck cap removal A)
 
-    ---------	-------------------------------------------------------------------------
-    1F424E~5D	; MODIFIED MORALE DISPLAY (UNIT R-CLICK, ADVENTURE MAP)
-    ---------	-------------------------------------------------------------------------
-    8B 43 68	mov eax,[ebx+68]	; EAX = morale bonus
-    E8 DE6EE5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    6A 10		push 10			; (shifted code)
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    EB 1E		jmp 5F427C		; -> [continue] (1F425E~7B is free space)
+	---------	-------------------------------------------------------------------------
+	1F424E~5D	; MODIFIED MORALE DISPLAY (UNIT R-CLICK, ADVENTURE MAP)
+	---------	-------------------------------------------------------------------------
+	8B 43 68	mov eax,[ebx+68]	; EAX = morale bonus
+	E8 DE6EE5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	6A 10		push 10			; (shifted code)
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	EB 1E		jmp 5F427C		; -> [continue] (1F425E~7B is free space)
 
-    ---------	-------------------------------------------------------------------------
-    1F3A99~A8	; MODIFIED MORALE DISPLAY (UNIT R-CLICK, COMBAT)
-    ---------	-------------------------------------------------------------------------
-    8B 46 68	mov eax,[esi+68]	; EAX = morale bonus
-    E8 9376E5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    6A 10		push 10			; (shifted code)
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    EB 1E		jmp 5F3AC7		; -> [continue] (1F3AB9~C6 is free space)
+	---------	-------------------------------------------------------------------------
+	1F3A99~A8	; MODIFIED MORALE DISPLAY (UNIT R-CLICK, COMBAT)
+	---------	-------------------------------------------------------------------------
+	8B 46 68	mov eax,[esi+68]	; EAX = morale bonus
+	E8 9376E5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	6A 10		push 10			; (shifted code)
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	EB 1E		jmp 5F3AC7		; -> [continue] (1F3AB9~C6 is free space)
 
-    ---------	-------------------------------------------------------------------------
-    0E1A31~53	; MODIFIED MORALE DISPLAY (HERO SCREEN)
-    ---------	-------------------------------------------------------------------------
-    E8 FE96F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    5F		pop edi			; (shifted code)
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8D 4D D4	lea ecx,[ebp-2C]	; ""
-    51		push ecx		; ""
-    8B 0D C88A6900	mov ecx,[698AC8]	; ""
-    89 45 EC	mov [ebp-14],eax	; ""
-    C745DC74000000	mov [ebp-24],74		; ""
-    A3 303B6700	mov [673B30],eax	; ""
-    EB 13		jmp 4E1A67		; -> [continue] (0E1A54~66 is free space)
+	---------	-------------------------------------------------------------------------
+	0E1A31~53	; MODIFIED MORALE DISPLAY (HERO SCREEN)
+	---------	-------------------------------------------------------------------------
+	E8 FE96F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	5F		pop edi			; (shifted code)
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8D 4D D4	lea ecx,[ebp-2C]	; ""
+	51		push ecx		; ""
+	8B 0D C88A6900	mov ecx,[698AC8]	; ""
+	89 45 EC	mov [ebp-14],eax	; ""
+	C745DC74000000	mov [ebp-24],74		; ""
+	A3 303B6700	mov [673B30],eax	; ""
+	EB 13		jmp 4E1A67		; -> [continue] (0E1A54~66 is free space)
 
-    --------	-------------------------------------------------------------------------
-    06C896~B	; MODIFIED MORALE DISPLAY (HERO, COMBAT)
-    --------	-------------------------------------------------------------------------
-    E8 54730700	call 4E3BEF		; -> free space (unnecessary luck cap removal B)
-    90		nop			; -
+	--------	-------------------------------------------------------------------------
+	06C896~B	; MODIFIED MORALE DISPLAY (HERO, COMBAT)
+	--------	-------------------------------------------------------------------------
+	E8 54730700	call 4E3BEF		; -> free space (unnecessary luck cap removal B)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0E3BEF~F7	; (INLINE EDIT - OVERWRITES UNNECESSARY LUCK CAP REMOVAL B)
-    ---------	-------------------------------------------------------------------------
-    E8 4075F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    8B 4F 4C	mov ecx,[edi+4C]	; (displaced code)
-    C3		ret			; -
+	---------	-------------------------------------------------------------------------
+	0E3BEF~F7	; (INLINE EDIT - OVERWRITES UNNECESSARY LUCK CAP REMOVAL B)
+	---------	-------------------------------------------------------------------------
+	E8 4075F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	8B 4F 4C	mov ecx,[edi+4C]	; (displaced code)
+	C3		ret			; -
 
-    ---------	-------------------------------------------------------------------------
-    0F6035~40	; MODIFIED MORALE DISPLAY (MESSAGE BOX GRAPHIC, POSITIVE)
-    ---------	-------------------------------------------------------------------------
-    A1 303B6700	mov eax,[673B30]	; EAX = hero's morale
-    89 43 28	mov [ebx+28],eax	; (optimized code)
-    EB AA		jmp 4F5FE9		; ""
-    90 90		nop			; -
+	---------	-------------------------------------------------------------------------
+	0F6035~40	; MODIFIED MORALE DISPLAY (MESSAGE BOX GRAPHIC, POSITIVE)
+	---------	-------------------------------------------------------------------------
+	A1 303B6700	mov eax,[673B30]	; EAX = hero's morale
+	89 43 28	mov [ebx+28],eax	; (optimized code)
+	EB AA		jmp 4F5FE9		; ""
+	90 90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0F60DB~E6	; MODIFIED MORALE DISPLAY (MESSAGE BOX GRAPHIC, NEGATIVE)
-    ----------	-------------------------------------------------------------------------
-    A1 303B6700	mov eax,[673B30]	; EAX = hero's morale
-    89 43 28	mov [ebx+28],eax	; (optimized code)
-    EB AA		jmp 4F608F		; ""
-    90 90		nop			; -
+	----------	-------------------------------------------------------------------------
+	0F60DB~E6	; MODIFIED MORALE DISPLAY (MESSAGE BOX GRAPHIC, NEGATIVE)
+	----------	-------------------------------------------------------------------------
+	A1 303B6700	mov eax,[673B30]	; EAX = hero's morale
+	89 43 28	mov [ebx+28],eax	; (optimized code)
+	EB AA		jmp 4F608F		; ""
+	90 90		nop			; -
 
-    04B050~5 > 5F5E5DC21800		; (A) remove unncessary cap (04B056~8F is free space)
-    0E3E80~9 > 8BC35B5F8BE55DC20C00 ; (B) "" (0E3E8A~CF is free space)
+	04B050~5 > 5F5E5DC21800		; (A) remove unncessary cap (04B056~8F is free space)
+	0E3E80~9 > 8BC35B5F8BE55DC20C00 ; (B) "" (0E3E8A~CF is free space)
 
-    -----------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------
 
-    ---------	-------------------------------------------------------------------------
-    051B52		; MODIFIED LUCK DISPLAY (ADVENTURE MAP STATUS WINDOW)
-    ---------	-------------------------------------------------------------------------
-    E8 DD95FFFF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	---------	-------------------------------------------------------------------------
+	051B52		; MODIFIED LUCK DISPLAY (ADVENTURE MAP STATUS WINDOW)
+	---------	-------------------------------------------------------------------------
+	E8 DD95FFFF	call 44B134		; -> free space (unnecessary luck cap removal A)
 
-    ---------	-------------------------------------------------------------------------
-    1F432C~55	; MODIFIED LUCK DISPLAY (UNIT R-CLICK, ADVENTURE MAP)
-    ---------	-------------------------------------------------------------------------
-    50		push eax		; store EAX
-    8B 43 7C	mov eax,[ebx+7C]	; EAX = luck bonus
-    E8 FF6DE5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    59		pop ecx			; retrieve EAX into ECX
-    6A 10		push 10			; (shifted code)
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    50		push eax		; ""
-    68 D0C66800	push 68C6D0		; ""
-    68 DC000000	push DC			; ""
-    6A 26		push 26			; ""
-    6A 2A		push 2A			; ""
-    68 BD000000	push BD			; ""
-    6A 4D		push 4D			; ""
-    EB 22		jmp 5F4378		; -> [continue] (1F4356~79 is free space)
+	---------	-------------------------------------------------------------------------
+	1F432C~55	; MODIFIED LUCK DISPLAY (UNIT R-CLICK, ADVENTURE MAP)
+	---------	-------------------------------------------------------------------------
+	50		push eax		; store EAX
+	8B 43 7C	mov eax,[ebx+7C]	; EAX = luck bonus
+	E8 FF6DE5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	59		pop ecx			; retrieve EAX into ECX
+	6A 10		push 10			; (shifted code)
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	50		push eax		; ""
+	68 D0C66800	push 68C6D0		; ""
+	68 DC000000	push DC			; ""
+	6A 26		push 26			; ""
+	6A 2A		push 2A			; ""
+	68 BD000000	push BD			; ""
+	6A 4D		push 4D			; ""
+	EB 22		jmp 5F4378		; -> [continue] (1F4356~79 is free space)
 
-    ---------	-------------------------------------------------------------------------
-    1F3BDC~E8	; MODIFIED LUCK DISPLAY (UNIT R-CLICK, COMBAT)
-    ---------	-------------------------------------------------------------------------
-    E8 5375E5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    6A 10		push 10			; (shifted code)
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    EB 1E		jmp 5F3C07		; -> [continue] (1F3BE9~C06 is free space)
+	---------	-------------------------------------------------------------------------
+	1F3BDC~E8	; MODIFIED LUCK DISPLAY (UNIT R-CLICK, COMBAT)
+	---------	-------------------------------------------------------------------------
+	E8 5375E5FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	6A 10		push 10			; (shifted code)
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	EB 1E		jmp 5F3C07		; -> [continue] (1F3BE9~C06 is free space)
 
-    ---------	-------------------------------------------------------------------------
-    0E19CF~E3	; MODIFIED LUCK DISPLAY (HERO SCREEN)
-    ---------	-------------------------------------------------------------------------
-    E8 5C1F0000	call 4E3930		; EAX = hero's luck
-    E8 5B97F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    8D 4D D4	lea ecx,[ebp-2C]	; (shifted code)
-    51		push ecx		; ""
-    A3 2C3B6700	mov [673B2C],eax	; store luck in memory (used by message boxes)
-    EB 1F		jmp 4E1A03		; -> [continue] (0E19E4~A02 is free space)
+	---------	-------------------------------------------------------------------------
+	0E19CF~E3	; MODIFIED LUCK DISPLAY (HERO SCREEN)
+	---------	-------------------------------------------------------------------------
+	E8 5C1F0000	call 4E3930		; EAX = hero's luck
+	E8 5B97F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	8D 4D D4	lea ecx,[ebp-2C]	; (shifted code)
+	51		push ecx		; ""
+	A3 2C3B6700	mov [673B2C],eax	; store luck in memory (used by message boxes)
+	EB 1F		jmp 4E1A03		; -> [continue] (0E19E4~A02 is free space)
 
-    --------	-------------------------------------------------------------------------
-    06C8B0~5	; MODIFIED LUCK DISPLAY (HERO, COMBAT)
-    --------	-------------------------------------------------------------------------
-    E8 43730700	call 4E3BF8		; -> free space (unnecessary luck cap removal B)
-    90		nop			; -
+	--------	-------------------------------------------------------------------------
+	06C8B0~5	; MODIFIED LUCK DISPLAY (HERO, COMBAT)
+	--------	-------------------------------------------------------------------------
+	E8 43730700	call 4E3BF8		; -> free space (unnecessary luck cap removal B)
+	90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0E3BF8~C00	; (INLINE EDIT - OVERWRITES UNNECESSARY LUCK CAP REMOVAL B)
-    ----------	-------------------------------------------------------------------------
-    E8 3775F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
-    8B 4F 50	mov ecx,[edi+50]	; (displaced code)
-    C3 		ret			; return (0E3C01~1F remains free)
+	----------	-------------------------------------------------------------------------
+	0E3BF8~C00	; (INLINE EDIT - OVERWRITES UNNECESSARY LUCK CAP REMOVAL B)
+	----------	-------------------------------------------------------------------------
+	E8 3775F6FF	call 44B134		; -> free space (unnecessary luck cap removal A)
+	8B 4F 50	mov ecx,[edi+50]	; (displaced code)
+	C3 		ret			; return (0E3C01~1F remains free)
 
-    ---------	-------------------------------------------------------------------------
-    11D99B~D9	; MODIFIED LUCK DISPLAY (KINGDOM OVERVIEW)
-    ---------	-------------------------------------------------------------------------
-    50		push eax		; store EAX
-    8B C6		mov eax,esi		; EAX = luck bonus
-    E8 91D7F2FF	call 44B134		; -> free space (unnecessary luck cap removal)
-    59		pop ecx			; retrieve EAX into ECX
-    6A 10		push 10			; (optimized code)
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    6A 00		push 00			; ""
-    50		push eax		; ""
-    8B 55 0C	mov edx,[ebp+0C]	; ""
-    81 C2 BB000000	add edx,BB		; ""
-    68 F4176800	push 6817F4		; ""
-    52		push edx		; ""
-    8B D3		mov edx,ebx		; ""
-    6B D2 74	imul edx,74		; ""
-    83 C2 34	add edx,34		; ""
-    6A 14		push 14			; ""
-    6A 1E		push 1E			; ""
-    52		push edx		; ""
-    68 F6000000	push F6			; ""
-    E8 2DCEFCFF	call 4EA800		; ""
-    90909090909090	nop			; -
+	---------	-------------------------------------------------------------------------
+	11D99B~D9	; MODIFIED LUCK DISPLAY (KINGDOM OVERVIEW)
+	---------	-------------------------------------------------------------------------
+	50		push eax		; store EAX
+	8B C6		mov eax,esi		; EAX = luck bonus
+	E8 91D7F2FF	call 44B134		; -> free space (unnecessary luck cap removal)
+	59		pop ecx			; retrieve EAX into ECX
+	6A 10		push 10			; (optimized code)
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	6A 00		push 00			; ""
+	50		push eax		; ""
+	8B 55 0C	mov edx,[ebp+0C]	; ""
+	81 C2 BB000000	add edx,BB		; ""
+	68 F4176800	push 6817F4		; ""
+	52		push edx		; ""
+	8B D3		mov edx,ebx		; ""
+	6B D2 74	imul edx,74		; ""
+	83 C2 34	add edx,34		; ""
+	6A 14		push 14			; ""
+	6A 1E		push 1E			; ""
+	52		push edx		; ""
+	68 F6000000	push F6			; ""
+	E8 2DCEFCFF	call 4EA800		; ""
+	90909090909090	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0F612E~39	; MODIFIED LUCK DISPLAY (MESSAGE BOX GRAPHIC)
-    ---------	-------------------------------------------------------------------------
-    A1 2C3B6700	mov eax,[673B2C]	; EAX = hero's luck
-    89 43 28	mov [ebx+28],eax	; (optimized code)
-    EB AB		jmp 4F60E3		; ""
-    90 90		nop			; -
+	---------	-------------------------------------------------------------------------
+	0F612E~39	; MODIFIED LUCK DISPLAY (MESSAGE BOX GRAPHIC)
+	---------	-------------------------------------------------------------------------
+	A1 2C3B6700	mov eax,[673B2C]	; EAX = hero's luck
+	89 43 28	mov [ebx+28],eax	; (optimized code)
+	EB AB		jmp 4F60E3		; ""
+	90 90		nop			; -
 
-    04B12E~33 > 5F5E5DC21400 	; (A) remove unncessary cap (frees space, see below)
-    0E3BE7~E  > 5F5E8BE55DC21400 	; (B) "" (frees space, see above)
+	04B12E~33 > 5F5E5DC21400 	; (A) remove unncessary cap (frees space, see below)
+	0E3BE7~E  > 5F5E8BE55DC21400 	; (B) "" (frees space, see above)
 
-    ---------	-------------------------------------------------------------------------
-    0E4FDD~FF	; "" (SHARED CODE)
-    ---------	-------------------------------------------------------------------------
-    74 0B		je 4E4FEA		; (shortened jump)
-    8B 15 E48A6900	mov edx,[698AE4]	; (optimized code)
-    01 55 08	add [ebp+08],edx	; ""
-    01 D0		add eax,edx		; ""
-    C6052C3B670004	mov byte [673B2C],04	; +1 luck gfx (adventure map message boxes)
-    C605303B670004	mov byte [673B30],04	; +1 morale gfx (adventure map message boxes)
-    E9 CBFDFFFF 	jmp 4E4DC8		; -> [continue]
-    90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	0E4FDD~FF	; "" (SHARED CODE)
+	---------	-------------------------------------------------------------------------
+	74 0B		je 4E4FEA		; (shortened jump)
+	8B 15 E48A6900	mov edx,[698AE4]	; (optimized code)
+	01 55 08	add [ebp+08],edx	; ""
+	01 D0		add eax,edx		; ""
+	C6052C3B670004	mov byte [673B2C],04	; +1 luck gfx (adventure map message boxes)
+	C605303B670004	mov byte [673B30],04	; +1 morale gfx (adventure map message boxes)
+	E9 CBFDFFFF 	jmp 4E4DC8		; -> [continue]
+	90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    04B134~5A	; SHARED CODE (INLINE EDIT - OVERWRITES UNNECESSARY LUCK CAP A)
-    ---------	-------------------------------------------------------------------------
-    83 C0 03	add eax,03		; EAX (Luck or Morale) +3
-    83 F8 00	cmp eax,00		; is EAX <=00 (-3 Luck or Morale)?
-    7D 02		jnl 4E19E9		; if no -> next check
-    31 C0		xor eax,eax		; EAX = 00
-    83 F8 09	cmp eax,09		; is EAX > 09 (+6 Luck or Morale)?
-    7E 05		jle 4E19F3		; if no -> EAX = image index
-    B8 09000000	mov eax,09		; EAX = 09
-    8A 80 51B14400	mov al,[eax+44B151]	; EAX = image index
-    8B CE		mov ecx,esi		; (displaced code)
-    C3		ret			; return (04B15B~68 is free space)
+	---------	-------------------------------------------------------------------------
+	04B134~5A	; SHARED CODE (INLINE EDIT - OVERWRITES UNNECESSARY LUCK CAP A)
+	---------	-------------------------------------------------------------------------
+	83 C0 03	add eax,03		; EAX (Luck or Morale) +3
+	83 F8 00	cmp eax,00		; is EAX <=00 (-3 Luck or Morale)?
+	7D 02		jnl 4E19E9		; if no -> next check
+	31 C0		xor eax,eax		; EAX = 00
+	83 F8 09	cmp eax,09		; is EAX > 09 (+6 Luck or Morale)?
+	7E 05		jle 4E19F3		; if no -> EAX = image index
+	B8 09000000	mov eax,09		; EAX = 09
+	8A 80 51B14400	mov al,[eax+44B151]	; EAX = image index
+	8B CE		mov ecx,esi		; (displaced code)
+	C3		ret			; return (04B15B~68 is free space)
 
-    00 01 02 03	; -3~0 Luck/Morale	(iXXXYYb3/b2/b1/g0.bmp)
-    04 04		; 1~2 Luck/Morale	(iXXXYYg1.bmp)
-    05 05		; 3~4 Luck/Morale	(iXXXYYg2.bmp)
-    06 06		; 5~6 Luck/Morale	(iXXXYYg3.bmp)
+	00 01 02 03	; -3~0 Luck/Morale	(iXXXYYb3/b2/b1/g0.bmp)
+	04 04		; 1~2 Luck/Morale	(iXXXYYg1.bmp)
+	05 05		; 3~4 Luck/Morale	(iXXXYYg2.bmp)
+	06 06		; 5~6 Luck/Morale	(iXXXYYg3.bmp)
 
 There's a lot of code up there, but we're mostly only interested in the last bit: the shared subroutine
 that's being used by most of the code above it. For graphical purposes only, we establish a range of 9
@@ -710,38 +709,38 @@ doesn't really work too well with this type of skill and so the below example go
 The free space we use for this comes from the removal of the pop-up message box explaining how Tactics
 works at the beginning of every battle, which is something I imagine most people will want to do anyway.
 
-    ---------	-------------------------------------------------------------------------
-    062802~27	; TACTICS SPECIALTY
-    ---------	-------------------------------------------------------------------------
-    89 B3 EC320100	mov [ebx+132EC],esi	; (optimized code)
-    31 FF		xor edi,edi		; ""
-    85 C0		test eax,eax		; ""
-    74 09		je 462817		; ""
-    E8 87050000	call 462D9A		; -> free space (tactics instruction box)
+	---------	-------------------------------------------------------------------------
+	062802~27	; TACTICS SPECIALTY
+	---------	-------------------------------------------------------------------------
+	89 B3 EC320100	mov [ebx+132EC],esi	; (optimized code)
+	31 FF		xor edi,edi		; ""
+	85 C0		test eax,eax		; ""
+	74 09		je 462817		; ""
+	E8 87050000	call 462D9A		; -> free space (tactics instruction box)
 
-    8B F9		mov edi,ecx		; (optimzied code)
-    31 C9		xor ecx,ecx		; ""
-    8B 83 D0530000	mov eax,[ebx+53D0]	; ""
-    85 C0		test eax,eax		; ""
-    74 07		je 462828		; ""
-    E8 74050000	call 462D9A		; -> free space (tactics instruction box)
-    90 90		nop			; -
+	8B F9		mov edi,ecx		; (optimzied code)
+	31 C9		xor ecx,ecx		; ""
+	8B 83 D0530000	mov eax,[ebx+53D0]	; ""
+	85 C0		test eax,eax		; ""
+	74 07		je 462828		; ""
+	E8 74050000	call 462D9A		; -> free space (tactics instruction box)
+	90 90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    062D98~BE	; (EXPANDED SPACE - OVERWRITES INSTRUCTIONAL MESSAGE BOX)
-    ---------	-------------------------------------------------------------------------
-    EB 30		jmp 462DCA		; skip tactics instruction box (frees 062D9A~C9)
-    0FBE88DC000000	movsx ecx,[eax+DC]	; ECX = hero's Tactics skill
-    8B 15 809C6700	mov edx,[679C80]	; EDX = specialty index
-    8B 40 1A	mov eax,[eax+1A]	; EAX = hero ID
-    8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
-    8D 04 C2	lea eax,[edx+eax*8]	; ""
-    83 38 00	cmp [eax],00		; skill specialist?
-    75 09		jne 462DBF		; if no -> return
-    83 78 04 13	cmp [eax+04],13		; Tactics specialist?
-    75 03		jne 462DBF		; if no -> return
-    83 C1 XX	add ecx,XX		; +XX hexes
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	062D98~BE	; (EXPANDED SPACE - OVERWRITES INSTRUCTIONAL MESSAGE BOX)
+	---------	-------------------------------------------------------------------------
+	EB 30		jmp 462DCA		; skip tactics instruction box (frees 062D9A~C9)
+	0FBE88DC000000	movsx ecx,[eax+DC]	; ECX = hero's Tactics skill
+	8B 15 809C6700	mov edx,[679C80]	; EDX = specialty index
+	8B 40 1A	mov eax,[eax+1A]	; EAX = hero ID
+	8D 04 80	lea eax,[eax+eax*4]	; EAX = data range
+	8D 04 C2	lea eax,[edx+eax*8]	; ""
+	83 38 00	cmp [eax],00		; skill specialist?
+	75 09		jne 462DBF		; if no -> return
+	83 78 04 13	cmp [eax+04],13		; Tactics specialist?
+	75 03		jne 462DBF		; if no -> return
+	83 C1 XX	add ecx,XX		; +XX hexes
+	C3		ret			; return
 
 ---------------------------------------------------------------------------------------------------------
 

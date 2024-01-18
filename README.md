@@ -1,6 +1,8 @@
 # Heroes3-Mod-Infos
 Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" guide.
 
+I formatted BTB's guide for easier use.
+
 ## Online sources:
 
 [Heroes Community forum - Modding/Scripting](http://heroescommunity.com/viewthread.php3?TID=32519)
@@ -37,6 +39,8 @@ Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" 
 [7. Buildings](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/7_buildings.md)
 
 [8. Map Locations](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/8_maplocations.md)
+
+[9. Miscellaneous](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/9_miscellaneous.md)
 
 [ID References](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/0_IDreferences.md)
 
