@@ -345,9 +345,7 @@ as well as in the table above, which gives us what we want except that we're now
 Fly Hive and Flies from the Gnoll Hut. We will need to do several things to address this:
 
 - Edit the building descriptions in Dwelling.txt
-
 - Swap the X/Y coordinates for Fortress's 1st and 3rd-level dwellings in the table from earlier(*)
-
 - Swap the DWORD pointers to the Gnoll Hut and Fly Hive building graphics in the .exe
 
 >(*The animation frame values are not used, so there is no need to swap them)
@@ -452,45 +450,45 @@ to the dependency table (although that will also need to be done); we also need 
 of what those towns are able to build in the first place. The code below will remove the cap on Castle's
 Mage Guild as well as raising it from level 3 to 4 for Stronghold and Fortress.
 
-    ---------	-------------------------------------------------------------------------
-    060FA4~ED	; ALLOW STRONGHOLD/FORTRESS MAGE GUILD IV & CASTLE MAGE GUILD V
-    ---------	-------------------------------------------------------------------------
-    74 0F		je 460FB5		; (shortened jump)
-    8B 4D 08	mov ecx,[ebp+08]	; ""
-    8B 75 FC	mov esi,[ebp-04]	; ""
-    C681C04E690003	mov byte [ecx+694EC0],3 ; ""
-    EB 76		jmp 46102B		; -> [exit, Mage Guild capped at III]
-    8B 86 58010000	mov eax,[esi+158]	; (shifted code)
-    8B 1D B0CD6600	mov ebx,[66CDB0]	; ""
-    8B 8E 5C010000	mov ecx,[esi+15C]	; ""
-    8B 3D B4CD6600	mov edi,[66CDB4]	; ""
-    21 D8		and eax,ebx		; ""
-    21 F9		and ecx,edi		; ""
-    09 C8		or eax,ecx		; ""
-    74 50		je 461025		; ""
-    8A 46 04	mov al,[esi+04]		; ""
-    8B 75 FC	mov esi,[ebp-04]	; ""
-    8B 4D 08	mov ecx,[ebp+08]	; ""
-    84 C0		test al,al		; ""
-    74 0C		je 460FEE		; ""
-    3C 06		cmp al,06		; Stronghold?
-    74 08		je 460FEE		; if yes -> [exit, Mage Guild capped at IV]
-    3C 07		cmp al,07		; Fortress?
-    74 04		je 460FEE		; if yes -> [exit, Mage Guild capped at IV]
-    42		inc edx			; allow Mage Guild V
-    90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	060FA4~ED	; ALLOW STRONGHOLD/FORTRESS MAGE GUILD IV & CASTLE MAGE GUILD V
+	---------	-------------------------------------------------------------------------
+	74 0F		je 460FB5		; (shortened jump)
+	8B 4D 08	mov ecx,[ebp+08]	; ""
+	8B 75 FC	mov esi,[ebp-04]	; ""
+	C681C04E690003	mov byte [ecx+694EC0],3 ; ""
+	EB 76		jmp 46102B		; -> [exit, Mage Guild capped at III]
+	8B 86 58010000	mov eax,[esi+158]	; (shifted code)
+	8B 1D B0CD6600	mov ebx,[66CDB0]	; ""
+	8B 8E 5C010000	mov ecx,[esi+15C]	; ""
+	8B 3D B4CD6600	mov edi,[66CDB4]	; ""
+	21 D8		and eax,ebx		; ""
+	21 F9		and ecx,edi		; ""
+	09 C8		or eax,ecx		; ""
+	74 50		je 461025		; ""
+	8A 46 04	mov al,[esi+04]		; ""
+	8B 75 FC	mov esi,[ebp-04]	; ""
+	8B 4D 08	mov ecx,[ebp+08]	; ""
+	84 C0		test al,al		; ""
+	74 0C		je 460FEE		; ""
+	3C 06		cmp al,06		; Stronghold?
+	74 08		je 460FEE		; if yes -> [exit, Mage Guild capped at IV]
+	3C 07		cmp al,07		; Fortress?
+	74 04		je 460FEE		; if yes -> [exit, Mage Guild capped at IV]
+	42		inc edx			; allow Mage Guild V
+	90 90 90	nop			; -
 
-    242EEA > 04	; add Mage Guild V to Castle's build list
-    28A3EC > 20C0C8	; outline
-    28AA26 > C0024C	; coordinates(*)
+	242EEA > 04	; add Mage Guild V to Castle's build list
+	28A3EC > 20C0C8	; outline
+	28AA26 > C0024C	; coordinates(*)
 
-    242FF0 > 03	; add Mage Guild IV to Stronghold's build list
-    28A808 > 90B768	; outline
-    28B050 > D90101	; coordinates
+	242FF0 > 03	; add Mage Guild IV to Stronghold's build list
+	28A808 > 90B768	; outline
+	28B050 > D90101	; coordinates
 
-    24301D > 03	; add Mage Guild IV to Fortress's build list
-    28A8B8 > 3CB668	; outline
-    28B158 > 008700	; coordinates(*)
+	24301D > 03	; add Mage Guild IV to Fortress's build list
+	28A8B8 > 3CB668	; outline
+	28B158 > 008700	; coordinates(*)
 
 >(*Again, the animation frame values are not used, so there's no need to add any)
 
@@ -584,41 +582,41 @@ sidestepping the issue. But this raises the bigger question of war machine speci
 don't sell their preferred item being shit out of luck if theirs gets destroyed in combat. In light of
 this, you can prevent war machines from being permanently removed from a hero's inventory thusly:
 
-    ---------	-------------------------------------------------------------------------
-    0D94D0~EB	; WAR MACHINES ARE NOT REMOVED FROM INVENTORY WHEN DESTROYED IN COMBAT
-    ---------	-------------------------------------------------------------------------
-    55		push ebp		; (setup)
-    8B EC		mov ebp,esp		; ""
-    8B 45 08	mov eax,[ebp+08]	; ""
-    05 6FFFFFFF	add eax,FFFFFF6F	; ""
+	---------	-------------------------------------------------------------------------
+	0D94D0~EB	; WAR MACHINES ARE NOT REMOVED FROM INVENTORY WHEN DESTROYED IN COMBAT
+	---------	-------------------------------------------------------------------------
+	55		push ebp		; (setup)
+	8B EC		mov ebp,esp		; ""
+	8B 45 08	mov eax,[ebp+08]	; ""
+	05 6FFFFFFF	add eax,FFFFFF6F	; ""
 
-    83 F8 03	cmp eax,03		; ammo cart?
-    74 04		je 4D94E4		; if yes -> move catapult to war machine slot 3
-    5D		pop ebp			; (cleanup)
-    C2 0400		ret 04			; return
+	83 F8 03	cmp eax,03		; ammo cart?
+	74 04		je 4D94E4		; if yes -> move catapult to war machine slot 3
+	5D		pop ebp			; (cleanup)
+	C2 0400		ret 04			; return
 
-    89 81 A5010000	mov [ecx+1A5],eax	; move catapult to war machine slot 3
-    EB F4		jmp 4D94E0		; -> (cleanup)
+	89 81 A5010000	mov [ecx+1A5],eax	; move catapult to war machine slot 3
+	EB F4		jmp 4D94E0		; -> (cleanup)
 
-    ----------	-------------------------------------------------------------------------
-    063DFE~E04	; ""
-    ----------	-------------------------------------------------------------------------
-    E8 E9560700	call 4D94EC		; -> free space (war machine removal)
-    90 90		nop			; -
+	----------	-------------------------------------------------------------------------
+	063DFE~E04	; ""
+	----------	-------------------------------------------------------------------------
+	E8 E9560700	call 4D94EC		; -> free space (war machine removal)
+	90 90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0D94EC~50E	; (INLINE EDIT - OVERWRITES ORIGINAL WAR MACHINE REMOVAL CODE)
-    ----------	-------------------------------------------------------------------------
-    8BBC81CC530000	mov edi,[ecx+eax*4+53CC]; EDI = hero data
-    85 FF		test edi,edi		; was there a hero in this slot?
-    74 10		je 4D9507		; if no -> (displaced code)
+	----------	-------------------------------------------------------------------------
+	0D94EC~50E	; (INLINE EDIT - OVERWRITES ORIGINAL WAR MACHINE REMOVAL CODE)
+	----------	-------------------------------------------------------------------------
+	8BBC81CC530000	mov edi,[ecx+eax*4+53CC]; EDI = hero data
+	85 FF		test edi,edi		; was there a hero in this slot?
+	74 10		je 4D9507		; if no -> (displaced code)
 
-    80BF9D01000003	cmp byte [edi+19D],03	; catapult in war machine slot 2?
-    75 07		jne 4D9507		; if no -> (displaced code)
-    C6879D01000005	mov byte [edi+19D],05	; move ammo cart to war machine slot 2
+	80BF9D01000003	cmp byte [edi+19D],03	; catapult in war machine slot 2?
+	75 07		jne 4D9507		; if no -> (displaced code)
+	C6879D01000005	mov byte [edi+19D],05	; move ammo cart to war machine slot 2
 
-    8B9481BC540000	mov edx,[ecx+eax*4+54BC]; (displaced code)
-    C3		ret			; return (0D950F~3F is free space)
+	8B9481BC540000	mov edx,[ecx+eax*4+54BC]; (displaced code)
+	C3		ret			; return (0D950F~3F is free space)
 
 What we're doing in the above code is intercepting the routine that removes destroyed artifacts from a
 hero's inventory and checking specifically for an ammo cart. Ballistas and first aid tents are disabled
@@ -630,54 +628,54 @@ destroyed, and then in the post-battle cleanup we replace any catapult in slot 2
 Moving on, the Blacksmith code is pretty unoptimized, so we can rewrite it to allow for any combination
 of war machine distribution that we wish, as well as uncoupling Stronghold's ballista from Castle:
 
-    ---------	-------------------------------------------------------------------------
-    1C3220~8F	; OPTIMIZED BLACKSMITH CODE
-    ---------	-------------------------------------------------------------------------
-    6A 04		push 04			; 04 = Ballista
-    58		pop eax			; ""
-    6A 05		push 05			; 05 = Ammo Cart
-    59		pop ecx			; ""
-    6A 06		push 06			; 06 = First Aid Tent
-    5A		pop edx			; ""
+	---------	-------------------------------------------------------------------------
+	1C3220~8F	; OPTIMIZED BLACKSMITH CODE
+	---------	-------------------------------------------------------------------------
+	6A 04		push 04			; 04 = Ballista
+	58		pop eax			; ""
+	6A 05		push 05			; 05 = Ammo Cart
+	59		pop ecx			; ""
+	6A 06		push 06			; 06 = First Aid Tent
+	5A		pop edx			; ""
 
-    A3 60AA6A00	mov [6AAA60],eax	; Castle gets a Ballista (EAX)
-    90		nop			; -
-    89 15 68AA6A00	mov [6AAA68],edx	; Rampart gets a First Aid Tent (EDX)
-    89 0D 70AA6A00	mov [6AAA70],ecx	; Tower gets an Ammo Cart
-    89 0D 78AA6A00	mov [6AAA78],ecx	; Inferno gets an Ammo Cart
-    89 15 80AA6A00	mov [6AAA80],edx	; Necropolis gets a First Aid Tent (EDX)
-    A3 88AA6A00	mov [6AAA88],eax	; Dungeon gets a Ballista (EAX)
-    90		nop			; -
-    89 0D 90AA6A00	mov [6AAA90],ecx	; Stronghold gets an Ammo Cart (EXX)
-    89 15 98AA6A00	mov [6AAA98],edx	; Fortress gets a First Aid Tent (EAX)
-    A3 A0AA6A00	mov [6AAAA0],eax	; Conflux gets a Ballista (EAX)
-    90		nop			; -
+	A3 60AA6A00	mov [6AAA60],eax	; Castle gets a Ballista (EAX)
+	90		nop			; -
+	89 15 68AA6A00	mov [6AAA68],edx	; Rampart gets a First Aid Tent (EDX)
+	89 0D 70AA6A00	mov [6AAA70],ecx	; Tower gets an Ammo Cart
+	89 0D 78AA6A00	mov [6AAA78],ecx	; Inferno gets an Ammo Cart
+	89 15 80AA6A00	mov [6AAA80],edx	; Necropolis gets a First Aid Tent (EDX)
+	A3 88AA6A00	mov [6AAA88],eax	; Dungeon gets a Ballista (EAX)
+	90		nop			; -
+	89 0D 90AA6A00	mov [6AAA90],ecx	; Stronghold gets an Ammo Cart (EXX)
+	89 15 98AA6A00	mov [6AAA98],edx	; Fortress gets a First Aid Tent (EAX)
+	A3 A0AA6A00	mov [6AAAA0],eax	; Conflux gets a Ballista (EAX)
+	90		nop			; -
 
-    83 C8 FF	or eax,-01		; cleanup (adds terminator to each address)
-    A3 64AA6A00	mov [6AAA64],eax	; ""
-    A3 6CAA6A00	mov [6AAA6C],eax	; ""
-    A3 74AA6A00	mov [6AAA74],eax	; ""
-    A3 7CAA6A00	mov [6AAA7C],eax	; ""
-    A3 84AA6A00	mov [6AAA84],eax	; ""
-    A3 8CAA6A00	mov [6AAA8C],eax	; ""
-    A3 94AA6A00	mov [6AAA94],eax	; ""
-    A3 9CAA6A00	mov [6AAA9C],eax	; ""
-    A3 A4AA6A00	mov [6AAAA4],eax	; ""
-    C3		ret			; return
+	83 C8 FF	or eax,-01		; cleanup (adds terminator to each address)
+	A3 64AA6A00	mov [6AAA64],eax	; ""
+	A3 6CAA6A00	mov [6AAA6C],eax	; ""
+	A3 74AA6A00	mov [6AAA74],eax	; ""
+	A3 7CAA6A00	mov [6AAA7C],eax	; ""
+	A3 84AA6A00	mov [6AAA84],eax	; ""
+	A3 8CAA6A00	mov [6AAA8C],eax	; ""
+	A3 94AA6A00	mov [6AAA94],eax	; ""
+	A3 9CAA6A00	mov [6AAA9C],eax	; ""
+	A3 A4AA6A00	mov [6AAAA4],eax	; ""
+	C3		ret			; return
 
-    --------	-------------------------------------------------------------------------
-    1D3FB0~4	; CUSTOMIZE WHICH FACTION'S BLACKSMITH THE BALLISTA YARD LOOKS AT
-    --------	-------------------------------------------------------------------------
-    E8 DBF2FEFF	call 5C3290		; -> free space
+	--------	-------------------------------------------------------------------------
+	1D3FB0~4	; CUSTOMIZE WHICH FACTION'S BLACKSMITH THE BALLISTA YARD LOOKS AT
+	--------	-------------------------------------------------------------------------
+	E8 DBF2FEFF	call 5C3290		; -> free space
 
-    --------	-------------------------------------------------------------------------
-    1C3290~C	; (INLINE EDIT - OVERWRITES ORIGINAL BLACKSMITH CODE)
-    --------	-------------------------------------------------------------------------
-    8B 49 10	mov ecx,[ecx+10]	; (displaced code)
-    6A XX		push XX			; XX = Faction ID (presumably one with a Ballista)
-    5A		pop edx			; ""
-    C3		ret			; return
-    909090909090	nop			; -
+	--------	-------------------------------------------------------------------------
+	1C3290~C	; (INLINE EDIT - OVERWRITES ORIGINAL BLACKSMITH CODE)
+	--------	-------------------------------------------------------------------------
+	8B 49 10	mov ecx,[ecx+10]	; (displaced code)
+	6A XX		push XX			; XX = Faction ID (presumably one with a Ballista)
+	5A		pop edx			; ""
+	C3		ret			; return
+	909090909090	nop			; -
 
 This optimized code highlights the inherent difficulty of making simpler inline changes to the original
 code: moving EAX (the ballista) into position is a shorter opcode than for ECX (ammo cart) or EDX (first
@@ -699,26 +697,26 @@ We then need to prevent the game from giving the hero a Catapult in siege battle
 have one (the game never originally checked for this for some reason). We do make an exception here for
 AI heroes since the AI is retarded enough without potentially denying them a critical piece of hardware.
 
-    --------	-------------------------------------------------------------------------
-    063351~7	; DO NOT LOAD CATAPULT FOR SIEGE BATTLES IF HERO DOESN'T HAVE ONE
-    --------	-------------------------------------------------------------------------
-    E8 BEAD0700	call 4DE114		; -> free space (move/trade Catapult)
-    75 F7		jne 46334F		; if no Catapult (human player) -> [exit]
+	--------	-------------------------------------------------------------------------
+	063351~7	; DO NOT LOAD CATAPULT FOR SIEGE BATTLES IF HERO DOESN'T HAVE ONE
+	--------	-------------------------------------------------------------------------
+	E8 BEAD0700	call 4DE114		; -> free space (move/trade Catapult)
+	75 F7		jne 46334F		; if no Catapult (human player) -> [exit]
 
-    ---------	-------------------------------------------------------------------------
-    0DE114~31	; (EXPANDED SPACE - OVERWRITES INABILITY TO MOVE/TRADE CATAPULT)
-    ---------	-------------------------------------------------------------------------
-    A1 FCCC6900	mov eax,[69CCFC]	; EAX = active player data
-    8A 80 E1000000	mov al,[eax+E1]		; AL = AI flag
-    84 C0		test al,al		; human player?
-    75 06		jne 4DE129		; if yes -> check for Catapult
+	---------	-------------------------------------------------------------------------
+	0DE114~31	; (EXPANDED SPACE - OVERWRITES INABILITY TO MOVE/TRADE CATAPULT)
+	---------	-------------------------------------------------------------------------
+	A1 FCCC6900	mov eax,[69CCFC]	; EAX = active player data
+	8A 80 E1000000	mov al,[eax+E1]		; AL = AI flag
+	84 C0		test al,al		; human player?
+	75 06		jne 4DE129		; if yes -> check for Catapult
 
-    8B C6		mov eax,esi		; (displaced code)
-    6B C0 08	imul eax,eax,08		; ""
-    C3		ret			; return
+	8B C6		mov eax,esi		; (displaced code)
+	6B C0 08	imul eax,eax,08		; ""
+	C3		ret			; return
 
-    83B99501000003	cmp [ecx+195],03	; does hero have a Catapult equipped?
-    EB F1		jmp 4DE123		; -> (displaced code)
+	83B99501000003	cmp [ecx+195],03	; does hero have a Catapult equipped?
+	EB F1		jmp 4DE123		; -> (displaced code)
 
 Since it's important for every town to have access to Catapults, they will be sold additionally to that
 town's war machine rather than in lieu of it. We'll accomplish this by hijacking Conflux's war machine,
@@ -728,25 +726,25 @@ once for the standard war machine, and then again with the town type set to "08"
 offered a Catapult. We check for a Conflux town before the first run and then manually set it to another
 town type that sells the same type of machine as Conflux does, similar to how the Ballista Yard works.
 
-    --------	-------------------------------------------------------------------------
-    1D3D4A~E	; BLACKSMITHS SELL CATAPULTS
-    --------	-------------------------------------------------------------------------
-    E8 C057F0FF	call 4D950F		; -> free space (war machine removal)
+	--------	-------------------------------------------------------------------------
+	1D3D4A~E	; BLACKSMITHS SELL CATAPULTS
+	--------	-------------------------------------------------------------------------
+	E8 C057F0FF	call 4D950F		; -> free space (war machine removal)
 
-    ---------	-------------------------------------------------------------------------
-    0D950F~2A	; (EXPANDED SPACE - OVERWRITES WAR MACHINE REMOVAL WHEN DESTROYED
-    ---------	-------------------------------------------------------------------------
-    83 FA 08	cmp edx,08		; Conflux?
-    75 03		jne 4D9517		; if no -> buy war machine
-    6A XX		push XX			; XX = town type that has Conflux's war machine
-    5A		pop edx			; ""
-    E8 148C0F00	call 5D2130		; buy war machine
-    8B 43 38	mov eax,[ebx+38]	; EAX = ???
-    8B 48 10	mov ecx,[eax+10]	; ECX = visiting hero ID
-    6A 08		push 08			; EDX = 08 (Conflux - sells Catapults)
-    5A		pop edx			; ""
-    E8 068C0F00	call 5D2130		; buy catapult
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	0D950F~2A	; (EXPANDED SPACE - OVERWRITES WAR MACHINE REMOVAL WHEN DESTROYED
+	---------	-------------------------------------------------------------------------
+	83 FA 08	cmp edx,08		; Conflux?
+	75 03		jne 4D9517		; if no -> buy war machine
+	6A XX		push XX			; XX = town type that has Conflux's war machine
+	5A		pop edx			; ""
+	E8 148C0F00	call 5D2130		; buy war machine
+	8B 43 38	mov eax,[ebx+38]	; EAX = ???
+	8B 48 10	mov ecx,[eax+10]	; ECX = visiting hero ID
+	6A 08		push 08			; EDX = 08 (Conflux - sells Catapults)
+	5A		pop edx			; ""
+	E8 068C0F00	call 5D2130		; buy catapult
+	C3		ret			; return
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -796,99 +794,99 @@ some free space for this, and I've chosen to obtain that space by reducing the m
 more reasonable value of 5 - with internal markets capping at 4 so that the external markets will always
 be superior. We then compress the data from the above tables and create space there like so:
 
-            MARKETPLACES                 ARTIFACT TRADERS              FREELANCERS GUILD
-    ----------------------------   ----------------------------   ----------------------------
-    (1) 278348 = 0.25 (0000803E)   (1) 27835C = 0.50 (0000003F)   (1) 278370 = 0.80 (CDCC4C3F)
-    (2) 27834C = 0.33 (ABAAAA3E)   (2) 278360 = 0.66 (ABAA2A3F)   (2) 278378 = 0.85 (9A99593F)
-    (3) 278350 = 0.40 (CDCCCC3E)   (3) 278364 = 0.80 (CDCC4C3F)   (3) 27837C = 0.90 (1FBA683F)
-    (4) 278354 = 0.45 (2FBAE83E)   (4) 278368 = 0.90 (1FBA683F)   (4) 278380 = 0.95 (3333733F)
-    (+) 278358 = 0.50 (0000003F)   (+) 27836C = 1.00 (0000803F)   (+) 278384 = 1.00 (0000803F)
-    ----------------------------   ----------------------------   ----------------------------
-     1EA45A: 0A > 04 (Rate Cap)     1EA1FC: 0A > 04 (Rate Cap)     1EA380: 0A > 04 (Rate Cap)
+                MARKETPLACES                 ARTIFACT TRADERS              FREELANCERS GUILD
+        ----------------------------   ----------------------------   ----------------------------
+        (1) 278348 = 0.25 (0000803E)   (1) 27835C = 0.50 (0000003F)   (1) 278370 = 0.80 (CDCC4C3F)
+        (2) 27834C = 0.33 (ABAAAA3E)   (2) 278360 = 0.66 (ABAA2A3F)   (2) 278378 = 0.85 (9A99593F)
+        (3) 278350 = 0.40 (CDCCCC3E)   (3) 278364 = 0.80 (CDCC4C3F)   (3) 27837C = 0.90 (1FBA683F)
+        (4) 278354 = 0.45 (2FBAE83E)   (4) 278368 = 0.90 (1FBA683F)   (4) 278380 = 0.95 (3333733F)
+        (+) 278358 = 0.50 (0000003F)   (+) 27836C = 1.00 (0000803F)   (+) 278384 = 1.00 (0000803F)
+        ----------------------------   ----------------------------   ----------------------------
+         1EA45A: 0A > 04 (Rate Cap)     1EA1FC: 0A > 04 (Rate Cap)     1EA380: 0A > 04 (Rate Cap)
 
-    1ED2BE > 6C	; update pointer for Freelancer's Guild rates
-    124A5D > 58	; update pointer for Artifact Traders/Black Market rates
-    1EC10C > 58	; ""
-    1EC826 > 58	; ""
-    1ED218 > 58 	; ""
-    1EDFDA > 58	; ""
-    1EE083 > 58	; ""
-    1EE64D > 58	; ""
-    1EE78A > 58	; ""
-    1EE8F6 > 58	; ""
+        1ED2BE > 6C	; update pointer for Freelancer's Guild rates
+        124A5D > 58	; update pointer for Artifact Traders/Black Market rates
+        1EC10C > 58	; ""
+        1EC826 > 58	; ""
+        1ED218 > 58 ; ""
+        1EDFDA > 58	; ""
+        1EE083 > 58	; ""
+        1EE64D > 58	; ""
+        1EE78A > 58	; ""
+        1EE8F6 > 58	; ""
 
-    ---------	-------------------------------------------------------------------------
-    1EA4C0~F4	; TRADING POST RATES TO PLAYER MARKETS +1
-    ---------	-------------------------------------------------------------------------
-    FF 05 013B6700	inc [673B01]		; set "temp" flag for market count routine
-    E8 15FFFFFF	call 5EA3E0		; -> [count player's markets]
-    FF 0D 013B6700	dec [673B01]		; clear "temp" flag
-    31 C0		xor eax,eax		; (optimized/displaced original code)
-    A3 0CAB6A00	mov [6AAB0C],eax	; ""
-    40		inc eax			; ""
-    A3 2CAB6A00	mov [6AAB2C],eax	; ""
-    A1 38956900	mov eax,[699538]	; ""
-    05 64F60100	add eax,1F664		; ""
-    A3 DCAA6A00	mov [6AAADC],eax	; ""
-    FF 05 00AB6A00	inc [6AAB00]		; +1 player markets
-    EB 3B		jmp 5EA530		; -> [exit]
+	---------	-------------------------------------------------------------------------
+	1EA4C0~F4	; TRADING POST RATES TO PLAYER MARKETS +1
+	---------	-------------------------------------------------------------------------
+	FF 05 013B6700	inc [673B01]		; set "temp" flag for market count routine
+	E8 15FFFFFF	call 5EA3E0		; -> [count player's markets]
+	FF 0D 013B6700	dec [673B01]		; clear "temp" flag
+	31 C0		xor eax,eax		; (optimized/displaced original code)
+	A3 0CAB6A00	mov [6AAB0C],eax	; ""
+	40		inc eax			; ""
+	A3 2CAB6A00	mov [6AAB2C],eax	; ""
+	A1 38956900	mov eax,[699538]	; ""
+	05 64F60100	add eax,1F664		; ""
+	A3 DCAA6A00	mov [6AAADC],eax	; ""
+	FF 05 00AB6A00	inc [6AAB00]		; +1 player markets
+	EB 3B		jmp 5EA530		; -> [exit]
 
-    ---------	-------------------------------------------------------------------------
-    1EA500~2F	; BLACK MARKET RATES TO PLAYER MARKETS +1
-    ---------	-------------------------------------------------------------------------
-    89 0D E0AA6A00	mov [6AAAE0],ecx	; (optimized/displaced original code)
-    89 15 DCAA6A00	mov [6AAADC],edx	; ""
-    FF 05 013B6700	inc [673B01]		; set "temp" flag for market count routine
-    E8 C9FEFFFF	call 5EA3E0		; -> [count player's markets]
-    FF 0D 013B6700	dec [673B01]		; clear "temp" flag
-    6A 02		push 02			; (optimized/displaced original code)
-    58		pop eax			; ""
-    A3 2CAB6A00	mov [6AAB2C],eax	; ""
-    A3 0CAB6A00	mov [6AAB0C],eax	; ""
-    FF 05 00AB6A00	inc [6AAB00]		; +1 player markets
+	---------	-------------------------------------------------------------------------
+	1EA500~2F	; BLACK MARKET RATES TO PLAYER MARKETS +1
+	---------	-------------------------------------------------------------------------
+	89 0D E0AA6A00	mov [6AAAE0],ecx	; (optimized/displaced original code)
+	89 15 DCAA6A00	mov [6AAADC],edx	; ""
+	FF 05 013B6700	inc [673B01]		; set "temp" flag for market count routine
+	E8 C9FEFFFF	call 5EA3E0		; -> [count player's markets]
+	FF 0D 013B6700	dec [673B01]		; clear "temp" flag
+	6A 02		push 02			; (optimized/displaced original code)
+	58		pop eax			; ""
+	A3 2CAB6A00	mov [6AAB2C],eax	; ""
+	A3 0CAB6A00	mov [6AAB0C],eax	; ""
+	FF 05 00AB6A00	inc [6AAB00]		; +1 player markets
 
-    ---------	-------------------------------------------------------------------------
-    1EA260~9E	; (EXTERNAL) FREELANCER'S GUILD RATES TO PLAYER MARKETS +1
-    ---------	-------------------------------------------------------------------------
-    89 0D E0AA6A00	mov [6AAAE0],ecx	; (optimized/displaced original code)
-    FF 05 013B6700	inc [673B01]		; set "temp" flag for market count routine
-    E8 6F010000	call 5EA3E0		; -> [count player's markets]
-    FF 0D 013B6700	dec [673B01]		; clear "temp" flag
-    6A 03		push 03			; (optimized/displaced original code)
-    58		pop eax			; ""
-    A3 2CAB6A00	mov [6AAB2C],eax	; ""
-    40		inc eax			; ""
-    A3 0CAB6A00	mov [6AAB0C],eax	; ""
-    A1 38956900	mov eax,[699538]	; ""
-    05 64F60100	add eax,1F664		; ""
-    A3 DCAA6A00	mov [6AAADC],eax	; ""
-    FF 05 00AB6A00	inc [6AAB00]		; +1 player markets
-    E9 91020000	jmp 5EA530		; -> [exit]
+	---------	-------------------------------------------------------------------------
+	1EA260~9E	; (EXTERNAL) FREELANCER'S GUILD RATES TO PLAYER MARKETS +1
+	---------	-------------------------------------------------------------------------
+	89 0D E0AA6A00	mov [6AAAE0],ecx	; (optimized/displaced original code)
+	FF 05 013B6700	inc [673B01]		; set "temp" flag for market count routine
+	E8 6F010000	call 5EA3E0		; -> [count player's markets]
+	FF 0D 013B6700	dec [673B01]		; clear "temp" flag
+	6A 03		push 03			; (optimized/displaced original code)
+	58		pop eax			; ""
+	A3 2CAB6A00	mov [6AAB2C],eax	; ""
+	40		inc eax			; ""
+	A3 0CAB6A00	mov [6AAB0C],eax	; ""
+	A1 38956900	mov eax,[699538]	; ""
+	05 64F60100	add eax,1F664		; ""
+	A3 DCAA6A00	mov [6AAADC],eax	; ""
+	FF 05 00AB6A00	inc [6AAB00]		; +1 player markets
+	E9 91020000	jmp 5EA530		; -> [exit]
 
-    ---------	-------------------------------------------------------------------------
-    1EA453		; EXIT PLAYER MARKET COUNT ROUTINE FOR EXTERNAL BUILDINGS
-    ---------	-------------------------------------------------------------------------
-    E9 2CDF0800     jmp 678384		; -> free space
-    90		nop			; -
+	---------	-------------------------------------------------------------------------
+	1EA453		; EXIT PLAYER MARKET COUNT ROUTINE FOR EXTERNAL BUILDINGS
+	---------	-------------------------------------------------------------------------
+	E9 2CDF0800     jmp 678384		; -> free space
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    278384~AE	; (EXPANDED SPACE - OVERWRITES RATES FOR 6-10 MARKETS)
-    ---------	-------------------------------------------------------------------------
-    8B 0D 00AB6A00	mov ecx,[6AAB00]	; (displaced code)
-    A0 013B6700	mov al,[673B01]		; AL = "temp" flag
-    A8 01		test al,01		; is this an external market?
-    0F84 C220F7FF	je 5EA459		; if no -> [exit to original code]
-    83 F9 04	cmp ecx,04		; player markets = 4? (maximum -1)
-    EB 04		jmp 6783A0		; (skip next 4 bytes)
-    90 90 90 90	nop			; (this space is unusable)
-    7E 03		jle 6783A5		; if less or equal -> (cleanup)
-    49		dec ecx			; -1 player markets
-    EB F2		jmp 678397		; -> player markets = 4?
-    89 0D 00AB6A00	mov [6AAB00],ecx	; set market rate
-    5F		pop edi			; (cleanup)
-    5F		pop edi			; ""
-    5E		pop esi			; ""
-    C3		ret 			; return (2783AF~C7 is free space)
+	---------	-------------------------------------------------------------------------
+	278384~AE	; (EXPANDED SPACE - OVERWRITES RATES FOR 6-10 MARKETS)
+	---------	-------------------------------------------------------------------------
+	8B 0D 00AB6A00	mov ecx,[6AAB00]	; (displaced code)
+	A0 013B6700	mov al,[673B01]		; AL = "temp" flag
+	A8 01		test al,01		; is this an external market?
+	0F84 C220F7FF	je 5EA459		; if no -> [exit to original code]
+	83 F9 04	cmp ecx,04		; player markets = 4? (maximum -1)
+	EB 04		jmp 6783A0		; (skip next 4 bytes)
+	90 90 90 90	nop			; (this space is unusable)
+	7E 03		jle 6783A5		; if less or equal -> (cleanup)
+	49		dec ecx			; -1 player markets
+	EB F2		jmp 678397		; -> player markets = 4?
+	89 0D 00AB6A00	mov [6AAB00],ecx	; set market rate
+	5F		pop edi			; (cleanup)
+	5F		pop edi			; ""
+	5E		pop esi			; ""
+	C3		ret 			; return (2783AF~C7 is free space)
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -896,34 +894,34 @@ be superior. We then compress the data from the above tables and create space th
 
 The growth bonuses of the Citadel and Castle can be changed with the following code:
 
-    ------------	-------------------------------------------------------------------------
-    1BFFF7~C004F	; CITADEL & CASTLE GROWTH BONUSES
-    ------------	-------------------------------------------------------------------------
-    0F BF 44 90 44	movsx eax,[eax+edx*4+44]; ~~~needs commentary
-    8B 96 50010000	mov edx,[esi+150]	;
-    89 45 F8	mov [ebp-8],eax		;
-    89 D0		mov eax,edx		;
-    23 05 E0CD6600	and eax,[66CDE0]	;
-    89 F9		mov ecx,edi		;
-    23 0D E4CD6600	and ecx,[66CDE4]	;
-    09 C8		or eax,ecx		;
-    74 0B		je ???			;
-    DB 45 F8	fld [ebp-8]		;
-    D8 0D 46005C00	fmul [5C0046]		;
-    EB 26		jmp ???			;
-    A1 D8CD6600	mov eax,[66CDD8]	;
-    8B 0D DCCD6600	mov ecx,[66CDDC]	;
-    21 C2		and edx,eax		;
-    21 CF		and edi,ecx		;
-    09 FA		or edx,edi		;
-    74 16		je 5C004D		;
-    DB 45 F8	fld [ebp-8]		;
-    D8 0D 42005C00	fmul [5C0042]		;
-    EB 08		jmp 5C004A		;
-    XX XX XX XX	(floating value)	;
-    YY YY YY YY	(floating value)	;
-    DB 4D F8	fstp [ebp-8]		;
-    8B 55 F8	mov edx,[ebp-8]		;
+	------------	-------------------------------------------------------------------------
+	1BFFF7~C004F	; CITADEL & CASTLE GROWTH BONUSES
+	------------	-------------------------------------------------------------------------
+	0F BF 44 90 44	movsx eax,[eax+edx*4+44]; ~~~needs commentary
+	8B 96 50010000	mov edx,[esi+150]	;
+	89 45 F8	mov [ebp-8],eax		;
+	89 D0		mov eax,edx		;
+	23 05 E0CD6600	and eax,[66CDE0]	;
+	89 F9		mov ecx,edi		;
+	23 0D E4CD6600	and ecx,[66CDE4]	;
+	09 C8		or eax,ecx		;
+	74 0B		je ???			;
+	DB 45 F8	fld [ebp-8]		;
+	D8 0D 46005C00	fmul [5C0046]		;
+	EB 26		jmp ???			;
+	A1 D8CD6600	mov eax,[66CDD8]	;
+	8B 0D DCCD6600	mov ecx,[66CDDC]	;
+	21 C2		and edx,eax		;
+	21 CF		and edi,ecx		;
+	09 FA		or edx,edi		;
+	74 16		je 5C004D		;
+	DB 45 F8	fld [ebp-8]		;
+	D8 0D 42005C00	fmul [5C0042]		;
+	EB 08		jmp 5C004A		;
+	XX XX XX XX	(floating value)	;
+	YY YY YY YY	(floating value)	;
+	DB 4D F8	fstp [ebp-8]		;
+	8B 55 F8	mov edx,[ebp-8]		;
 
 "XX XX XX XX" and "YY YY YY YY" in the above example are floating-point values for the growth bonuses of
 the Citadel and Castle, respectively. We've seen these several times already now, but like the elemental
@@ -984,142 +982,142 @@ Finally, one other thing that you will need to do in addition to implementing th
 the name "Keep" (unearneath "Lower Tower") for each faction in Walls.txt. This is so we can blank out a
 now-unused string in the simplified right-click textbox in the code below. And now, on with the edit:
 
-    0657BD > 45	; adjusted jump length
-    0657D1 > 31	; ""
+	0657BD > 45	; adjusted jump length
+	0657D1 > 31	; ""
 
-    01E3A4 7D > 4D	; arrow tower damage is now properly reduced by Air Shield & Armorer
-    01E4E0 7D > 4D	; ""
-    065944 7D > 4D	; ""
+	01E3A4 7D > 4D	; arrow tower damage is now properly reduced by Air Shield & Armorer
+	01E4E0 7D > 4D	; ""
+	065944 7D > 4D	; ""
 
-    ---------	-------------------------------------------------------------------------
-    065900~23	; ARROW TOWER DAMAGE
-    ---------	-------------------------------------------------------------------------
-    8B 97 C8530000	mov edx,[edi+53C8]	; EDX = town data
-    0FBE 42 04	movsx eax,[edx+04]	; EAX = town type
-        0FBE0C452ABD6300	movsx ecx,[eax*2+63BD2A]; ECX = minimum damage
-        0FBE14452BBD6300	movsx edx,[eax*2+63BD2B]; EDX = maximum damage
-    E8 A16E0A00	call 50C7C0		; (EAX = min~max)
-    89 45 08	mov [ebp+08],eax	; store damage
-    EB 10		jmp 465934		; -> [exit]
+	---------	-------------------------------------------------------------------------
+	065900~23	; ARROW TOWER DAMAGE
+	---------	-------------------------------------------------------------------------
+	8B 97 C8530000	mov edx,[edi+53C8]	; EDX = town data
+	0FBE 42 04	movsx eax,[edx+04]	; EAX = town type
+      0FBE0C452ABD6300	movsx ecx,[eax*2+63BD2A]; ECX = minimum damage
+      0FBE14452BBD6300	movsx edx,[eax*2+63BD2B]; EDX = maximum damage
+	E8 A16E0A00	call 50C7C0		; (EAX = min~max)
+	89 45 08	mov [ebp+08],eax	; store damage
+	EB 10		jmp 465934		; -> [exit]
 
-    ---------	-------------------------------------------------------------------------
-    079C5A-70	; ARROW TOWER DAMAGE (RIGHT CLICK)
-    ---------	-------------------------------------------------------------------------
-    8B 89 C8530000	mov ecx,[ecx+53C8]	; ECX = town data
-    31 C0		xor eax,eax		; EAX = 0
-    E8 B2000000	call 479D19		; -> free space (same routine)
-    31 DB		xor ebx,ebx		; EBX = 0
-    6A 00		push 00			; final character of textbox = 0
-    50		push eax		; push maximum damage
-    56		push esi		; push minimum damage
-    8B 75 08	mov esi,[ebp+08]	; ESI = ???
-    90		nop			; -
+	---------	-------------------------------------------------------------------------
+	079C5A-70	; ARROW TOWER DAMAGE (RIGHT CLICK)
+	---------	-------------------------------------------------------------------------
+	8B 89 C8530000	mov ecx,[ecx+53C8]	; ECX = town data
+	31 C0		xor eax,eax		; EAX = 0
+	E8 B2000000	call 479D19		; -> free space (same routine)
+	31 DB		xor ebx,ebx		; EBX = 0
+	6A 00		push 00			; final character of textbox = 0
+	50		push eax		; push maximum damage
+	56		push esi		; push minimum damage
+	8B 75 08	mov esi,[ebp+08]	; ESI = ???
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    079D03-3A	; ""
-    ---------	-------------------------------------------------------------------------
-    6A 00		push 00			; Unused
-    6A 00		push 00			; ""
-    6A 0F		push 0F			; Move to unused slot for string
-    8D 55 CC	lea edx,[ebp-34]	; ???
-    52		push edx		; ???
-    8B CE		mov ecx,esi		; ???
-    E8 ECFEFFFF	call 479C00		; ???
-    E9 84000000	jmp 479D9D		; frees space: 079D19~9C
+	---------	-------------------------------------------------------------------------
+	079D03-3A	; ""
+	---------	-------------------------------------------------------------------------
+	6A 00		push 00			; Unused
+	6A 00		push 00			; ""
+	6A 0F		push 0F			; Move to unused slot for string
+	8D 55 CC	lea edx,[ebp-34]	; ???
+	52		push edx		; ???
+	8B CE		mov ecx,esi		; ???
+	E8 ECFEFFFF	call 479C00		; ???
+	E9 84000000	jmp 479D9D		; frees space: 079D19~9C
 
-    8A 59 04	mov bl,[ecx+04]		; EBX = town type
-    8A045D2ABD6300	mov al,[ebx*2+63BD2A]	; EAX = minimum damage
-    8B F0		mov esi,eax		; ESI = minimum damage
-    8A1C5D2BBD6300	mov bl,[ebx*2+63BD2B]	; EBX = maximum damage
-    52		push edx		; store EDX
-    B8 67666666	mov eax,66666667	; EDX = maximum damage / 10
-    F7 EB		imul ebx		; ""
-    C1 FA 02	sar edx,02		; ""
-    8B C2		mov eax,edx		; EAX = maximum damage / 10
-    5A		pop edx			; retrtieve EDX
-    C3		ret			; ret
+	8A 59 04	mov bl,[ecx+04]		; EBX = town type
+	8A045D2ABD6300	mov al,[ebx*2+63BD2A]	; EAX = minimum damage
+	8B F0		mov esi,eax		; ESI = minimum damage
+	8A1C5D2BBD6300	mov bl,[ebx*2+63BD2B]	; EBX = maximum damage
+	52		push edx		; store EDX
+	B8 67666666	mov eax,66666667	; EDX = maximum damage / 10
+	F7 EB		imul ebx		; ""
+	C1 FA 02	sar edx,02		; ""
+	8B C2		mov eax,edx		; EAX = maximum damage / 10
+	5A		pop edx			; retrtieve EDX
+	C3		ret			; ret
 
-    --------	-------------------------------------------------------------------------
-    069A81~B	; MOAT DAMAGE
-    --------	-------------------------------------------------------------------------
-    0FBE 5A 04	movsx ebx,[edx+04]	; EBX = town type
-    E8 B1020100	call 479D3B		; -> free space (arrow tower right click info)
-    90 90		nop			; -
+	--------	-------------------------------------------------------------------------
+	069A81~B	; MOAT DAMAGE
+	--------	-------------------------------------------------------------------------
+	0FBE 5A 04	movsx ebx,[edx+04]	; EBX = town type
+	E8 B1020100	call 479D3B		; -> free space (arrow tower right click info)
+	90 90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0B31C9~D3	; MOAT DAMAGE (AI SETTINGS)
-    ---------	-------------------------------------------------------------------------
-    53		push ebx		; store EBX
-    0FBE 5A 04	movsx ebx,[edx+04]	; EBX = town type
-    E8 5127FBFF	call 465924		; -> free space (old arrow tower damage formula)
-    5B		pop ebx			; retrieve EBX
+	---------	-------------------------------------------------------------------------
+	0B31C9~D3	; MOAT DAMAGE (AI SETTINGS)
+	---------	-------------------------------------------------------------------------
+	53		push ebx		; store EBX
+	0FBE 5A 04	movsx ebx,[edx+04]	; EBX = town type
+	E8 5127FBFF	call 465924		; -> free space (old arrow tower damage formula)
+	5B		pop ebx			; retrieve EBX
 
-    ---------	-------------------------------------------------------------------------
-    0B31FD~207	; MOAT DAMAGE (AI SETTINGS)
-    ---------	-------------------------------------------------------------------------
-    53		push ebx		; store EBX
-    0FBE 5A 04	movsx ebx,[edx+04]	; EBX = town type
-    E8 1D27FBFF	call 465924		; -> free space (old arrow tower damage formula)
-    5B		pop ebx			; retrieve EBX
+	---------	-------------------------------------------------------------------------
+	0B31FD~207	; MOAT DAMAGE (AI SETTINGS)
+	---------	-------------------------------------------------------------------------
+	53		push ebx		; store EBX
+	0FBE 5A 04	movsx ebx,[edx+04]	; EBX = town type
+	E8 1D27FBFF	call 465924		; -> free space (old arrow tower damage formula)
+	5B		pop ebx			; retrieve EBX
 
-    ---------	-------------------------------------------------------------------------
-    065924~33	; (INLINE EDIT - OVERWRITES ORIGINAL ARROW TOWER DAMAGE FORMULA)
-    ---------	-------------------------------------------------------------------------
-    57		push edi		; store EDI
-    8B FE		mov edi,esi		; EDI = unit stack data
-    E8 0F440100	call 479D3B		; -> free space (arrow tower right click info)
-    8B D3		mov edx,ebx		; EDX = barricade damage
-    5F		pop edi			; retrieve EDI
-    C3		ret			; return
-    90 90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	065924~33	; (INLINE EDIT - OVERWRITES ORIGINAL ARROW TOWER DAMAGE FORMULA)
+	---------	-------------------------------------------------------------------------
+	57		push edi		; store EDI
+	8B FE		mov edi,esi		; EDI = unit stack data
+	E8 0F440100	call 479D3B		; -> free space (arrow tower right click info)
+	8B D3		mov edx,ebx		; EDX = barricade damage
+	5F		pop edi			; retrieve EDI
+	C3		ret			; return
+	90 90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    079D3B~6A	; (EXPANDED SPACE - OVERWRITES ARROW TOWER RIGHT CLICK INFO)
-    ---------	-------------------------------------------------------------------------
-    50		push eax		; store EAX
-    0FBE 47 34	movsx eax,[edi+34]	; EAX = Unit ID
-    2C 10		sub al,10		; AL -10
-    3C 77		cmp al,77		; is AL > 77? (table end = Rust Dragons)
-    77 06		ja 479D4C		; if yes -> AL = moat damage
-    8A A0 58A64400	mov ah,[eax+44A658]	; AH = resistance A
-    8A045D18BD6300	mov al,[ebx*2+63BD18]	; AL = moat damage
-    80 FC 05	cmp ah,05		; O-Fire?
-    75 0F		jne 479D67		; if no -> BL = moat damage
-    84 C0		test al,al		; is damage 0? (Castle/Conflux moat)
-    75 04		jne 479D60		; if no -> Inferno?
-    B3 02		mov bl,02		; BL = 2 (Tower)
-    EB EC		jmp 479D4C		; -> AL = moat damage
-    80 FB 03	cmp bl,03		; Inferno?
-    75 02		jne 479D67		; if no -> BL = moat damage
-    31 C0		xor eax,eax		; no damage
-    88 C3		mov bl,al		; BL = moat damage
-    58		pop eax			; retrieve EAX
-    C3		ret			; return (079D6B~9C is free space)
+	---------	-------------------------------------------------------------------------
+	079D3B~6A	; (EXPANDED SPACE - OVERWRITES ARROW TOWER RIGHT CLICK INFO)
+	---------	-------------------------------------------------------------------------
+	50		push eax		; store EAX
+	0FBE 47 34	movsx eax,[edi+34]	; EAX = Unit ID
+	2C 10		sub al,10		; AL -10
+	3C 77		cmp al,77		; is AL > 77? (table end = Rust Dragons)
+	77 06		ja 479D4C		; if yes -> AL = moat damage
+	8A A0 58A64400	mov ah,[eax+44A658]	; AH = resistance A
+	8A045D18BD6300	mov al,[ebx*2+63BD18]	; AL = moat damage
+	80 FC 05	cmp ah,05		; O-Fire?
+	75 0F		jne 479D67		; if no -> BL = moat damage
+	84 C0		test al,al		; is damage 0? (Castle/Conflux moat)
+	75 04		jne 479D60		; if no -> Inferno?
+	B3 02		mov bl,02		; BL = 2 (Tower)
+	EB EC		jmp 479D4C		; -> AL = moat damage
+	80 FB 03	cmp bl,03		; Inferno?
+	75 02		jne 479D67		; if no -> BL = moat damage
+	31 C0		xor eax,eax		; no damage
+	88 C3		mov bl,al		; BL = moat damage
+	58		pop eax			; retrieve EAX
+	C3		ret			; return (079D6B~9C is free space)
 
-    ---------	-------------------------------------------------------------------------
-    23BD18~3B	; BARRICADE & TURRET DAMAGE TABLE
-    ---------	-------------------------------------------------------------------------
-    00 00		; Castle Moat (no damage)
-    XX 00		; Rampart Brambles
-    XX 00		; Castle/Conflux Moat (fire-immune units)
-    XX 00		; Inferno Lava
-    XX 00		; Necropolis Boneyard
-    XX 00		; Dungeon Tar
-    XX 00		; Stronghold Spikes
-    XX 00		; Fortress Tar
-    00 00		; Conflux Moat (no damage)
+	---------	-------------------------------------------------------------------------
+	23BD18~3B	; BARRICADE & TURRET DAMAGE TABLE
+	---------	-------------------------------------------------------------------------
+	00 00		; Castle Moat (no damage)
+	XX 00		; Rampart Brambles
+	XX 00		; Castle/Conflux Moat (fire-immune units)
+	XX 00		; Inferno Lava
+	XX 00		; Necropolis Boneyard
+	XX 00		; Dungeon Tar
+	XX 00		; Stronghold Spikes
+	XX 00		; Fortress Tar
+	00 00		; Conflux Moat (no damage)
 
-    XX YY		; Castle Arrow Tower (XX = minimum, YY = maximum)
-    XX YY		; Rampart ""
-    XX YY		; Tower ""
-    XX YY		; Inferno ""
-    XX YY		; Necropolis ""
-    XX YY		; Dungeon ""
-    XX YY		; Stronghold ""
-    XX YY		; Fortress ""
-    XX YY		; Conflux ""
+	XX YY		; Castle Arrow Tower (XX = minimum, YY = maximum)
+	XX YY		; Rampart ""
+	XX YY		; Tower ""
+	XX YY		; Inferno ""
+	XX YY		; Necropolis ""
+	XX YY		; Dungeon ""
+	XX YY		; Stronghold ""
+	XX YY		; Fortress ""
+	XX YY		; Conflux ""
 
-    065FDD > BE XX 00000090	; Tower Land Mines
+	065FDD > BE XX 00000090	; Tower Land Mines
 
 ------------------------------------------------------------------------------------------
 
@@ -1197,39 +1195,39 @@ how to do later in this guide). The Thieves Guild info is even more useless sinc
 all information you can see just by clicking on the Thieves' Guild button yourself. To
 that end, we can simplify the code by just always calling the map rumor routine:
 
-    --------	-------------------------------------------------------------------------
-    0C0107~F	; TAVERN DIALOGUE TO ALWAYS MAP RUMORS, ELSE RANDOM
-    --------	-------------------------------------------------------------------------
-    8B CB		mov ecx,ebx		; ECX = main index
-    E8 62CB0000	call 4CCC70		; get random map rumor (RandTvrn if none)
-    EB 27		jmp 4C0137		; -> [continue] (0C0110~36 is free space)
+	--------	-------------------------------------------------------------------------
+	0C0107~F	; TAVERN DIALOGUE TO ALWAYS MAP RUMORS, ELSE RANDOM
+	--------	-------------------------------------------------------------------------
+	8B CB		mov ecx,ebx		; ECX = main index
+	E8 62CB0000	call 4CCC70		; get random map rumor (RandTvrn if none)
+	EB 27		jmp 4C0137		; -> [continue] (0C0110~36 is free space)
 
-    ----------	-------------------------------------------------------------------------
-    0C89FE~A06	; ""
-    ----------	-------------------------------------------------------------------------
-    8B CB		mov ecx,ebx		; ECX = main index
-    E8 6B420000	call 4CCC70		; get random map rumor (RandTvrn if none)
-    EB 27		jmp 4C8A2E		; -> [continue] (0C8A07~2D is free space)
+	----------	-------------------------------------------------------------------------
+	0C89FE~A06	; ""
+	----------	-------------------------------------------------------------------------
+	8B CB		mov ecx,ebx		; ECX = main index
+	E8 6B420000	call 4CCC70		; get random map rumor (RandTvrn if none)
+	EB 27		jmp 4C8A2E		; -> [continue] (0C8A07~2D is free space)
 
 This removes the grail hint/thieves guild advice routine entirely, freeing up by far the
 largest amount of contiguous free space in this guide (0CCE2D~D3CF). Another change that
 we can make is to have the tavern advice update daily instead of weekly, which will have
 us slightly modify the second code block above like so:
 
-    --------	-------------------------------------------------------------------------
-    0C7CB2~7	; DAILY TAVERN DIALOGUE SWAPS
-    --------	-------------------------------------------------------------------------
-    E8 490D0000	call 4C8A00		; update tavern dialogue
-    90		nop			; -
+	--------	-------------------------------------------------------------------------
+	0C7CB2~7	; DAILY TAVERN DIALOGUE SWAPS
+	--------	-------------------------------------------------------------------------
+	E8 490D0000	call 4C8A00		; update tavern dialogue
+	90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0C89FE~A0D	; "" (INLINE EDIT) + DIALOGUE IS NEVER THIEVES GUILD INFO
-    ----------	-------------------------------------------------------------------------
-    EB 2E		jmp 4C8A2E		; skip dialogue updates during weekly routine
-    8B CB		mov ecx,ebx		; ECX = main index
-    E8 69420000	call 4CCC70		; get random map rumor (RandTvrn if none)
-    8B 0D 08736900	mov ecx,[697308]	; (displaced code)
-    C3		ret 			; return (0C8A0C~2D is free space)
+	----------	-------------------------------------------------------------------------
+	0C89FE~A0D	; "" (INLINE EDIT) + DIALOGUE IS NEVER THIEVES GUILD INFO
+	----------	-------------------------------------------------------------------------
+	EB 2E		jmp 4C8A2E		; skip dialogue updates during weekly routine
+	8B CB		mov ecx,ebx		; ECX = main index
+	E8 69420000	call 4CCC70		; get random map rumor (RandTvrn if none)
+	8B 0D 08736900	mov ecx,[697308]	; (displaced code)
+	C3		ret 			; return (0C8A0C~2D is free space)
 
 A lesser-known effect of Taverns is that the right-click information you get from other
 towns requires that you own two Taverns (set at 016DF7) in order to see even an estimate
@@ -1276,102 +1274,102 @@ little advantage over the external ones in the rare cases in which they can actu
 built. Using some space we'll free later from the Idol of Fortune day 7 check, let's look
 at addressing this by allowing internal shipyards to sell boats at a discounted price.
 
-    --------	-------------------------------------------------------------------------
-    1D2B57~B	; INTERNAL SHIPYARDS ARE CHEAPER
-    --------	-------------------------------------------------------------------------
-    E9 29E4ECFF	jmp 4A0F85		; free space (Idol of Fortune, day 7)
+	--------	-------------------------------------------------------------------------
+	1D2B57~B	; INTERNAL SHIPYARDS ARE CHEAPER
+	--------	-------------------------------------------------------------------------
+	E9 29E4ECFF	jmp 4A0F85		; free space (Idol of Fortune, day 7)
 
-    ---------	-------------------------------------------------------------------------
-    0A0F85~9A	; (EXPANDED SPACE - OVERWRITES IDOL OF FORTUNE, DAY 7)
-    ---------	-------------------------------------------------------------------------
-    FF 05 013B6700	inc [673B01]		; set "temp" flag for external shipyard
-    E8 60131300 	call 5D22F0		; displaced code
-    FF 0D 013B6700	dec [673B01]		; unset flag
-    E9 C11B1300  	jmp 5D2B5C		; return
+	---------	-------------------------------------------------------------------------
+	0A0F85~9A	; (EXPANDED SPACE - OVERWRITES IDOL OF FORTUNE, DAY 7)
+	---------	-------------------------------------------------------------------------
+	FF 05 013B6700	inc [673B01]		; set "temp" flag for external shipyard
+	E8 60131300 	call 5D22F0		; displaced code
+	FF 0D 013B6700	dec [673B01]		; unset flag
+	E9 C11B1300  	jmp 5D2B5C		; return
 
-    ---------	-------------------------------------------------------------------------
-    1D286D~9A	; CHECK IF PLAYER CAN AFFORD TO PURCHASE A BOAT
-    ---------	-------------------------------------------------------------------------
-    E8 29E7ECFF	call 4A0F9B		  ; -> free space (Idol of Fortune, day 7)
-    6B C0 2D	imul eax,eax,2D		  ; EAX = player index
-    3994C1840B0200	cmp [ecx+eax*8+20B84],edx ; does player have enough gold?
-    7C 1D		jl 5D289B		  ; if no -> [disable buy button]
+	---------	-------------------------------------------------------------------------
+	1D286D~9A	; CHECK IF PLAYER CAN AFFORD TO PURCHASE A BOAT
+	---------	-------------------------------------------------------------------------
+	E8 29E7ECFF	call 4A0F9B		  ; -> free space (Idol of Fortune, day 7)
+	6B C0 2D	imul eax,eax,2D		  ; EAX = player index
+	3994C1840B0200	cmp [ecx+eax*8+20B84],edx ; does player have enough gold?
+	7C 1D		jl 5D289B		  ; if no -> [disable buy button]
 
-    E8 5DBEEFFF	call 4CE6E0		  ; ???
-    8B 0D 38956900	mov ecx,[699538]	  ; ECX = main index
+	E8 5DBEEFFF	call 4CE6E0		  ; ???
+	8B 0D 38956900	mov ecx,[699538]	  ; ECX = main index
 
-    E8 21E7ECFF	call 4A0FAF		  ; free space (Idol of Fortune, day 7)
-    6B C0 2D	imul eax,eax,2D		  ; EAX = player index
-    3994C16C0B0200	cmp [ecx+eax*8+20B6C],edx ; does player have enough wood?
-    7D 4D		jge 5D28E7		  ; if no -> [disable buy button]
-    90		nop			  ; -
+	E8 21E7ECFF	call 4A0FAF		  ; free space (Idol of Fortune, day 7)
+	6B C0 2D	imul eax,eax,2D		  ; EAX = player index
+	3994C16C0B0200	cmp [ecx+eax*8+20B6C],edx ; does player have enough wood?
+	7D 4D		jge 5D28E7		  ; if no -> [disable buy button]
+	90		nop			  ; -
 
-    ---------	-------------------------------------------------------------------------
-    0A0F9B~BF	; (EXPANDED SPACE - OVERWRITES IDOL OF FORTUNE, DAY 7)
-    ---------	-------------------------------------------------------------------------
-    8A 15 013B6700	mov dl,[673B01]		; DL = "temp" flag
-    F6 C2 01	test dl,01		; external?
-    BA F4010000	mov edx,1F4		; EDX = 500
-    74 03		je 4A0FAE		; if no -> return
-    6B D2 04	imul edx,edx,04		; EDX = 2,000
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	0A0F9B~BF	; (EXPANDED SPACE - OVERWRITES IDOL OF FORTUNE, DAY 7)
+	---------	-------------------------------------------------------------------------
+	8A 15 013B6700	mov dl,[673B01]		; DL = "temp" flag
+	F6 C2 01	test dl,01		; external?
+	BA F4010000	mov edx,1F4		; EDX = 500
+	74 03		je 4A0FAE		; if no -> return
+	6B D2 04	imul edx,edx,04		; EDX = 2,000
+	C3		ret			; return
 
-    8A 15 013B6700	mov dl,[673B01]		; DL = "temp" flag
-    F6 C2 01	test dl,01		; external?
-    6A 05		push 05			; EDX = 5
-    5A		pop edx			; ""
-    74 02		je 4A0FBF		; if no -> return
-    01 D2 		add edx,edx		; EDX = 10
-    C3		ret			; returns
+	8A 15 013B6700	mov dl,[673B01]		; DL = "temp" flag
+	F6 C2 01	test dl,01		; external?
+	6A 05		push 05			; EDX = 5
+	5A		pop edx			; ""
+	74 02		je 4A0FBF		; if no -> return
+	01 D2 		add edx,edx		; EDX = 10
+	C3		ret			; returns
 
-    ---------	-------------------------------------------------------------------------
-    1D24E0		; GET GOLD COST FOR DIALOGUE WINDOW
-    ---------	-------------------------------------------------------------------------
-    E9 DBEAECFF	jmp 4A0FC0		; free space (Idol of Fortune, day 7)
+	---------	-------------------------------------------------------------------------
+	1D24E0		; GET GOLD COST FOR DIALOGUE WINDOW
+	---------	-------------------------------------------------------------------------
+	E9 DBEAECFF	jmp 4A0FC0		; free space (Idol of Fortune, day 7)
 
-    ------		-------------------------------------------------------------------------
-    1D2535		; GET WOOD COST FOR DIALOGUE WINDOW
-    ------		-------------------------------------------------------------------------
-    E9 A2EAECFF	jmp 4A0FDC		; free space (Idol of Fortune, day 7)
+	------		-------------------------------------------------------------------------
+	1D2535		; GET WOOD COST FOR DIALOGUE WINDOW
+	------		-------------------------------------------------------------------------
+	E9 A2EAECFF	jmp 4A0FDC		; free space (Idol of Fortune, day 7)
 
-    ---------	-------------------------------------------------------------------------
-    0A0FC0~F8	; (EXPANDED SPACE - OVERWRITES IDOL OF FORTUNE, DAY 7)
-    ---------	-------------------------------------------------------------------------
-    8A 0D 013B6700	mov cl,[673B01]		; DL = "temp" flag
-    F6 C1 01	test cl,01		; external?
-    74 07		je 4A0FD2		; if no -> push "500"
-    68 F6C36800	push 68C3F6		; push "2000"
-    EB 05		jmp 4A0FD7		; return
-    68 F2C36800	push 68C3F2		; push "500"
-    E9 09151300	jmp 5D24E5		; return
+	---------	-------------------------------------------------------------------------
+	0A0FC0~F8	; (EXPANDED SPACE - OVERWRITES IDOL OF FORTUNE, DAY 7)
+	---------	-------------------------------------------------------------------------
+	8A 0D 013B6700	mov cl,[673B01]		; DL = "temp" flag
+	F6 C1 01	test cl,01		; external?
+	74 07		je 4A0FD2		; if no -> push "500"
+	68 F6C36800	push 68C3F6		; push "2000"
+	EB 05		jmp 4A0FD7		; return
+	68 F2C36800	push 68C3F2		; push "500"
+	E9 09151300	jmp 5D24E5		; return
 
-    8A 0D 013B6700	mov cl,[673B01]		; DL = "temp" flag
-    F6 C1 01	test cl,01		; external?
-    74 07		je 4A0FEE		; if no -> push "5"
-    68 EFC36800	push 68C3EF		; push "5"
-    EB 05		jmp 4A0FF3		; return
-    68 EDC36800	push 68C3ED		; push "10"
-    E9 42151300	jmp 5D253A		; return
-    90		nop			; -
+	8A 0D 013B6700	mov cl,[673B01]		; DL = "temp" flag
+	F6 C1 01	test cl,01		; external?
+	74 07		je 4A0FEE		; if no -> push "5"
+	68 EFC36800	push 68C3EF		; push "5"
+	EB 05		jmp 4A0FF3		; return
+	68 EDC36800	push 68C3ED		; push "10"
+	E9 42151300	jmp 5D253A		; return
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    28C3EC~FB	; DIALOGUE BOX TEXT STRINGS (GOLD & WOOD COSTS)
-    ---------	-------------------------------------------------------------------------
-    00		; -
-    35 00		; 68C3EF = "5"
-    31 30 00	; 68C3ED = "10"
-    35 30 30 00	; 68C3F2 = "500"
-    32 30 30 30 00	; 68C3F6 = "2000"
-    00		; -
+	---------	-------------------------------------------------------------------------
+	28C3EC~FB	; DIALOGUE BOX TEXT STRINGS (GOLD & WOOD COSTS)
+	---------	-------------------------------------------------------------------------
+	00		; -
+	35 00		; 68C3EF = "5"
+	31 30 00	; 68C3ED = "10"
+	35 30 30 00	; 68C3F2 = "500"
+	32 30 30 30 00	; 68C3F6 = "2000"
+	00		; -
 
-    1D3BD9 > 0CFEFFFF ; -500 Gold (internal shipyards)
-    1D3C0A > FB	  ; -5 Wood ("")
+	1D3BD9 > 0CFEFFFF ; -500 Gold (internal shipyards)
+	1D3C0A > FB	  ; -5 Wood ("")
 
-    09E1D8 = E8030000 ; 1000 gold (external shipyards)
-    09E1EB = 0A	  ; 10 wood ("" - unchanged)
+	09E1D8 = E8030000 ; 1000 gold (external shipyards)
+	09E1EB = 0A	  ; 10 wood ("" - unchanged)
 
-    09E262 = 18FCFFFF ; -1000 gold (external shipyards)
-    09E289 = F6	  ; -10 wood ("" - unchanged)
+	09E262 = 18FCFFFF ; -1000 gold (external shipyards)
+	09E289 = F6	  ; -10 wood ("" - unchanged)
 
 -----------------------------------------------------------------------------------------
 
@@ -1381,22 +1379,22 @@ This will fix the infamous bug wherein Castle Lighthouses increase ship movement
 players instead of just the player that controls them. We will need some free space to do
 so; I've chosen the space we freeed up earlier with out tavern dialogue edits.
 
-    ------		-------------------------------------------------------------------------
-    0E4D40		; CASTLE LIGHTHOUSE BUGFIX
-    ------		-------------------------------------------------------------------------
-    E9 CBB3FDFF	jmp 4C0110		; -> free space (tavern dialogue selection)
-    90		nop			; -
+	------		-------------------------------------------------------------------------
+	0E4D40		; CASTLE LIGHTHOUSE BUGFIX
+	------		-------------------------------------------------------------------------
+	E9 CBB3FDFF	jmp 4C0110		; -> free space (tavern dialogue selection)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0C0110~2B	; (EXPANDED SPACE - OVERWRITES RANDOM SELECTION OF TAVERN DIALOGUE)
-    ---------	-------------------------------------------------------------------------
-    8B 45 FC	mov eax,[ebp-04]	; EAX = hero data
-    8A 40 04	mov al,[eax+04]		; AL = hero owner
-    8A 51 01	mov dl,[ecx+01]		; DL = town owner
-    38 D0		cmp al,dl		; does AL = DL?
-    0F85 4B4C0200 	jne 4E4D6C		; if no -> [no bonus from Lighthouse]
-    8B 81 50010000	mov eax,[ecx+150]	; (displaced code)
-    E9 1A4C0200	jmp 4E4D46		; return (0C012C~36 is free space)
+	---------	-------------------------------------------------------------------------
+	0C0110~2B	; (EXPANDED SPACE - OVERWRITES RANDOM SELECTION OF TAVERN DIALOGUE)
+	---------	-------------------------------------------------------------------------
+	8B 45 FC	mov eax,[ebp-04]	; EAX = hero data
+	8A 40 04	mov al,[eax+04]		; AL = hero owner
+	8A 51 01	mov dl,[ecx+01]		; DL = town owner
+	38 D0		cmp al,dl		; does AL = DL?
+	0F85 4B4C0200 	jne 4E4D6C		; if no -> [no bonus from Lighthouse]
+	8B 81 50010000	mov eax,[ecx+150]	; (displaced code)
+	E9 1A4C0200	jmp 4E4D46		; return (0C012C~36 is free space)
 
 -----------------------------------------------------------------------------------------
 
@@ -1525,19 +1523,19 @@ look into how to actually change the growth bonus to a different value.
 The buildings which temporarily boost attributes of defending heroes all run through
 one long routine starting at 063927 and can be edited at the following addresses:
 
-    Tower Grail		    Brimstone Clouds	Glyphs of Fear		Blood Obelisk
-    -----------------	-----------------	-----------------	-----------------
-    06392F: 68 = Bldg.	06395C: 40 = Bldg.	063A17: 58 = Bldg.	0639E6: 40 = Bldg.
-    06393D: 6C = ""		06396A: 44 = ""		063A1F: 5C = ""		0639F4: 44 = ""
-    ******: ** = SP		063978: 78 = PWR	063A31: 77 = DEF	0639FE: 76 = ATK
-    06394D: 96 = +150	06397C: 02 = +2		063A35: 02 = +2		063A02: 02 = +2
+	Tower Grail		Brimstone Clouds	Glyphs of Fear		Blood Obelisk
+	-----------------	-----------------	-----------------	-----------------
+	06392F: 68 = Bldg.	06395C: 40 = Bldg.	063A17: 58 = Bldg.	0639E6: 40 = Bldg.
+	06393D: 6C = ""		06396A: 44 = ""		063A1F: 5C = ""		0639F4: 44 = ""
+	******: ** = SP		063978: 78 = PWR	063A31: 77 = DEF	0639FE: 76 = ATK
+	06394D: 96 = +150	06397C: 02 = +2		063A35: 02 = +2		063A02: 02 = +2
 
-    Dungeon Grail		Stronghold Grail	Fortress Grail A	Fortress Grail B
-    -----------------	-----------------	-----------------	-----------------
-    06398A: 68 = Bldg.	0639B8: 68 = Bldg.	063A3E: 68 = Bldg.	<---
-    063998: 6C = ""		0639C6: 6C = ""		063A44: 6C = ""		""
-    0639A6: 78 = PWR	0639D4: 76 = ATK	063A7A: 77 = DEF	063A66: 76 = ATK
-    0639AA: 0C = +12	0639D8: 14 = +15	063A63: 0A = +10	063A6E: ""
+	Dungeon Grail		Stronghold Grail	Fortress Grail A	Fortress Grail B
+	-----------------	-----------------	-----------------	-----------------
+	06398A: 68 = Bldg.	0639B8: 68 = Bldg.	063A3E: 68 = Bldg.	<---
+	063998: 6C = ""		0639C6: 6C = ""		063A44: 6C = ""		""
+	0639A6: 78 = PWR	0639D4: 76 = ATK	063A7A: 77 = DEF	063A66: 76 = ATK
+	0639AA: 0C = +12	0639D8: 14 = +15	063A63: 0A = +10	063A6E: ""
 
 The Fortress grail uses the same value for both bonuses; to remove the attack bonus and
 only boost one stat, NOP out the instructions (write all 90's) from 063A64 to 063A71.
@@ -1610,96 +1608,96 @@ Fucking Dead. Zombies everywhere dude. Just zombies, zombies, zombies fucking ev
 Making this happen will require some space, which I'll assume we freed up when we trashed
 the Conflux grail effect from earlier. Here's how to make your own Necronomicon:
 
-    ------		-------------------------------------------------------------------------
-    0C85D3		; INFERNO/NECROPOLIS GRAILS TO "ALWAYS WEEK/MONTH OF DEMON/ZOMBIE"
-    ------		-------------------------------------------------------------------------
-    E9 205F0F00	jmp 5BE4F8		; -> free space (Conflux grail effect)
-    90 90 90	nop			; -
+	------		-------------------------------------------------------------------------
+	0C85D3		; INFERNO/NECROPOLIS GRAILS TO "ALWAYS WEEK/MONTH OF DEMON/ZOMBIE"
+	------		-------------------------------------------------------------------------
+	E9 205F0F00	jmp 5BE4F8		; -> free space (Conflux grail effect)
+	90 90 90	nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    1BE4F8~50C	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
-    ----------	-------------------------------------------------------------------------
-    8A 44 18 04	mov al,[eax+ebx+04]	; AL = town type
-    3C 03		cmp al,03		; Inferno?
-    74 08		je 5BE508		; if yes -> [continue]
-    3C 04		cmp al,04		; Necropolis?
-    0F85 F1A0F0FF	jne 4C85F9		; if no -> [exit]
-    E9 CEA0F0FF	jmp 4C85DB		; -> [continue]
+	----------	-------------------------------------------------------------------------
+	1BE4F8~50C	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
+	----------	-------------------------------------------------------------------------
+	8A 44 18 04	mov al,[eax+ebx+04]	; AL = town type
+	3C 03		cmp al,03		; Inferno?
+	74 08		je 5BE508		; if yes -> [continue]
+	3C 04		cmp al,04		; Necropolis?
+	0F85 F1A0F0FF	jne 4C85F9		; if no -> [exit]
+	E9 CEA0F0FF	jmp 4C85DB		; -> [continue]
 
-    ---------	-------------------------------------------------------------------------
-    0C8602~23	; INFERNO/NECROPOLIS GRAILS TO "ALWAYS WEEK/MONTH OF DEMON/ZOMBIE"
-    ---------	-------------------------------------------------------------------------
-    8B 0D B0476700	mov ecx,[6747B0]	; ???
-    8B 55 FC	mov edx,[ebp-04]	; ???
-    8B 82 14160200	mov eax,[edx+21614]	; ???
-    8A 44 18 04	mov al,[eax+ebx+04]	; AL = town type
-    E8 F35E0F00	call 5BE50D		; -> free space (Conflux grail effect)
-    89 35 A0776900	mov [6977A0],esi	; store week type
-    89 45 F0	mov [ebp-10],eax	; store upgraded unit type
-    48		dec eax			; EAX = base unit
+	---------	-------------------------------------------------------------------------
+	0C8602~23	; INFERNO/NECROPOLIS GRAILS TO "ALWAYS WEEK/MONTH OF DEMON/ZOMBIE"
+	---------	-------------------------------------------------------------------------
+	8B 0D B0476700	mov ecx,[6747B0]	; ???
+	8B 55 FC	mov edx,[ebp-04]	; ???
+	8B 82 14160200	mov eax,[edx+21614]	; ???
+	8A 44 18 04	mov al,[eax+ebx+04]	; AL = town type
+	E8 F35E0F00	call 5BE50D		; -> free space (Conflux grail effect)
+	89 35 A0776900	mov [6977A0],esi	; store week type
+	89 45 F0	mov [ebp-10],eax	; store upgraded unit type
+	48		dec eax			; EAX = base unit
 
-    ---------	-------------------------------------------------------------------------
-    1BE50D~26	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
-    ---------	-------------------------------------------------------------------------
-    3C 04		cmp al,04		; Necropolis?
-    74 06		je 5BE517		; if yes -> set "temp" flag
-    6A 31		push 31			; 31 = Horny Demons
-    6A 07		push 07			; +7
-    EB 0A		jmp 5BE521		; -> "grail" growth week
+	---------	-------------------------------------------------------------------------
+	1BE50D~26	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
+	---------	-------------------------------------------------------------------------
+	3C 04		cmp al,04		; Necropolis?
+	74 06		je 5BE517		; if yes -> set "temp" flag
+	6A 31		push 31			; 31 = Horny Demons
+	6A 07		push 07			; +7
+	EB 0A		jmp 5BE521		; -> "grail" growth week
 
-    FF 05 013B6700	inc [673B01]		; set "temp" flag
-    6A 3B		push 3B			; 3B = Zombies (Russo-style)
-    6A 0E		push 0E			; +15
+	FF 05 013B6700	inc [673B01]		; set "temp" flag
+	6A 3B		push 3B			; 3B = Zombies (Russo-style)
+	6A 0E		push 0E			; +15
 
-    6A 02		push 02			; "grail" growth week
-    5E		pop esi			; ESI = week type
-    5A		pop edx			; EDX = bonus
-    58		pop eax			; EAX = unit
-    C3		ret			; return
+	6A 02		push 02			; "grail" growth week
+	5E		pop esi			; ESI = week type
+	5A		pop edx			; EDX = bonus
+	58		pop eax			; EAX = unit
+	C3		ret			; return
 
-    ---------	-------------------------------------------------------------------------
-    0CC94F~60	; INFERNO/NECROPOLIS GRAIL TEXTBOX (WEEK)
-    ---------	-------------------------------------------------------------------------
-    E9 D31B0F00	jmp 5BE527		; -> free space (Conflux grail effect)
-    90		nop			; -
-    8B 90 D4150000	mov edx,[eax+15D4]	; EDX = Demons
-    8B 80 48160000	mov eax,[eax+1648]	; EAX = Horny Demons
+	---------	-------------------------------------------------------------------------
+	0CC94F~60	; INFERNO/NECROPOLIS GRAIL TEXTBOX (WEEK)
+	---------	-------------------------------------------------------------------------
+	E9 D31B0F00	jmp 5BE527		; -> free space (Conflux grail effect)
+	90		nop			; -
+	8B 90 D4150000	mov edx,[eax+15D4]	; EDX = Demons
+	8B 80 48160000	mov eax,[eax+1648]	; EAX = Horny Demons
 
-    ---------	-------------------------------------------------------------------------
-    1BE527~51	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
-    ---------	-------------------------------------------------------------------------
-    803D013B670001	cmp byte [673B01],01	; Necropolis?
-    74 08		je 5BE538		; if yes -> unset "temp" flag
+	---------	-------------------------------------------------------------------------
+	1BE527~51	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
+	---------	-------------------------------------------------------------------------
+	803D013B670001	cmp byte [673B01],01	; Necropolis?
+	74 08		je 5BE538		; if yes -> unset "temp" flag
 
-    6A 07		push 07			; ECX = 7 (Demon growth bonus)
-    59		pop ecx			; ""
-    E9 1DE4F0FF	jmp 4CC955		; -> [return]
+	6A 07		push 07			; ECX = 7 (Demon growth bonus)
+	59		pop ecx			; ""
+	E9 1DE4F0FF	jmp 4CC955		; -> [return]
 
-    FF 0D 013B6700	dec [673B01]		; unset "temp" flag
-    6A 0E		push 0E			; ECX = 15 (Zombie growth bonus)
-    59		pop ecx			; ""
-    8B 90 5C1A0000	mov edx,[eax+1A5C]	; EDX = Zombies (Romero-style)
-    8B 80 D01A0000	mov eax,[eax+1AD0]	; EAX = Zombies (Russo-style)
-    E9 0FE4F0FF 	jmp 4CC961		; -> [continue]
+	FF 0D 013B6700	dec [673B01]		; unset "temp" flag
+	6A 0E		push 0E			; ECX = 15 (Zombie growth bonus)
+	59		pop ecx			; ""
+	8B 90 5C1A0000	mov edx,[eax+1A5C]	; EDX = Zombies (Romero-style)
+	8B 80 D01A0000	mov eax,[eax+1AD0]	; EAX = Zombies (Russo-style)
+	E9 0FE4F0FF 	jmp 4CC961		; -> [continue]
 
-    ---------	-------------------------------------------------------------------------
-    0C8C38~41	; INFERNO/NECROPOLIS GRAIL TEXTBOX (MONTH)
-    ---------	-------------------------------------------------------------------------
-    E8 15590F00	call 5BE552		; -> free space (Conflux grail effect)
-    90 90 90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	0C8C38~41	; INFERNO/NECROPOLIS GRAIL TEXTBOX (MONTH)
+	---------	-------------------------------------------------------------------------
+	E8 15590F00	call 5BE552		; -> free space (Conflux grail effect)
+	90 90 90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    1BE552~68	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
-    ---------	-------------------------------------------------------------------------
-    803D013B670001	cmp byte [673B01],01	; Necropolis?
-    74 04		je 5BE55F		; if yes -> Zombies
-    6A 30		push 30			; Demons
-    EB 02		jmp 5BE561		; -> ESI = unit
+	---------	-------------------------------------------------------------------------
+	1BE552~68	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL EFFECT)
+	---------	-------------------------------------------------------------------------
+	803D013B670001	cmp byte [673B01],01	; Necropolis?
+	74 04		je 5BE55F		; if yes -> Zombies
+	6A 30		push 30			; Demons
+	EB 02		jmp 5BE561		; -> ESI = unit
 
-    6A 3A		push 3A			; Zombies (Romero-style)
-    5E		pop esi			; ESI = unit
-    89 35 98776900	mov [697798],esi	; store unit
-    C3 		ret 			; return (1BE569~75 is free space)
+	6A 3A		push 3A			; Zombies (Romero-style)
+	5E		pop esi			; ESI = unit
+	89 35 98776900	mov [697798],esi	; store unit
+	C3 		ret 			; return (1BE569~75 is free space)
 
 Of course, with the Conflux grail effect trashed, that leaves us with a grail that has no
 bonus. Incidentally, we also have a grail - Tower's Skyship - with two effects: it boosts
@@ -1743,76 +1741,76 @@ the spell point bonus. Keeping somewhat to the theme of both the other two "good
 as well as the Tower grail itself, let's have it allow your units to always recieve the
 native terrain bonus in combat (terrain movement costs outside of combat still apply).
 
-    ---------	-------------------------------------------------------------------------
-    03D544~50	; NEW TOWER GRAIL EFFECT
-    ---------	-------------------------------------------------------------------------
-    89 4B 3C	mov [ebx+3C],ecx	; (rearranged code so we can use ECX)
-    E8 D5121900	call 5CE821		; -> free space (Conflux grail, right click)
-    8B 45 14	mov eax,[ebp+14]	; (rearranged code so we can use EAX)
-    29 C2 		sub edx,eax		; ""
-    
-    ---------	-------------------------------------------------------------------------
-    1CE821~D5	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL, RIGHT CLICK)
-    ---------	-------------------------------------------------------------------------
-    53		push ebx		 ; store EBX
-    80BBD804000001	cmp byte [ebx+4D8],01	 ; is unit already on native terrain?
-    74 30		je 5CE85B		 ; if yes -> (cleanup)
-    
-    8B 35 20946900	mov esi,[699420]	 ; ESI = combat manager
-    8B 45 14	mov eax,[ebp+14]	 ; EAX = unit's side (attacker = 0, defender = 1)
-    8B9C86CC530000	mov ebx,[esi+eax*4+53CC] ; EBX = unit's hero data
-    85 DB		test ebx,ebx		 ; is there a hero?
-    74 1C		je 5CE85B		 ; if no -> (cleanup)
-    
-    8B 35 38956900	mov esi,[699538]	 ; ESI = main index
-    8A 4B 22	mov cl,[ebx+22]		 ; ECX = hero's owner
-    6B C9 2D	imul ecx,ecx,2D		 ; ECX = data range
-    8D9CCED00A0200	lea ebx,[esi+ecx*8+20AD0]; EBX = player data
-    8A84CE0E0B0200	mov al,[esi+ecx*8+20B0E] ; EAX = number of towns owned by player
-    
-    84 C0		test al,al		 ; do we have any towns?
-    74 6C		je 5CE8C9		 ; if no -> (cleanup)
-    
-    57		push edi		 ; store number of towns checked (starts at 0)
-    50		push eax		 ; store number towns owned by player
-    8A 44 3B 40	mov al,[ebx+edi+40]	 ; EAX = town ID owned by player
-    3C FF		cmp al,-01		 ; is this a blank slot? (???)
-    75 04		jne 5CE86B		 ; if no -> EAX = data range
-    
-    31 C0		xor eax,eax		 ; EAX = 0
-    EB 15		jmp 5CE880		 ; -> Tower? (~~~this makes no sense)
-    
-    69 C0 2D000000	imul eax,eax,2D		 ; EAX = data range
-    8B 35 38956900	mov esi,[699538]	 ; ESI = main index
-    8B 8E 14160200	mov ecx,[esi+21614]	 ; ECX = town index
-    8D 04 C1	lea eax,[ecx+eax*8]	 ; EAX = town data
-    80 78 04 02	cmp byte [eax+04],02	 ; Tower?
-    75 3C		jne 5CE8C2		 ; if no -> EAX = number towns owned by player
-    
-    8B 90 58010000	mov edx,[eax+158]	 ; is grail building built?
-    8B 88 5C010000	mov ecx,[eax+15C]	 ; ""
-    8B 3D 68CE6600	mov edi,[66CE68]	 ; ""
-    8B 35 6CCE6600	mov esi,[66CE6C]	 ; ""
-    21 FA		and edx,edi		 ; ""
-    21 F1		and ecx,esi		 ; ""
-    09 CA		or edx,ecx		 ; ""
-    74 1C 		je 5CE8C2		 ; if no -> EAX = number towns owned by player
-    
-    8B 7D F8	mov edi,[ebp-08]	 ; EDI = unit data
-    C687D804000001	mov byte[edi+4D8],01	 ; unit is on native terrain
-    FF 87 C4000000	inc [edi+C4]		 ; Attack +1
-    FF 87 C8000000	inc [edi+C8]		 ; Defense +1
-    FF 87 CC000000	inc [edi+CC]		 ; Speed +1
-    
-    58		pop eax			 ; EAX = number towns owned by player
-    5F 		pop edi			 ; EDI = number of towns checked
-    47 		inc edi			 ; EDI + 1
-    39 F8		cmp eax,edi		 ; have we checked every town this player owns?
-    7C 94		jl 5CE85D		 ; if no -> store number of towns checked
-    
-    5B		pop ebx			 ; (cleanup)
-    31 FF		xor edi,edi		 ; ""
-    31 D2		xor edx,edx		 ; ""
-    42		inc edx			 ; ""
-    C3		ret			 ; return
-    909090909090	nop			 ; -
+	---------	-------------------------------------------------------------------------
+	03D544~50	; NEW TOWER GRAIL EFFECT
+	---------	-------------------------------------------------------------------------
+	89 4B 3C	mov [ebx+3C],ecx	; (rearranged code so we can use ECX)
+	E8 D5121900	call 5CE821		; -> free space (Conflux grail, right click)
+	8B 45 14	mov eax,[ebp+14]	; (rearranged code so we can use EAX)
+	29 C2 		sub edx,eax		; ""
+
+	---------	-------------------------------------------------------------------------
+	1CE821~D5	; (EXPANDED SPACE - OVERWRITES CONFLUX GRAIL, RIGHT CLICK)
+	---------	-------------------------------------------------------------------------
+	53		push ebx		 ; store EBX
+	80BBD804000001	cmp byte [ebx+4D8],01	 ; is unit already on native terrain?
+	74 30		je 5CE85B		 ; if yes -> (cleanup)
+
+	8B 35 20946900	mov esi,[699420]	 ; ESI = combat manager
+	8B 45 14	mov eax,[ebp+14]	 ; EAX = unit's side (attacker = 0, defender = 1)
+	8B9C86CC530000	mov ebx,[esi+eax*4+53CC] ; EBX = unit's hero data
+	85 DB		test ebx,ebx		 ; is there a hero?
+	74 1C		je 5CE85B		 ; if no -> (cleanup)
+
+	8B 35 38956900	mov esi,[699538]	 ; ESI = main index
+	8A 4B 22	mov cl,[ebx+22]		 ; ECX = hero's owner
+	6B C9 2D	imul ecx,ecx,2D		 ; ECX = data range
+	8D9CCED00A0200	lea ebx,[esi+ecx*8+20AD0]; EBX = player data
+	8A84CE0E0B0200	mov al,[esi+ecx*8+20B0E] ; EAX = number of towns owned by player
+
+	84 C0		test al,al		 ; do we have any towns?
+	74 6C		je 5CE8C9		 ; if no -> (cleanup)
+
+	57		push edi		 ; store number of towns checked (starts at 0)
+	50		push eax		 ; store number towns owned by player
+	8A 44 3B 40	mov al,[ebx+edi+40]	 ; EAX = town ID owned by player
+	3C FF		cmp al,-01		 ; is this a blank slot? (???)
+	75 04		jne 5CE86B		 ; if no -> EAX = data range
+
+	31 C0		xor eax,eax		 ; EAX = 0
+	EB 15		jmp 5CE880		 ; -> Tower? (~~~this makes no sense)
+
+	69 C0 2D000000	imul eax,eax,2D		 ; EAX = data range
+	8B 35 38956900	mov esi,[699538]	 ; ESI = main index
+	8B 8E 14160200	mov ecx,[esi+21614]	 ; ECX = town index
+	8D 04 C1	lea eax,[ecx+eax*8]	 ; EAX = town data
+	80 78 04 02	cmp byte [eax+04],02	 ; Tower?
+	75 3C		jne 5CE8C2		 ; if no -> EAX = number towns owned by player
+
+	8B 90 58010000	mov edx,[eax+158]	 ; is grail building built?
+	8B 88 5C010000	mov ecx,[eax+15C]	 ; ""
+	8B 3D 68CE6600	mov edi,[66CE68]	 ; ""
+	8B 35 6CCE6600	mov esi,[66CE6C]	 ; ""
+	21 FA		and edx,edi		 ; ""
+	21 F1		and ecx,esi		 ; ""
+	09 CA		or edx,ecx		 ; ""
+	74 1C 		je 5CE8C2		 ; if no -> EAX = number towns owned by player
+
+	8B 7D F8	mov edi,[ebp-08]	 ; EDI = unit data
+	C687D804000001	mov byte[edi+4D8],01	 ; unit is on native terrain
+	FF 87 C4000000	inc [edi+C4]		 ; Attack +1
+	FF 87 C8000000	inc [edi+C8]		 ; Defense +1
+	FF 87 CC000000	inc [edi+CC]		 ; Speed +1
+
+	58		pop eax			 ; EAX = number towns owned by player
+	5F 		pop edi			 ; EDI = number of towns checked
+	47 		inc edi			 ; EDI + 1
+	39 F8		cmp eax,edi		 ; have we checked every town this player owns?
+	7C 94		jl 5CE85D		 ; if no -> store number of towns checked
+
+	5B		pop ebx			 ; (cleanup)
+	31 FF		xor edi,edi		 ; ""
+	31 D2		xor edx,edx		 ; ""
+	42		inc edx			 ; ""
+	C3		ret			 ; return
+	909090909090	nop			 ; -

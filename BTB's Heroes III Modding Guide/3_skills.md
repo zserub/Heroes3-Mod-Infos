@@ -778,24 +778,26 @@ the complete rewrite further below), we can make it respect this property and no
 unliving units using the space we freed up with the Estates specialty. Note that the "unliving" umbrella
 includes undead units, so you can't raise Skeletons from other Skeletons; if you would prefer it to be possible, adding a second check for the unliving flag to the below code is quite trivial.
 
-    --------	-------------------------------------------------------------------------
-    076F63~8	; NECROMANCY TO NOT WORK ON UNLIVING UNITS
-    --------	-------------------------------------------------------------------------
-    E8 ????????	call 4E4648		; -> free space (old Estates specialty)
-    90		nop			; -
+	--------	-------------------------------------------------------------------------
+	076F63~8	; NECROMANCY TO NOT WORK ON UNLIVING UNITS
+	--------	-------------------------------------------------------------------------
+	E8 ????????	call 4E4648		; -> free space (old Estates specialty)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0E4648~66	; (EXPANDED SPACE - OVERWRITES OLD ESTATES SPECIALTY)
-    ---------	-------------------------------------------------------------------------
-    8B 44 82 10	mov eax,[edx+eax*4+10]	; EAX = unit data
-    C1 E8 04	shr eax,04		; shift to "living" flag
-    A8 01		test al,01		; alive?
-    75 04		jne ??????		; if yes -> EAX = unit HP
-    31 C0		xor eax,eax		; EAX = 0
-    EB 04		jmp ??????		; -> (displaced code)
-    8B 44 82 4C	mov eax,[edx+eax*4+4C]	; EAX = unit HP
-    39 C8		cmp eax,ecx		; (displaced code)
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	0E4648~66	; (EXPANDED SPACE - OVERWRITES OLD ESTATES SPECIALTY)
+	---------	-------------------------------------------------------------------------
+	8B 44 82 10	mov eax,[edx+eax*4+10]	; EAX = unit data
+	C1 E8 04	shr eax,04		; shift to "living" flag
+	A8 01		test al,01		; alive?
+	75 04		jne ??????		; if yes -> EAX = unit HP
+	31 C0		xor eax,eax		; EAX = 0
+	EB 04		jmp ??????		; -> (displaced code)
+	8B 44 82 4C	mov eax,[edx+eax*4+4C]	; EAX = unit HP
+	39 C8		cmp eax,ecx		; (displaced code)
+	C3		ret			; return
+
+	076FC9 > 00	; removes minimum of 1
 
     076FC9 > 00	; removes minimum of 1
 
@@ -809,200 +811,199 @@ As a balancing factor, we no longer revive upgraded units
 Also, the Lich Cloak only raises Liches from level 5 and higher units
 To just disallow upgrades, set 069B2E to E9 81000000, which will free up 069B33~B3.
 
-    ----------	-------------------------------------------------------------------------
-    076EF4~FAE	; SIMPLIFIED NECROMANCY FORMULA
-    ----------	-------------------------------------------------------------------------
-    68 82000000	push 82			; 82 = Lich Cloak
-    E8 62250600	call 4D9460		; check for artifact
-    89 45 E4	mov [ebp-1C],eax	; store result
-    C745E814000000	mov [ebp-18],14		; number of stacks to check
-    8B 55 E0	mov edx,[ebp-20]	; EDX = losing team (0 or 1)
-    8D 04 D2	lea eax,[edx+edx*8]	; EBX = stack
-    8D 04 82	lea eax,[edx+eax*4]	; ""
-    C1 E0 05	shl eax,05		; ""
-    29 D0		sub eax,edx		; ""
-    8D 14 40	lea edx,[eax+eax*2]	; ""
-    8D9CD600550000	lea ebx,[esi+edx*8+5500]; ""
-    8B 03		mov eax,[ebx]		; EAX = unit ID
-    83 F8 FF	cmp eax,-01		; empty stack?
-    74 47		je 476F6E		; if yes -> next stack
-    8B 7B 2C	mov edi,[ebx+2C]	; EDI = units in stack
-    8B 53 18	mov edx,[ebx+18]	; EDX = units left alive
-    29 D7		sub edi,edx		; subtract units left from total
-    85 FF		test edi,edi		; did we kill any?
-    7E 3B		jle 476F6E		; if no -> next stack
+	076EF4~FAE	; SIMPLIFIED NECROMANCY FORMULA
+	----------	-------------------------------------------------------------------------
+	68 82000000	push 82			; 82 = Lich Cloak
+	E8 62250600	call 4D9460		; check for artifact
+	89 45 E4	mov [ebp-1C],eax	; store result
+	C745E814000000	mov [ebp-18],14		; number of stacks to check
+	8B 55 E0	mov edx,[ebp-20]	; EDX = losing team (0 or 1)
+	8D 04 D2	lea eax,[edx+edx*8]	; EBX = stack
+	8D 04 82	lea eax,[edx+eax*4]	; ""
+	C1 E0 05	shl eax,05		; ""
+	29 D0		sub eax,edx		; ""
+	8D 14 40	lea edx,[eax+eax*2]	; ""
+	8D9CD600550000	lea ebx,[esi+edx*8+5500]; ""
+	8B 03		mov eax,[ebx]		; EAX = unit ID
+	83 F8 FF	cmp eax,-01		; empty stack?
+	74 47		je 476F6E		; if yes -> next stack
+	8B 7B 2C	mov edi,[ebx+2C]	; EDI = units in stack
+	8B 53 18	mov edx,[ebx+18]	; EDX = units left alive
+	29 D7		sub edi,edx		; subtract units left from total
+	85 FF		test edi,edi		; did we kill any?
+	7E 3B		jle 476F6E		; if no -> next stack
 
-    8D14C500000000	lea edx,[eax*8]		; EAX = data range
-    29 C2		sub edx,eax		; ""
-    8D 04 90	lea eax,[eax+edx*4]	; ""
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    8B 4C 82 10	mov ecx,[edx+eax*4+10]	; ECX = unit data
-    C1 E9 04	shr ecx,04		; switch to living flag
-    F6 C1 01	test cl,01		; living?
-    74 1D		je 476F6E		; if no -> next stack
-    80 7D E4 01	cmp byte [ebp-1C],01	; Lich Cloak?
-    75 11		jne 476F68		; if no -> add to Skeleton pile
-    8B 44 82 04	mov eax,[edx+eax*4+04]	; EAX = unit's level
-    83 F8 04	cmp eax,04		; is level less than 5?
-    7C 08		jl 476F68		; if yes -> add to Skeleton pile
-    01 BE 503D0100	add [esi+13D50],edi	; add to Lich pile
-    EB 06		jmp 476F6E		; -> next stack
-    01 BE 4C3D0100	add [esi+13D4C],edi	; add to Skeleton pile
-    81 C3 48050000	add ebx,548		; next stack
-    FF 4D E8	dec [ebp-18]		; decrease stacks to check
-    75 A7		jne 476F20		; if not zero -> loop (EAX = unit ID)
+	8D14C500000000	lea edx,[eax*8]		; EAX = data range
+	29 C2		sub edx,eax		; ""
+	8D 04 90	lea eax,[eax+edx*4]	; ""
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	8B 4C 82 10	mov ecx,[edx+eax*4+10]	; ECX = unit data
+	C1 E9 04	shr ecx,04		; switch to living flag
+	F6 C1 01	test cl,01		; living?
+	74 1D		je 476F6E		; if no -> next stack
+	80 7D E4 01	cmp byte [ebp-1C],01	; Lich Cloak?
+	75 11		jne 476F68		; if no -> add to Skeleton pile
+	8B 44 82 04	mov eax,[edx+eax*4+04]	; EAX = unit's level
+	83 F8 04	cmp eax,04		; is level less than 5?
+	7C 08		jl 476F68		; if yes -> add to Skeleton pile
+	01 BE 503D0100	add [esi+13D50],edi	; add to Lich pile
+	EB 06		jmp 476F6E		; -> next stack
+	01 BE 4C3D0100	add [esi+13D4C],edi	; add to Skeleton pile
+	81 C3 48050000	add ebx,548		; next stack
+	FF 4D E8	dec [ebp-18]		; decrease stacks to check
+	75 A7		jne 476F20		; if not zero -> loop (EAX = unit ID)
 
-    DB 86 4C3D0100	fild dword [esi+13D4C]	; load Skeleton pile
-    D9 5D D8	fstp dword [ebp-28]	; store as floating value
-    D9 45 D8	fld dword [ebp-28]	; load floating value
-    D8 4D DC	fmul dword [ebp-24]	; multiply by Necromancy
-    E8 07101A00	call 617F94		; convert to integer
-    89 86 4C3D0100	mov [esi+13D4C],eax	; store Skeletons
+	DB 86 4C3D0100	fild dword [esi+13D4C]	; load Skeleton pile
+	D9 5D D8	fstp dword [ebp-28]	; store as floating value
+	D9 45 D8	fld dword [ebp-28]	; load floating value
+	D8 4D DC	fmul dword [ebp-24]	; multiply by Necromancy
+	E8 07101A00	call 617F94		; convert to integer
+	89 86 4C3D0100	mov [esi+13D4C],eax	; store Skeletons
 
-    DB 86 503D0100	fild dword [esi+13D50]	; load Lich pile
-    D9 5D D8	fstp dword [ebp-28]	; store as floating value
-    D9 45 D8 	fld dword [ebp-28]	; load floating value
-    D8 4D DC	fmul dword [ebp-24]	; multiply by Necromancy
-    E8 ED0F1A00	call 617F94		; convert to integer
-    89 86 503D0100	mov [esi+13D50],eax	; store Liches
-    EB 1E		jmp 476FCD		; -> [continue] (076FAF~CD is free space)
+	DB 86 503D0100	fild dword [esi+13D50]	; load Lich pile
+	D9 5D D8	fstp dword [ebp-28]	; store as floating value
+	D9 45 D8 	fld dword [ebp-28]	; load floating value
+	D8 4D DC	fmul dword [ebp-24]	; multiply by Necromancy
+	E8 ED0F1A00	call 617F94		; convert to integer
+	89 86 503D0100	mov [esi+13D50],eax	; store Liches
+	EB 1E		jmp 476FCD		; -> [continue] (076FAF~CD is free space)
 
-    ----------	-------------------------------------------------------------------------
-    026E29~94	; SIMPLIFIED NECROMANCY FORMULA (AI)
-    ----------	-------------------------------------------------------------------------
-    68 82000000	push 82			; 82 = Lich Cloak
-    E8 2D260B00	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 04		je 426E3B		; if no -> skeletons
-    6A 40		push 40			; 40 = Liches
-    EB 02		jmp 426E3D		; -> EBX = unit to revive
-    6A 38		push 38			; 38 = Skeletons
-    5B		pop ebx			; EBX = unit to revive
-    C745FC00000000	mov [ebp-04],00		; ~~~needs finished commentary
-    C745F007000000	mov [ebp-10],07		;
-    8B 06		mov eax,[esi]		;
-    83 F8 FF	cmp eax,-01		;
-    74 24		je 426E77		;
-    8D14C500000000	lea edx,[eax*8]		;
-    29 C2		sub edx,eax		;
-    8D 04 90	lea eax,[eax+edx*4]	;
-    8B 15 B0476700	mov edx,[6747B0]	;
-    8B 4C 82 10	mov ecx,[edx+eax*4+10]	;
-    C1 E9 04	shr ecx,04		;
-    F6 C1 01	test cl,01		;
-    74 06		je 426E77		;
-    8B 46 1C	mov eax,[esi+1C]	;
-    01 45 FC	add [ebp-04],eax	;
-    83 C6 04	add esi,04		;
-    FF 4D F0	dec [ebp-10]		;
-    75 CD		jne 426E4C		;
-    DB 45 FC	fild dword [ebp-04]	; load pile
-    D9 5D FC	fstp dword [ebp-04]	; store as floating value
-    D9 45 FC	fld dword [ebp-04]	; load floating value
-    D8 4D F8	fmul dword [ebp-08]	; multiply by Necromancy
-    E8 04111F00	call 617F94		; convert to integer
-    89 45 FC	mov [ebp-04],eax	; store pile
-    EB 30		jmp 426EC5		; -> [continue] (026E95~C4 is free space)
+	----------	-------------------------------------------------------------------------
+	026E29~94	; SIMPLIFIED NECROMANCY FORMULA (AI)
+	----------	-------------------------------------------------------------------------
+	68 82000000	push 82			; 82 = Lich Cloak
+	E8 2D260B00	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 04		je 426E3B		; if no -> skeletons
+	6A 40		push 40			; 40 = Liches
+	EB 02		jmp 426E3D		; -> EBX = unit to revive
+	6A 38		push 38			; 38 = Skeletons
+	5B		pop ebx			; EBX = unit to revive
+	C745FC00000000	mov [ebp-04],00		; ~~~needs finished commentary
+	C745F007000000	mov [ebp-10],07		;
+	8B 06		mov eax,[esi]		;
+	83 F8 FF	cmp eax,-01		;
+	74 24		je 426E77		;
+	8D14C500000000	lea edx,[eax*8]		;
+	29 C2		sub edx,eax		;
+	8D 04 90	lea eax,[eax+edx*4]	;
+	8B 15 B0476700	mov edx,[6747B0]	;
+	8B 4C 82 10	mov ecx,[edx+eax*4+10]	;
+	C1 E9 04	shr ecx,04		;
+	F6 C1 01	test cl,01		;
+	74 06		je 426E77		;
+	8B 46 1C	mov eax,[esi+1C]	;
+	01 45 FC	add [ebp-04],eax	;
+	83 C6 04	add esi,04		;
+	FF 4D F0	dec [ebp-10]		;
+	75 CD		jne 426E4C		;
+	DB 45 FC	fild dword [ebp-04]	; load pile
+	D9 5D FC	fstp dword [ebp-04]	; store as floating value
+	D9 45 FC	fld dword [ebp-04]	; load floating value
+	D8 4D F8	fmul dword [ebp-08]	; multiply by Necromancy
+	E8 04111F00	call 617F94		; convert to integer
+	89 45 FC	mov [ebp-04],eax	; store pile
+	EB 30		jmp 426EC5		; -> [continue] (026E95~C4 is free space)
 
-    ----------	-------------------------------------------------------------------------
-    069B07~B48	; DO NOT RAISE UPGRADED UNITS
-    ----------	-------------------------------------------------------------------------
-    8B 86 503D0100	mov eax,[esi+13D50]	; EAX = Lich pile
-    85 C0		test eax,eax		; Liches?
-    7E 14		jle 469B25		; if no -> Skeleton Pile
-    6A FF		push -01		; (filler push?)
-    50		push eax		; push Lich pile
-    6A 40		push 40			; 40 = Liches
-    8B 7D 08	mov edi,[ebp+08]	; EDI = hero's team
-    8B8CBEC4540000	mov ecx,[esi+edi*4+54C4]; ECX = hero's army
-    E8 8B0EFEFF	call 44A9B0		; add Liches to hero's army
+	----------	-------------------------------------------------------------------------
+	069B07~B48	; DO NOT RAISE UPGRADED UNITS
+	----------	-------------------------------------------------------------------------
+	8B 86 503D0100	mov eax,[esi+13D50]	; EAX = Lich pile
+	85 C0		test eax,eax		; Liches?
+	7E 14		jle 469B25		; if no -> Skeleton Pile
+	6A FF		push -01		; (filler push?)
+	50		push eax		; push Lich pile
+	6A 40		push 40			; 40 = Liches
+	8B 7D 08	mov edi,[ebp+08]	; EDI = hero's team
+	8B8CBEC4540000	mov ecx,[esi+edi*4+54C4]; ECX = hero's army
+	E8 8B0EFEFF	call 44A9B0		; add Liches to hero's army
 
-    8B 86 4C3D0100	mov eax,[esi+13D4C]	; EAX = Skeleton pile
-    85 C0		test eax,eax		; Skeletons?
-    7E 14		jle 469B43		; if no -> (cleanup)
-    6A FF		push -01		; (filler push?)
-    50		push eax		; push Skeleton pile
-    6A 38		push 38			; 38 = Skeletons
-    8B 7D 08	mov edi,[ebp+08]	; EDI = hero's team
-    8B8CBEC4540000	mov ecx,[esi+edi*4+54C4]; ECX = hero's army
-    E8 6D0EFEFF	call 44A9B0		; add Skeletons to hero's army
+	8B 86 4C3D0100	mov eax,[esi+13D4C]	; EAX = Skeleton pile
+	85 C0		test eax,eax		; Skeletons?
+	7E 14		jle 469B43		; if no -> (cleanup)
+	6A FF		push -01		; (filler push?)
+	50		push eax		; push Skeleton pile
+	6A 38		push 38			; 38 = Skeletons
+	8B 7D 08	mov edi,[ebp+08]	; EDI = hero's team
+	8B8CBEC4540000	mov ecx,[esi+edi*4+54C4]; ECX = hero's army
+	E8 6D0EFEFF	call 44A9B0		; add Skeletons to hero's army
 
-    5F		pop edi			; (cleanup)
-    5E		pop esi			; ""
-    5D		pop ebp			; ""
-    C2 0400		ret 04			; return (069B49~BF is free space)
+	5F		pop edi			; (cleanup)
+	5E		pop esi			; ""
+	5D		pop ebp			; ""
+	C2 0400		ret 04			; return (069B49~BF is free space)
 
-    ----------	-------------------------------------------------------------------------
-    0AE26A~328	; NECROMANCY MESSAGE BOX
-    ----------	-------------------------------------------------------------------------
-    8B 81 503D0100	mov eax,[ecx+13D50]	; EAX = Lich pile
-    85 C0		test eax,eax		; Liches?
-    74 04		je 4AE278		; if no -> EAX = Skeleton pile
-    6A 40		push 40			; 40 = Liches
-    EB 08		jmp 4AE280		; -> ECX = unit to raise
-    8B 81 4C3D0100	mov eax,[ecx+13D4C]	; EAX = Skeleton pile
-    6A 38		push 38			; 38 = Skeletons
-    59		pop ecx			; ECX = unit to raise
-    6B C9 1D	imul ecx,1D		; ECX = data range
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    83 F8 01	cmp eax,01		; are we only raising one unit?
-    75 24		jne 4AE2B3		; if no -> EDX = unit name (plural)
-    8B 54 8A 14	mov edx,[edx+ecx*4+14]	; EDX = unit name (singular)
-    8B 0D C45D6A00	mov ecx,[6A5DC4]	; (textbox shit)
-    8B 49 20	mov ecx,[ecx+20]	; ""
-    8B 89 4C020000	mov ecx,[ecx+24C]	; ""
-    52		push edx		; ""
-    51		push ecx		; ""
-    68 28746900	push 697428		; ""
-    E8 30971600	call 6179DE		; ""
-    83 C4 0C	add esp,0C		; ""
-    EB 23		jmp 4AE2D6		; -> EAX = Combat Manager
+	----------	-------------------------------------------------------------------------
+	0AE26A~328	; NECROMANCY MESSAGE BOX
+	----------	-------------------------------------------------------------------------
+	8B 81 503D0100	mov eax,[ecx+13D50]	; EAX = Lich pile
+	85 C0		test eax,eax		; Liches?
+	74 04		je 4AE278		; if no -> EAX = Skeleton pile
+	6A 40		push 40			; 40 = Liches
+	EB 08		jmp 4AE280		; -> ECX = unit to raise
+	8B 81 4C3D0100	mov eax,[ecx+13D4C]	; EAX = Skeleton pile
+	6A 38		push 38			; 38 = Skeletons
+	59		pop ecx			; ECX = unit to raise
+	6B C9 1D	imul ecx,1D		; ECX = data range
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	83 F8 01	cmp eax,01		; are we only raising one unit?
+	75 24		jne 4AE2B3		; if no -> EDX = unit name (plural)
+	8B 54 8A 14	mov edx,[edx+ecx*4+14]	; EDX = unit name (singular)
+	8B 0D C45D6A00	mov ecx,[6A5DC4]	; (textbox shit)
+	8B 49 20	mov ecx,[ecx+20]	; ""
+	8B 89 4C020000	mov ecx,[ecx+24C]	; ""
+	52		push edx		; ""
+	51		push ecx		; ""
+	68 28746900	push 697428		; ""
+	E8 30971600	call 6179DE		; ""
+	83 C4 0C	add esp,0C		; ""
+	EB 23		jmp 4AE2D6		; -> EAX = Combat Manager
 
-    8B 54 8A 18	mov edx,[edx+ecx*4+18]	; EDX = unit name (plural)
-    8B 0D C45D6A00	mov ecx,[6A5DC4]	; (textbox shit)
-    8B 49 20	mov ecx,[ecx+20]	; ""
-    8B 89 48020000	mov ecx,[ecx+248]	; ""
-    52		push edx		; ""
-    50		push eax		; ""
-    51		push ecx		; ""
-    68 28746900	push 697428		; ""
-    E8 0B971600 	call 6179DE		; ""
-    83 C4 10	add esp,10		; ""
+	8B 54 8A 18	mov edx,[edx+ecx*4+18]	; EDX = unit name (plural)
+	8B 0D C45D6A00	mov ecx,[6A5DC4]	; (textbox shit)
+	8B 49 20	mov ecx,[ecx+20]	; ""
+	8B 89 48020000	mov ecx,[ecx+248]	; ""
+	52		push edx		; ""
+	50		push eax		; ""
+	51		push ecx		; ""
+	68 28746900	push 697428		; ""
+	E8 0B971600 	call 6179DE		; ""
+	83 C4 10	add esp,10		; ""
 
-    A1 20946900	mov eax,[699420]	; EAX = Combat Manager
-    8B 90 503D0100	mov edx,[eax+13D50]	; EDX = Lich pile
-    85 D2		test edx,edx		; Liches?
-    74 04		je 4AE2E9		; if no -> EDX = Skeleton pile
-    6A 40		push 40			; 40 = Liches
-    EB 08		jmp 4AE2F1		; -> ECX = unit to raise
-    8B 90 4C3D0100	mov edx,[eax+13D4C]	; EDX = Skeleton pile
-    6A 38		push 38			; 38 = Skeletons
-    59		pop ecx			; ECX = unit to raise
-    6A 00		push 00			; (displaced code)
-    EB 33		jmp 4AE329		; -> [continue]
+	A1 20946900	mov eax,[699420]	; EAX = Combat Manager
+	8B 90 503D0100	mov edx,[eax+13D50]	; EDX = Lich pile
+	85 D2		test edx,edx		; Liches?
+	74 04		je 4AE2E9		; if no -> EDX = Skeleton pile
+	6A 40		push 40			; 40 = Liches
+	EB 08		jmp 4AE2F1		; -> ECX = unit to raise
+	8B 90 4C3D0100	mov edx,[eax+13D4C]	; EDX = Skeleton pile
+	6A 38		push 38			; 38 = Skeletons
+	59		pop ecx			; ECX = unit to raise
+	6A 00		push 00			; (displaced code)
+	EB 33		jmp 4AE329		; -> [continue]
 
-    83BA503D010000	cmp [edx+13D50],00	; (Skeleton pile empty) check Lich pile
-    74 6D		je 4AE36C		; if empty -> [exit, no message box]
-    E9 0EFFFFFF	jmp 4AE212		; -> [continue]
+	83BA503D010000	cmp [edx+13D50],00	; (Skeleton pile empty) check Lich pile
+	74 6D		je 4AE36C		; if empty -> [exit, no message box]
+	E9 0EFFFFFF	jmp 4AE212		; -> [continue]
 
-    8B 15 20946900	mov edx,[699420]	; EDX = Combat Manager
-    83BA503D010000	cmp [edx+13D50],00	; check Lich pile
-    74 0D		je 4AE320		; if empty -> (displaced code)
-    31 C9		xor ecx,ecx		; ECX = 0
-    89 8A 503D0100	mov [edx+13D50],ecx	; empty Lich pile
-    E9 DEFEFFFF	jmp 4AE1FE		; -> [loop]
+	8B 15 20946900	mov edx,[699420]	; EDX = Combat Manager
+	83BA503D010000	cmp [edx+13D50],00	; check Lich pile
+	74 0D		je 4AE320		; if empty -> (displaced code)
+	31 C9		xor ecx,ecx		; ECX = 0
+	89 8A 503D0100	mov [edx+13D50],ecx	; empty Lich pile
+	E9 DEFEFFFF	jmp 4AE1FE		; -> [loop]
 
-    8B 15 38956900	mov edx,[699538]	; (displaced code)
-    EB 2F		jmp 4AE357		; -> [continue]
-    90		nop			; -
+	8B 15 38956900	mov edx,[699538]	; (displaced code)
+	EB 2F		jmp 4AE357		; -> [continue]
+	90		nop			; -
 
-    --------	-------------------------------------------------------------------------
-    0AE351~6	; NECROMANCY MESSAGE BOX (CONT.)
-    --------	-------------------------------------------------------------------------
-    EB B1		jmp 4AE304		; -> free space (inline - see above)
-    90 90 90 90 	-
+	--------	-------------------------------------------------------------------------
+	0AE351~6	; NECROMANCY MESSAGE BOX (CONT.)
+	--------	-------------------------------------------------------------------------
+	EB B1		jmp 4AE304		; -> free space (inline - see above)
+	90 90 90 90 	-
 
-    0AE20E > E4 00	; adjusted jump to free space above
+	0AE20E > E4 00	; adjusted jump to free space above
 
 -----------------------------------------------------------------------------------------
 
@@ -1013,31 +1014,31 @@ of therefore limited use. My solution to this problem was to create a secondary 
 increases the stat bonuses that units recieve on native terrain. The free space that we use for this is
 more of the space we freed earlier for in-town movement point calculation.
 
-    --------	-------------------------------------------------------------------------
-    03D551~9	; SCOUTING INCREASES NATIVE TERRAIN BONUSES
-    --------	-------------------------------------------------------------------------
-    E8 29790A00	call 4E4E7F		; -> free space (unit specialist movement bonus)
-    90 90 90 90	nop			; -
+	--------	-------------------------------------------------------------------------
+	03D551~9	; SCOUTING INCREASES NATIVE TERRAIN BONUSES
+	--------	-------------------------------------------------------------------------
+	E8 29790A00	call 4E4E7F		; -> free space (unit specialist movement bonus)
+	90 90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0E4E7F~BB	; (EXPANDED SPACE - OVERWRITES UNIT SPECIALIST MOVEMENT BONUS)
-    ---------	-------------------------------------------------------------------------
-    80BBD804000001	cmp byte [ebx+4D8],01	; are we on native terrain?
-    75 2A		jne 4E4EB2		; if no -> (displaced code)
+	---------	-------------------------------------------------------------------------
+	0E4E7F~BB	; (EXPANDED SPACE - OVERWRITES UNIT SPECIALIST MOVEMENT BONUS)
+	---------	-------------------------------------------------------------------------
+	80BBD804000001	cmp byte [ebx+4D8],01	; are we on native terrain?
+	75 2A		jne 4E4EB2		; if no -> (displaced code)
 
-    8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
-    8B8C81CC530000	mov ecx,[ecx+eax*4+53CC]; ECX = active hero data
-    85 C9		test ecx,ecx		; is there an active hero?
-    74 19		je 4E4EB2		; if no -> (displaced code)
+	8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
+	8B8C81CC530000	mov ecx,[ecx+eax*4+53CC]; ECX = active hero data
+	85 C9		test ecx,ecx		; is there an active hero?
+	74 19		je 4E4EB2		; if no -> (displaced code)
 
-    0FBE89CC000000	movsx ecx,[ecx+CC]	; ECX = hero's scouting skill
-    01 8B CC000000	add [ebx+CC],ecx	; add Scouting skill to Defense
-    01 8B C8000000	add [ebx+C8],ecx	; add Scouting skill to Attack
-    01 8B C4000000	add [ebx+C4],ecx	; add Scouting skill to Speed
+	0FBE89CC000000	movsx ecx,[ecx+CC]	; ECX = hero's scouting skill
+	01 8B CC000000	add [ebx+CC],ecx	; add Scouting skill to Defense
+	01 8B C8000000	add [ebx+C8],ecx	; add Scouting skill to Attack
+	01 8B C4000000	add [ebx+C4],ecx	; add Scouting skill to Speed
 
-    83 C9 FF	or ecx,-01		; (displaced code)
-    89 83 F4000000	mov [ebx+F4],eax	; ""
-    C3		ret			; return (0E4EBC~CD is free space)
+	83 C9 FF	or ecx,-01		; (displaced code)
+	89 83 F4000000	mov [ebx+F4],eax	; ""
+	C3		ret			; return (0E4EBC~CD is free space)
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -1119,37 +1120,37 @@ weighted toward higher (Hostile) or lower (Friendly) results. We do this by gett
 1 to 10 for all three variable aggression settings and then, in the case of Friendly and Hostile units,
 check to see if the result is above or below a given threshold. If so, it's then manually adjusted.
 
-    ----------	-------------------------------------------------------------------------
-    101AEC~B1F	; WEIGHTED AGGRESSION SETTINGS
-    ----------	-------------------------------------------------------------------------
-    6A 01		push 01			; 01 = minimum aggression
-    6A 0A		push 0A			; 0A = maximum aggression
-    5A		pop edx			; ""
-    59		pop ecx			; ""
-    FF2485C81D5000	jmp [eax*4+501DC8]	; -> (aggression setting)
+	----------	-------------------------------------------------------------------------
+	101AEC~B1F	; WEIGHTED AGGRESSION SETTINGS
+	----------	-------------------------------------------------------------------------
+	6A 01		push 01			; 01 = minimum aggression
+	6A 0A		push 0A			; 0A = maximum aggression
+	5A		pop edx			; ""
+	59		pop ecx			; ""
+	FF2485C81D5000	jmp [eax*4+501DC8]	; -> (aggression setting)
 
-    B0 FC		mov al,-04		; (COMPLIANT): EAX = -4
-    EB 34		jmp 501B31		; -> continue
+	B0 FC		mov al,-04		; (COMPLIANT): EAX = -4
+	EB 34		jmp 501B31		; -> continue
 
-    E8 BEAC0000	call 50C7C0		; (FRIENDLY): EAX = 1~10
-    83 F8 08	cmp eax,08		; is aggression (EAX) >= 8?
-    7E 2A		jle 501B31		; if no -> continue
-    B0 01		mov al,01		; EAX = 1
-    EB 26		jmp 501B31		; -> continue
+	E8 BEAC0000	call 50C7C0		; (FRIENDLY): EAX = 1~10
+	83 F8 08	cmp eax,08		; is aggression (EAX) >= 8?
+	7E 2A		jle 501B31		; if no -> continue
+	B0 01		mov al,01		; EAX = 1
+	EB 26		jmp 501B31		; -> continue
 
-    E8 B0AC0000	call 50C7C0		; (AGGRESSIVE): EAX = 1~10
-    EB 1F		jmp 501B31		; -> continue
+	E8 B0AC0000	call 50C7C0		; (AGGRESSIVE): EAX = 1~10
+	EB 1F		jmp 501B31		; -> continue
 
-    E8 A9AC0000	call 50C7C0		; (HOSTILE): EAX = 1~10
-    83 F8 03	cmp eax,03		; is aggression (EAX) <= 3?
-    7D 15		jge 501B31		; if no -> continue
-    B0 0A		mov al,0A		; EAX = 10
-    EB 11		jmp 501B31		; -> continue (101B20~7 is free space)
+	E8 A9AC0000	call 50C7C0		; (HOSTILE): EAX = 1~10
+	83 F8 03	cmp eax,03		; is aggression (EAX) <= 3?
+	7D 15		jge 501B31		; if no -> continue
+	B0 0A		mov al,0A		; EAX = 10
+	EB 11		jmp 501B31		; -> continue (101B20~7 is free space)
 
-    101DC8 > F9	; update jump pointer
-    101DCC > FD	; ""
-    101DD0 > 0B	; ""
-    101DD4 > 12	; ""
+	101DC8 > F9	; update jump pointer
+	101DCC > FD	; ""
+	101DD0 > 0B	; ""
+	101DD4 > 12	; ""
 
 Beyond that, what you can do about this depends either on how dirty you feel like getting your hands or
 how much you like the example I'm about to give. A quick and fairly effective nerf is to change 017246
@@ -1167,68 +1168,69 @@ removing the Sympathy bonus, then you need only edit these addresses to the appr
 where a disassembler like Cheat Engine will come in handy, since it will translate the assembly command
 into raw hex for you). That said, I've opted to go for more of a total rewrite, as seen below:
 
-    --------	---------------------------------------------------------------------
-    0A7550~E	; NEW JOIN OFFER FORMULA
-    --------	---------------------------------------------------------------------
-    29 D0		sub eax,edx		; removes Sympathy (EDX) after fight check
-    29 C8		sub eax,ecx		; removes Diplomacy (ECX) after fight check
+	--------	---------------------------------------------------------------------
+	0A7550~E	; NEW JOIN OFFER FORMULA
+	--------	---------------------------------------------------------------------
+	29 D0		sub eax,edx		; removes Sympathy (EDX) after fight check
+	29 C8		sub eax,ecx		; removes Diplomacy (ECX) after fight check
 
-    39 C6		cmp esi,eax		; is our army strength (EAX) >= aggression (ESI)?
-    0F 9D 45 0C	setge [ebp+0C]		; if yes, enemy flees if they do not join
+	39 C6		cmp esi,eax		; is our army strength (EAX) >= aggression (ESI)?
+	0F 9D 45 0C	setge [ebp+0C]		; if yes, enemy flees if they do not join
 
-    E9 B2D20300	jmp 4E4811		; -> free space (Diplomacy specialty & artifacts)
+	E9 B2D20300	jmp 4E4811		; -> free space (Diplomacy specialty & artifacts)
 
-    ---------	---------------------------------------------------------------------
-    0E4802~30	; (EXPANDED SPACE - OVERWRITES DIPLOMACY SPECIALTY & ARTIFACTS)
-    ---------	---------------------------------------------------------------------
-    8B148D38EA6300	mov edx,[ecx*4+63EA38]	; EDX = surrender discount
-    89 55 FC	mov [ebp-04],edx	; store surrender discount
-    E9 16010000	jmp 4E4927		; frees space: 0E4811~926
+	---------	---------------------------------------------------------------------
+	0E4802~30	; (EXPANDED SPACE - OVERWRITES DIPLOMACY SPECIALTY & ARTIFACTS)
+	---------	---------------------------------------------------------------------
+	8B148D38EA6300	mov edx,[ecx*4+63EA38]	; EDX = surrender discount
+	89 55 FC	mov [ebp-04],edx	; store surrender discount
+	E9 16010000	jmp 4E4927		; frees space: 0E4811~926
 
-    8B 5D 10	mov ebx,[ebp+10]	; (displaced code)
+	8B 5D 10	mov ebx,[ebp+10]	; (displaced code)
 
-    8B C1		mov eax,ecx		; EAX = Diplomacy
-    6B C0 02	imul eax,02		; EAX * 2
-    01 D0		add eax,edx		; EAX + Sympathy (EDX)
+	8B C1		mov eax,ecx		; EAX = Diplomacy
+	6B C0 02	imul eax,02		; EAX * 2
+	01 D0		add eax,edx		; EAX + Sympathy (EDX)
 
-    39 C6		cmp esi,eax		; is EAX >= aggression (ESI)?
-    0F8F C92DFCFF	jg 4A75EC		; if no -> [no join]
+	39 C6		cmp esi,eax		; is EAX >= aggression (ESI)?
+	0F8F C92DFCFF	jg 4A75EC		; if no -> [no join]
 
-    83 FA 02	cmp edx,02		; is sympathy 2?
-    0F8D 332DFCFF	jge 4A755F		; if yes -> [free join]
-    E9 7A2DFCFF	jmp 4A75AB		; -> [paid join]
+	83 FA 02	cmp edx,02		; is sympathy 2?
+	0F8D 332DFCFF	jge 4A755F		; if yes -> [free join]
+	E9 7A2DFCFF	jmp 4A75AB		; -> [paid join]
 
-    ---------	-------------------------------------------------------------------------
-    01722C~64	; NEW JOIN OFFER FORMULA (VISIONS SPELL)
-    ---------	-------------------------------------------------------------------------
-    7F 23		jg 417251		; (skip join check if initial fight check fails)
-    29 D0		sub eax,edx		; removes Sympathy (EDX) after fight check
-    29 F0		sub eax,esi		; removes Diplomacy (ESI) after fight check
+	---------	-------------------------------------------------------------------------
+	01722C~64	; NEW JOIN OFFER FORMULA (VISIONS SPELL)
+	---------	-------------------------------------------------------------------------
+	7F 23		jg 417251		; (skip join check if initial fight check fails)
+	29 D0		sub eax,edx		; removes Sympathy (EDX) after fight check
+	29 F0		sub eax,esi		; removes Diplomacy (ESI) after fight check
 
-    01 F6		add esi,esi		; Diplomacy (ESI) * 2
-    EB 05		jmp 41723B		; (skip unusable space)
-    90 90 90 90 90	nop			; -
-    01 D6		add esi,edx		; Diplomacy + Sympathy (EDX)
-    39 F1		cmp ecx,esi		; is ESI >= aggression (ECX)?
-    7F 10		jg 417251		; if no -> fight or flee
+	01 F6		add esi,esi		; Diplomacy (ESI) * 2
+	EB 05		jmp 41723B		; (skip unusable space)
+	90 90 90 90 90	nop			; -
+	01 D6		add esi,edx		; Diplomacy + Sympathy (EDX)
+	39 F1		cmp ecx,esi		; is ESI >= aggression (ECX)?
+	7F 10		jg 417251		; if no -> fight or flee
 
-    31 F6		xor esi,esi		; ESI = 0 (join check)
-    83 FA 02	cmp edx,02		; is sympathy 2?
-    EB 05		jmp 41724D		; (skip unusable space)
-    90 90 90 90 90	nop			; -
-    75 13		jne 417262		; if no -> (paid join)
-    EB 12		jmp 417263		; -> (free join)
+	31 F6		xor esi,esi		; ESI = 0 (join check)
+	83 FA 02	cmp edx,02		; is sympathy 2?
+	EB 05		jmp 41724D		; (skip unusable space)
+	90 90 90 90 90	nop			; -
+	75 13		jne 417262		; if no -> (paid join)
+	EB 12		jmp 417263		; -> (free join)
 
-    31 F6		xor esi,esi		; ESI = 0 (fight or flee)
-    F7450800000200	test [ebp+08],20000	; is unit flagged as "can't run"?
-    75 08		jne 417264		; if yes -> (fight)
+	31 F6		xor esi,esi		; ESI = 0 (fight or flee)
+	F7450800000200	test [ebp+08],20000	; is unit flagged as "can't run"?
+	75 08		jne 417264		; if yes -> (fight)
 
-    39 C1		cmp ecx,eax		; is army strength (EAX) >= aggression (ECX)?
-    7C 05		jl 417265		; if no -> [exit] (flee)
-    EB 02		jmp 417264		; -> (fight)
-    46		inc esi			; ESI = 3 (paid join)
-    46		inc esi			; ESI = 2 (free join)
-    46		inc esi			; ESI = 1 (fight)
+	39 C1		cmp ecx,eax		; is army strength (EAX) >= aggression (ECX)?
+	7C 05		jl 417265		; if no -> [exit] (flee)
+	EB 02		jmp 417264		; -> (fight)
+	46		inc esi			; ESI = 3 (paid join)
+	46		inc esi			; ESI = 2 (free join)
+	46		inc esi			; ESI = 1 (fight)
+
 
 So, what's happening here? First of all, we're removing the Diplomacy and Sympathy bonuses after running
 the initial fight check so that, while they can still allow a stack that would otherwise fight to join,
@@ -1248,176 +1250,177 @@ unit, let's have it come from that unit being from the same faction as the hero.
 more or less inline, only overwriting a totally unncessary check for RoE maps (in which the four basic
 elementals are factionless and do not upgrade since Conflux wasn't a thing yet).
 
-    ---------	-------------------------------------------------------------------------
-    0A7236~7F	; COMPLIANT UNITS ALWAYS JOIN FOR FREE (OVERWRITES ROE MAP CHECK)
-    ---------	-------------------------------------------------------------------------
-    8B 45 08	mov eax,[ebp+08]	; EAX = random unit data
-    8B 00		mov eax,[eax]		; EAX = aggression
-    C1 E0 0F	shl eax,0F		; ""
-    C1 F8 1B	sar eax,1B		; ""
-    83 C0 06	add eax,06		; EAX + 6
-    83 F8 02	cmp eax,02		; is random unit complaint? (-4 aggression)
-    75 04		jne 4A724D		; if no -> (optimized code)
-    8B E5		mov esp,ebp		; return (sympathy = 2 for free join)
-    5D		pop ebp			; ""
-    C3		ret			; ""
+	---------	-------------------------------------------------------------------------
+	0A7236~7F	; COMPLIANT UNITS ALWAYS JOIN FOR FREE (OVERWRITES ROE MAP CHECK)
+	---------	-------------------------------------------------------------------------
+	8B 45 08	mov eax,[ebp+08]	; EAX = random unit data
+	8B 00		mov eax,[eax]		; EAX = aggression
+	C1 E0 0F	shl eax,0F		; ""
+	C1 F8 1B	sar eax,1B		; ""
+	83 C0 06	add eax,06		; EAX + 6
+	83 F8 02	cmp eax,02		; is random unit complaint? (-4 aggression)
+	75 04		jne 4A724D		; if no -> (optimized code)
+	8B E5		mov esp,ebp		; return (sympathy = 2 for free join)
+	5D		pop ebp			; ""
+	C3		ret			; ""
 
-    53		push ebx		; (optimized code)
-    56		push esi		; ""
-    57		push edi		; ""
-    8B F9		mov edi,ecx		; ""
-    8B F2		mov esi,edx		; ""
-    31 C9		xor ecx,ecx		; ""
-    89 4D FC	mov [ebp-04],ecx	; ""
-    89 4D F8	mov [ebp-08],ecx	; ""
-    8B 1D B0476700	mov ebx,[6747B0]	; ""
-    8B D6		mov edx,esi		; ""
-    6B D2 1D	imul edx,1D		; ""
-    83 3C 93 FF	cmp [ebx+edx*4],-01	; ""
-    75 05		jne 4A7272		; ""
-    83 C8 FF	or eax,-01		; ""
-    EB 69		jmp 4A72DB		; ""
-    8B CE		mov ecx,esi		; ""
-    E8 5738FDFF	call 47AAD0		; ""
-    83 F8 FF	cmp eax,-01		; ""
-    75 5D 		jne 4A72DB		; ""
-    EB 54		jmp 4A72D4		; "" (0A7280~D3 is free space)
+	53		push ebx		; (optimized code)
+	56		push esi		; ""
+	57		push edi		; ""
+	8B F9		mov edi,ecx		; ""
+	8B F2		mov esi,edx		; ""
+	31 C9		xor ecx,ecx		; ""
+	89 4D FC	mov [ebp-04],ecx	; ""
+	89 4D F8	mov [ebp-08],ecx	; ""
+	8B 1D B0476700	mov ebx,[6747B0]	; ""
+	8B D6		mov edx,esi		; ""
+	6B D2 1D	imul edx,1D		; ""
+	83 3C 93 FF	cmp [ebx+edx*4],-01	; ""
+	75 05		jne 4A7272		; ""
+	83 C8 FF	or eax,-01		; ""
+	EB 69		jmp 4A72DB		; ""
+	8B CE		mov ecx,esi		; ""
+	E8 5738FDFF	call 47AAD0		; ""
+	83 F8 FF	cmp eax,-01		; ""
+	75 5D 		jne 4A72DB		; ""
+	EB 54		jmp 4A72D4		; "" (0A7280~D3 is free space)
 
-    ---------	-------------------------------------------------------------------------
-    0A72DB~E5	; SECOND SYMAPTHY POINT FROM FACTION ALIGNMENT INSTEAD OF ARMY MAJORITY
-    ---------	-------------------------------------------------------------------------
-    57		push edi		; push hero onto stack for later use
-    81 C7 AD000000	add edi,AD		; (optimized code)
-    6A 07		push 07			; ""
-    5B		pop ebx			; ""
-    90		nop			; -
+	---------	-------------------------------------------------------------------------
+	0A72DB~E5	; SECOND SYMAPTHY POINT FROM FACTION ALIGNMENT INSTEAD OF ARMY MAJORITY
+	---------	-------------------------------------------------------------------------
+	57		push edi		; push hero onto stack for later use
+	81 C7 AD000000	add edi,AD		; (optimized code)
+	6A 07		push 07			; ""
+	5B		pop ebx			; ""
+	90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0A72FD~32C	; ""
-    ----------	-------------------------------------------------------------------------
-    75 05		jne 4A7304		; -> loop code (adjusted jump length)
-    31 C0		xor eax,eax		; EAX (sympathy) = 0
-    40		inc eax			; EAX +1
-    EB 08		jmp 4A730C		; -> EDI = hero
+	----------	-------------------------------------------------------------------------
+	0A72FD~32C	; ""
+	----------	-------------------------------------------------------------------------
+	75 05		jne 4A7304		; -> loop code (adjusted jump length)
+	31 C0		xor eax,eax		; EAX (sympathy) = 0
+	40		inc eax			; EAX +1
+	EB 08		jmp 4A730C		; -> EDI = hero
 
-    83 C7 04	add edi,04		; loop code
-    4B		dec ebx			; ""
-    75 DC		jne 4A72E6		; ""
-    31 C0		xor eax,eax		; EAX = 0 (unit is not in our army)
+	83 C7 04	add edi,04		; loop code
+	4B		dec ebx			; ""
+	75 DC		jne 4A72E6		; ""
+	31 C0		xor eax,eax		; EAX = 0 (unit is not in our army)
 
-    5F		pop edi			; EDI = hero
-    31 DB		xor ebx,ebx		; EBX = 0
-    8A 5F 30	mov bl,[edi+30]		; EBX = hero class
-    D1 EB		shr ebx,1		; EBX/2 (hero's faction)
-    6B F6 74	imul esi,esi,74		; prepare to check unit faction
-    81 C6 B8036700	add esi,6703B8		; ""
-    8B 36		mov esi,[esi]		; ESI = unit faction
-    39 F3		cmp ebx,esi		; same faction?
-    75 01		jne 4A7324		; if no -> (cleanup)
-    40		inc eax			; EAX +1
+	5F		pop edi			; EDI = hero
+	31 DB		xor ebx,ebx		; EBX = 0
+	8A 5F 30	mov bl,[edi+30]		; EBX = hero class
+	D1 EB		shr ebx,1		; EBX/2 (hero's faction)
+	6B F6 74	imul esi,esi,74		; prepare to check unit faction
+	81 C6 B8036700	add esi,6703B8		; ""
+	8B 36		mov esi,[esi]		; ESI = unit faction
+	39 F3		cmp ebx,esi		; same faction?
+	75 01		jne 4A7324		; if no -> (cleanup)
+	40		inc eax			; EAX +1
 
-    5F		pop edi			; (cleanup)
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C3		ret			; return
-    90 90		nop			; -
+	5F		pop edi			; (cleanup)
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C3		ret			; return
+	90 90		nop			; -
+
 
     In lieu of a diplomacy bonus on easy mode, let's look at providing one for heroes who encounter units in
     which they specialize. The below code uses more of the space from the Diplomacy specialty and artifacts
     section and assumes that we have swapped all unit specialists from type 1 (scaling) to type 4 (static).
 
-    ---------	-------------------------------------------------------------------------
-    0A7484~9A	; DIPLOMACY BONUS FOR UNIT SPECIALISTS
-    ---------	-------------------------------------------------------------------------
-    8B 4F 1A	mov ecx,[edi+1A]	; ECX = Hero ID
-    E8 A5D30300	call 4E4831		; -> free space (Diplomacy bonus & artifacts)
-    8B DA 		mov ebx,edx		; EBX = diplomacy (EDX will be overwritten)
-    89 45 F8	mov [ebp-08],eax	; (optimized code)
-    DFE0		fnstsw ax		; ""
-    F6 C4 01	test ah,01		; ""
-    75 05		jne 004A749D		; ""
-    6A 0B		push 0B			; ""
-    58		pop eax			; ""
+	---------	-------------------------------------------------------------------------
+	0A7484~9A	; DIPLOMACY BONUS FOR UNIT SPECIALISTS
+	---------	-------------------------------------------------------------------------
+	8B 4F 1A	mov ecx,[edi+1A]	; ECX = Hero ID
+	E8 A5D30300	call 4E4831		; -> free space (Diplomacy bonus & artifacts)
+	8B DA 		mov ebx,edx		; EBX = diplomacy (EDX will be overwritten)
+	89 45 F8	mov [ebp-08],eax	; (optimized code)
+	DFE0		fnstsw ax		; ""
+	F6 C4 01	test ah,01		; ""
+	75 05		jne 004A749D		; ""
+	6A 0B		push 0B			; ""
+	58		pop eax			; ""
 
-    ---------	-------------------------------------------------------------------------
-    0171BD~CD	; DIPLOMACY BONUS FOR UNIT SPECIALISTS (VISIONS SPELL RIGHT-CLICK INFO)
-    ---------	-------------------------------------------------------------------------
-    8B 4E 1A	mov ecx,[esi+1A]	; ECX = Hero ID
-    E8 7ED60C00	call 4E4843		; -> free space (Diplomacy bonus & artifacts)
-    89 45 DC	mov [ebp-24],eax	; optimized code
-    8B C7		mov eax,edi		; ""
-    6B C0 08	imul eax,eax,08		; ""
-    90		nop			; -
+	---------	-------------------------------------------------------------------------
+	0171BD~CD	; DIPLOMACY BONUS FOR UNIT SPECIALISTS (VISIONS SPELL RIGHT-CLICK INFO)
+	---------	-------------------------------------------------------------------------
+	8B 4E 1A	mov ecx,[esi+1A]	; ECX = Hero ID
+	E8 7ED60C00	call 4E4843		; -> free space (Diplomacy bonus & artifacts)
+	89 45 DC	mov [ebp-24],eax	; optimized code
+	8B C7		mov eax,edi		; ""
+	6B C0 08	imul eax,eax,08		; ""
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0E4831~A4	; (EXPANDED SPACE - OVERWRITES DIPLOMACY SPECIALTY & ARTIFACTS)
-    ---------	-------------------------------------------------------------------------
-    0FBE97CD000000	movsx edx,[edi+CD]	; EDX = diplomacy
-    57		push edi		; store EDI
-    8B 7D F8	mov edi,[ebp-08]	; EDI = enemy unit ID
-    E8 0F000000	call 4E4850		; -> free space (Diplomacy specialty & artifacts)
-    5F		pop edi			; retrieve EDI
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	0E4831~A4	; (EXPANDED SPACE - OVERWRITES DIPLOMACY SPECIALTY & ARTIFACTS)
+	---------	-------------------------------------------------------------------------
+	0FBE97CD000000	movsx edx,[edi+CD]	; EDX = diplomacy
+	57		push edi		; store EDI
+	8B 7D F8	mov edi,[ebp-08]	; EDI = enemy unit ID
+	E8 0F000000	call 4E4850		; -> free space (Diplomacy specialty & artifacts)
+	5F		pop edi			; retrieve EDI
+	C3		ret			; return
 
-    0FBE96CD000000	movsx edx,[esi+CD]	; EDX = diplomacy
-    E8 01000000	call 4E4850		; -> free space (Diplomacy specialty & artifacts)
-    C3		ret			; return
+	0FBE96CD000000	movsx edx,[esi+CD]	; EDX = diplomacy
+	E8 01000000	call 4E4850		; -> free space (Diplomacy specialty & artifacts)
+	C3		ret			; return
 
-    57		push edi		; store EDI (enemy unit ID)
-    8B 1D 809C6700	mov ebx,[679C80]	; EBX = specialty index
-    8D 0C 89	lea ecx,[ecx+ecx*4]	; ECX = data range
-    8D 0C CB	lea ecx,[ebx+ecx*8]	; ""
-    83 39 04	cmp dword [ecx],04	; unit specialist?
-    75 2D		jne 4E488F		; if no -> retrieve EDI
+	57		push edi		; store EDI (enemy unit ID)
+	8B 1D 809C6700	mov ebx,[679C80]	; EBX = specialty index
+	8D 0C 89	lea ecx,[ecx+ecx*4]	; ECX = data range
+	8D 0C CB	lea ecx,[ebx+ecx*8]	; ""
+	83 39 04	cmp dword [ecx],04	; unit specialist?
+	75 2D		jne 4E488F		; if no -> retrieve EDI
 
-    83 FF 70	cmp edi,70		; unit ID 70 (Air Elementals) or higher?
-    72 0D		jb 4E4874		; if no -> EDI/2
+	83 FF 70	cmp edi,70		; unit ID 70 (Air Elementals) or higher?
+	72 0D		jb 4E4874		; if no -> EDI/2
 
-    81 FF 84000000	cmp edi,84		; unit ID 84 (Azure Dragons) or higher?
-    73 14		jae 4E4883		; if yes -> compare EDI to hero specialty unit
+	81 FF 84000000	cmp edi,84		; unit ID 84 (Azure Dragons) or higher?
+	73 14		jae 4E4883		; if yes -> compare EDI to hero specialty unit
 
-    8B 59 04	mov ebx,[ecx+04]	; EBX = hero specialty unit
-    EB 07		jmp 4E487B		; -> compare EBX to (lookup table + EDI)
+	8B 59 04	mov ebx,[ecx+04]	; EBX = hero specialty unit
+	EB 07		jmp 4E487B		; -> compare EBX to (lookup table + EDI)
 
-    D1 FF		sar edi,01		; EDI/2 (drops remainder)
-    6B FF 02	imul edi,02		; EDI*2
-    EB 08		jmp 4E4883		; -> compare EDI to hero specialty unit
+	D1 FF		sar edi,01		; EDI/2 (drops remainder)
+	6B FF 02	imul edi,02		; EDI*2
+	EB 08		jmp 4E4883		; -> compare EDI to hero specialty unit
 
-    38 9F 21484E00	cmp [edi+4E4821],bl	; compare EBX to (lookup table + EDI)
-    74 05		je 4E4888		; if match -> diplomacy bonus
-    39 79 04	cmp [ecx+04],edi	; compare EDI to hero specialty unit
-    75 07		jne 4E488F		; if no match -> retrieve EDI
+	38 9F 21484E00	cmp [edi+4E4821],bl	; compare EBX to (lookup table + EDI)
+	74 05		je 4E4888		; if match -> diplomacy bonus
+	39 79 04	cmp [ecx+04],edi	; compare EDI to hero specialty unit
+	75 07		jne 4E488F		; if no match -> retrieve EDI
 
-    42		inc edx			; Diplomacy (EDX) +1
-    83 FA 03	cmp edx,03		; is Diplomacy level now over maximum?
-    7E 01		jle 4E488F		; if no -> retrieve EDI
-    4A		dec edx			; Diplomacy (EDX) -1
+	42		inc edx			; Diplomacy (EDX) +1
+	83 FA 03	cmp edx,03		; is Diplomacy level now over maximum?
+	7E 01		jle 4E488F		; if no -> retrieve EDI
+	4A		dec edx			; Diplomacy (EDX) -1
 
-    5F		pop edi			; retrieve EDI
-    C3		ret			; return
+	5F		pop edi			; retrieve EDI
+	C3		ret			; return
 
-    81		; Air Elementals accept Energy specialty
-    7B		; Earth Elementals accept Ice specialty
-    7D		; Fire Elementals accept Magma specialty
-    7F		; Water Elementals accept Storm specialty
-    20		; Gold Golems accept regular Golem specialty
-    20		; Diamond Golems accept regular Golem specialty
-    FF		; -
-    76		; Sprites accept Pixie specialty
-    FF		; -
-    78		; Magic Elementals accept Magic specialty
-    FF		; -
-    73		; Ice Elementals accept Water specialty
-    FF		; -
-    71		; Magma Elementals accept Earth specialty
-    FF		; -
-    70		; Storm Elementals accept Air specialty
-    FF		; -
-    72		; Energy Elementals accept Fire specialty
-    FF		; -
-    82		; Phoenixes accept Firebird specialty
+	81		; Air Elementals accept Energy specialty
+	7B		; Earth Elementals accept Ice specialty
+	7D		; Fire Elementals accept Magma specialty
+	7F		; Water Elementals accept Storm specialty
+	20		; Gold Golems accept regular Golem specialty
+	20		; Diamond Golems accept regular Golem specialty
+	FF		; -
+	76		; Sprites accept Pixie specialty
+	FF		; -
+	78		; Magic Elementals accept Magic specialty
+	FF		; -
+	73		; Ice Elementals accept Water specialty
+	FF		; -
+	71		; Magma Elementals accept Earth specialty
+	FF		; -
+	70		; Storm Elementals accept Air specialty
+	FF		; -
+	72		; Energy Elementals accept Fire specialty
+	FF		; -
+	82		; Phoenixes accept Firebird specialty
 
 There's a bit of optimization in the above code that bears explanation. We account for upgraded units by
 dividing the unit ID by 2 and then multiplying it by 2; since division in ASM drops any remainder, base
@@ -1430,46 +1433,46 @@ providing a discount for recruiting units from external dwellings. The below cod
 23EA38\~47 for the discount. We left an allowance in the join formula edit above to keep the surrender
 discount; you can remove it and just have this one by setting 0E4802\~8 to 8B 15 38 EA 63 00 90.
 
-    ------		-------------------------------------------------------------------------
-    0A8975		; DIPLOMACY REDUCES UNIT COSTS FROM EXTERNAL DWELLINGS
-    ------		-------------------------------------------------------------------------
-    E9 2BBF0300	jmp 4E48A5		; -> free space (Diplomacy Bonus & Artifacts)
+	------		-------------------------------------------------------------------------
+	0A8975		; DIPLOMACY REDUCES UNIT COSTS FROM EXTERNAL DWELLINGS
+	------		-------------------------------------------------------------------------
+	E9 2BBF0300	jmp 4E48A5		; -> free space (Diplomacy Bonus & Artifacts)
 
-    --------	-------------------------------------------------------------------------
-    1507F6~B	; ""
-    --------	-------------------------------------------------------------------------
-    E8 C040F9FF	call 4E48BB		; -> free space (Diplomacy specialty & artifacts)
-    90		nop			; -
+	--------	-------------------------------------------------------------------------
+	1507F6~B	; ""
+	--------	-------------------------------------------------------------------------
+	E8 C040F9FF	call 4E48BB		; -> free space (Diplomacy specialty & artifacts)
+	90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0E48A5~906	; (EXPANDED SPACE - OVERWRITES DIPLOMACY BONUS & ARTIFACTS)
-    ----------	-------------------------------------------------------------------------
-    FF 05 013B6700	inc [673B01]		; set "temp" flag
-    E8 70CCFBFF	call 4A1520		; -> [external dwelling routine]
-    FF 0D 013B6700	dec [673B01]		; unset "temp" flag
-    E9 BF40FCFF	jmp 4A897A		; return
+	----------	-------------------------------------------------------------------------
+	0E48A5~906	; (EXPANDED SPACE - OVERWRITES DIPLOMACY BONUS & ARTIFACTS)
+	----------	-------------------------------------------------------------------------
+	FF 05 013B6700	inc [673B01]		; set "temp" flag
+	E8 70CCFBFF	call 4A1520		; -> [external dwelling routine]
+	FF 0D 013B6700	dec [673B01]		; unset "temp" flag
+	E9 BF40FCFF	jmp 4A897A		; return
 
-    8B 0D 38956900	mov ecx,[699538]	; ECX = main index
-    50		push eax		; Store EAX
-    A0 013B6700	mov al,[673B01]		; AL = "temp" flag
-    A8 01		test al,01		; external dwelling?
-    74 37		je 4E4902		; if no -> retrieve EAX
+	8B 0D 38956900	mov ecx,[699538]	; ECX = main index
+	50		push eax		; Store EAX
+	A0 013B6700	mov al,[673B01]		; AL = "temp" flag
+	A8 01		test al,01		; external dwelling?
+	74 37		je 4E4902		; if no -> retrieve EAX
 
-    E8 A09DFEFF	call 4CE670		; (prepare EAX to check hero)
-    8B 40 04	mov eax,[eax+04]	; ""
-    69 C0 92040000	imul eax,eax,492	; ""
-    8D840820160200	lea eax,[eax+ecx+21620]	; EAX = hero
-    0FBE88CD000000	movsx ecx, [eax+CD]	; ECX = Diplomacy
-    DB 45 F8	fild dword [ebp-08]	; load unit cost
-    D9 5D 08	fstp dword [ebp+08]	; store as floating value
-    D9 45 08	fld dword [ebp+08]	; load floating value
-    D80C8D38EA6300	fmul dword[ecx*4+63EA38]; multiply by discount
-    E8 98361300	call 617F94		; convert to integer
-    29 45 F8	sub [ebp-08],eax	; subtract discount from unit cost
-    8B 4D F8	mov ecx,[ebp-08]	; ECX = unit cost
-    58		pop eax			; retrieve EAX
-    8D 75 E0	lea esi,[ebp-20]	; (displaced code)
-    C3		ret			; return (0E490C~26 is free space)
+	E8 A09DFEFF	call 4CE670		; (prepare EAX to check hero)
+	8B 40 04	mov eax,[eax+04]	; ""
+	69 C0 92040000	imul eax,eax,492	; ""
+	8D840820160200	lea eax,[eax+ecx+21620]	; EAX = hero
+	0FBE88CD000000	movsx ecx, [eax+CD]	; ECX = Diplomacy
+	DB 45 F8	fild dword [ebp-08]	; load unit cost
+	D9 5D 08	fstp dword [ebp+08]	; store as floating value
+	D9 45 08	fld dword [ebp+08]	; load floating value
+	D80C8D38EA6300	fmul dword[ecx*4+63EA38]; multiply by discount
+	E8 98361300	call 617F94		; convert to integer
+	29 45 F8	sub [ebp-08],eax	; subtract discount from unit cost
+	8B 4D F8	mov ecx,[ebp-08]	; ECX = unit cost
+	58		pop eax			; retrieve EAX
+	8D 75 E0	lea esi,[ebp-20]	; (displaced code)
+	C3		ret			; return (0E490C~26 is free space)
 
 Worth noting in the above are the commands that modify 673B01(*). We need a temporary variable to tell
 us if we're in an external dwelling or not since there's no other way for us to know once we're already
@@ -1517,29 +1520,29 @@ of benefits otherwise. Let's look at improving them, starting with our combo Bal
 Rather than a mere chance of dealing double damage at basic level that's only guaranteed at expert, the
 Ballista and Catapult will always deal double damage and triple at expert.
 
-    ----------	-------------------------------------------------------------------------
-    0435DD~605	; BALLISTA TO 2X DAMAGE AT BASIC SKILL & 3X AT EXPERT
-    ----------	-------------------------------------------------------------------------
-    8B8481CC530000	mov eax,[ecx+eax*4+53CC]; EAX = hero data
-    0FBEB8DD000000	movsx edi,[eax+DD]	; EDI = hero's Artillery skill
-    85 FF		test edi,edi		; do we have Artillery?
-    0F84 9B020000	je 44388E		; if no -> [exit]
-    8B 55 08	mov edx,[ebp+08]	; EDX = base damage
-    01 55 14	add [ebp+14],edx	; add EDX to total damage
-    83 FF 03	cmp edi,03		; expert Artillery?
-    7C 03		jl 443601		; if no -> [continue]
-    01 55 14	add [ebp+14],edx	; add EDX to total damage
-    E9 88020000	jmp 44388E		; -> [continue] (043606~C6 is free)
+	----------	-------------------------------------------------------------------------
+	0435DD~605	; BALLISTA TO 2X DAMAGE AT BASIC SKILL & 3X AT EXPERT
+	----------	-------------------------------------------------------------------------
+	8B8481CC530000	mov eax,[ecx+eax*4+53CC]; EAX = hero data
+	0FBEB8DD000000	movsx edi,[eax+DD]	; EDI = hero's Artillery skill
+	85 FF		test edi,edi		; do we have Artillery?
+	0F84 9B020000	je 44388E		; if no -> [exit]
+	8B 55 08	mov edx,[ebp+08]	; EDX = base damage
+	01 55 14	add [ebp+14],edx	; add EDX to total damage
+	83 FF 03	cmp edi,03		; expert Artillery?
+	7C 03		jl 443601		; if no -> [continue]
+	01 55 14	add [ebp+14],edx	; add EDX to total damage
+	E9 88020000	jmp 44388E		; -> [continue] (043606~C6 is free)
 
 >(NOTE: the values at 23B810 will no longer be used)
 
-    ---------	-------------------------------------------------------------------------
-    045BEC~F7	; CATAPULT TO CUSTOMIZABLE DAMAGE
-    ---------	-------------------------------------------------------------------------
-    8B 7D 0C	mov edi,[ebp+0C]	; EDI = ballistics data
-    0FBE 7F 05	movsx edi,[edi+05]	; EDI = catapult damage
-    8B 75 08	mov esi,[ebp+08]	; ESI = target ID
-    EB 1F		jmp 445C1A		; -> [continue] (045BF8~C19 is free)
+	---------	-------------------------------------------------------------------------
+	045BEC~F7	; CATAPULT TO CUSTOMIZABLE DAMAGE
+	---------	-------------------------------------------------------------------------
+	8B 7D 0C	mov edi,[ebp+0C]	; EDI = ballistics data
+	0FBE 7F 05	movsx edi,[edi+05]	; EDI = catapult damage
+	8B 75 08	mov esi,[ebp+08]	; ESI = target ID
+	EB 1F		jmp 445C1A		; -> [continue] (045BF8~C19 is free)
 
 For the damage of the Catapult (and, by extension, Cyclopses), we'll hijack the first "damage" column in
 Ballist.txt which, in the original game, specifies the 10% chance for no damage at no Ballistics skill.
@@ -1555,86 +1558,86 @@ with enough HP to make use of the increased healing. My solution to this problem
 allow the tent to also heal negative statuses: physical ailments at basic level, mental statuses at
 advanced, and finally all statuses (including purely magical ones like Slow and Curse) at expert.
 
-    ---------	-------------------------------------------------------------------------
-    0E4B96~F7	; FIRST AID HEALS STATUSES (OVERWRITES ORIGINAL EFFECT)
-    ---------	-------------------------------------------------------------------------
-    57		push edi		; store EDI
-    85 F6		test esi,esi		; ??? (crash prevention)
-    74 58		je 4E4BF3		; -> only heal HP
+	---------	-------------------------------------------------------------------------
+	0E4B96~F7	; FIRST AID HEALS STATUSES (OVERWRITES ORIGINAL EFFECT)
+	---------	-------------------------------------------------------------------------
+	57		push edi		; store EDI
+	85 F6		test esi,esi		; ??? (crash prevention)
+	74 58		je 4E4BF3		; -> only heal HP
 
-    0FBE81E4000000	movsx eax,[ecx+E4]	; EAX = First Aid skill
-    84 C0		test al,al		; no skill?
-    74 4D		je 4E4BF3		; if yes -> only heal HP
-    3C 01		cmp al,01		; Basic?
-    74 32		je 4E4BDC		; if yes -> physical statuses only
-    3C 02		cmp al,02		; Advanced?
-    74 17		je 4E4BC5		; if yes -> remove mental statuses
+	0FBE81E4000000	movsx eax,[ecx+E4]	; EAX = First Aid skill
+	84 C0		test al,al		; no skill?
+	74 4D		je 4E4BF3		; if yes -> only heal HP
+	3C 01		cmp al,01		; Basic?
+	74 32		je 4E4BDC		; if yes -> physical statuses only
+	3C 02		cmp al,02		; Advanced?
+	74 17		je 4E4BC5		; if yes -> remove mental statuses
 
-    31 FF		xor edi,edi		; EDI = 0 (remove magic statuses)
-    0FBE8798EA6300	movsx eax,[edi+63EA98]	; EAX = status to remove
-    50		push eax		; remove status
-    8B CE		mov ecx,esi		; ""
-    E8 71F6F5FF	call 444230		; ""
-    47		inc edi			; EDI + 1
-    83 FF 04	cmp edi,04		; have we cleared every magical status?
-    7C EB		jl 4E4BB0		; if no  -> EAX = status to remove
+	31 FF		xor edi,edi		; EDI = 0 (remove magic statuses)
+	0FBE8798EA6300	movsx eax,[edi+63EA98]	; EAX = status to remove
+	50		push eax		; remove status
+	8B CE		mov ecx,esi		; ""
+	E8 71F6F5FF	call 444230		; ""
+	47		inc edi			; EDI + 1
+	83 FF 04	cmp edi,04		; have we cleared every magical status?
+	7C EB		jl 4E4BB0		; if no  -> EAX = status to remove
 
-    31 FF		xor edi,edi		; EDI = 0 (remove mental statuses)
-    0FBE879CEA6300	movsx eax,[edi+63EA9C]	; EAX = status to remove
-    50		push eax		; remove status
-    8B CE		mov ecx,esi		; ""
-    E8 5AF6F5FF	call 444230		; ""
-    47		inc edi			; EDI + 1
-    83 FF 05	cmp edi,05		; have we cleared every mental status?
-    7C EB		jl 4E4BC7		; if no  -> EAX = status to remove
+	31 FF		xor edi,edi		; EDI = 0 (remove mental statuses)
+	0FBE879CEA6300	movsx eax,[edi+63EA9C]	; EAX = status to remove
+	50		push eax		; remove status
+	8B CE		mov ecx,esi		; ""
+	E8 5AF6F5FF	call 444230		; ""
+	47		inc edi			; EDI + 1
+	83 FF 05	cmp edi,05		; have we cleared every mental status?
+	7C EB		jl 4E4BC7		; if no  -> EAX = status to remove
 
-    31 FF		xor edi,edi		; EDI = 0 (remove physical statuses)
-    0FBE87A1EA6300	movsx eax,[edi+63EAA1]	; EAX = status to remove
-    50		push eax		; remove status
-    8B CE		mov ecx,esi		; ""
-    E8 43F6F5FF	call 444230		; ""
-    47		inc edi			; EDI + 1
-    83 FF 05	cmp edi,05		; have we cleared every physical status?
-    7C EB		jl 4E4BDE		; if no  -> EAX = status to remove
-    5F		pop edi			; (cleanup)
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C3		ret			; return
+	31 FF		xor edi,edi		; EDI = 0 (remove physical statuses)
+	0FBE87A1EA6300	movsx eax,[edi+63EAA1]	; EAX = status to remove
+	50		push eax		; remove status
+	8B CE		mov ecx,esi		; ""
+	E8 43F6F5FF	call 444230		; ""
+	47		inc edi			; EDI + 1
+	83 FF 05	cmp edi,05		; have we cleared every physical status?
+	7C EB		jl 4E4BDE		; if no  -> EAX = status to remove
+	5F		pop edi			; (cleanup)
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C3		ret			; return
 
-    ---------	-------------------------------------------------------------------------
-    23EA98~A7	; FIRST AID STATUS TABLE (OVERWRITES ORIGINAL FIRST AID HEALTH TABLE)
-    ---------	-------------------------------------------------------------------------
-    2A 2D 34 36	; magic statuses (Curse, Weakness, Misfortune, Slow)
-    32 3B 3C 3D 3E	; mental statuses (Sorrow, Berserk, Hypnotize, Forgetfulness, Blind)
-    46 47 49 4A 4B	; physical statuses (Petrify, Poison, Disease, Paralyze, Aging)
-    00 00		; -
+	---------	-------------------------------------------------------------------------
+	23EA98~A7	; FIRST AID STATUS TABLE (OVERWRITES ORIGINAL FIRST AID HEALTH TABLE)
+	---------	-------------------------------------------------------------------------
+	2A 2D 34 36	; magic statuses (Curse, Weakness, Misfortune, Slow)
+	32 3B 3C 3D 3E	; mental statuses (Sorrow, Berserk, Hypnotize, Forgetfulness, Blind)
+	46 47 49 4A 4B	; physical statuses (Petrify, Poison, Disease, Paralyze, Aging)
+	00 00		; -
 
-    07387A > 00	; allows First Aid Tent to heal statuses on units at maximum health
-    07609B > 00	; ""
+	07387A > 00	; allows First Aid Tent to heal statuses on units at maximum health
+	07609B > 00	; ""
 
------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------
 
-    ---------	-------------------------------------------------------------------------
-    03383E~4A	; FIRST AID TENT HEALTH RESTORATION BASED ON SKILL (NO RANODMIZATION)
-    ---------	-------------------------------------------------------------------------
-    0FBE81E4000000	movsx eax,[ecx+E4]	; EAX = First Aid skill
-    8A 80 30854700	mov al,[eax+478530]	; EAX = health to restore
+	---------	-------------------------------------------------------------------------
+	03383E~4A	; FIRST AID TENT HEALTH RESTORATION BASED ON SKILL (NO RANODMIZATION)
+	---------	-------------------------------------------------------------------------
+	0FBE81E4000000	movsx eax,[ecx+E4]	; EAX = First Aid skill
+	8A 80 30854700	mov al,[eax+478530]	; EAX = health to restore
 
-    ---------	-------------------------------------------------------------------------
-    078521~F	; ""
-    ---------	-------------------------------------------------------------------------
-    0FBE80E4000000	movsx eax,[eax+E4]	; EAX = First Aid skill
-    8A 80 30854700	mov al,[eax+478530]	; EAX = health to restore
-    EB 08		jmp 478538		; -> continue
+	---------	-------------------------------------------------------------------------
+	078521~F	; ""
+	---------	-------------------------------------------------------------------------
+	0FBE80E4000000	movsx eax,[eax+E4]	; EAX = First Aid skill
+	8A 80 30854700	mov al,[eax+478530]	; EAX = health to restore
+	EB 08		jmp 478538		; -> continue
 
-    ---------	-------------------------------------------------------------------------
-    078530~7	; FIRST AID HEALTH RESTORATION TABLE
-    ---------	-------------------------------------------------------------------------
-    XX		; no skill
-    XX		; Basic
-    XX		; Advanced
-    XX		; Expert
-    90 90 90 90	; -
+	---------	-------------------------------------------------------------------------
+	078530~7	; FIRST AID HEALTH RESTORATION TABLE
+	---------	-------------------------------------------------------------------------
+	XX		; no skill
+	XX		; Basic
+	XX		; Advanced
+	XX		; Expert
+	90 90 90 90	; -
 
 While it does keep the First Aid skill tied to the tent, just allowing it to remove status effects isn't
 really a sufficient draw to make the skill attractive. So let's take the rest of the space we freed up
@@ -1642,30 +1645,30 @@ earlier with the change to Logistics and have First Aid also buff the health of 
 buff will be equal to the hero's First Aid skill level (basic = 1, advanced = 2, expert = 3) times the
 unit's level, thus making the skill significantly impactful even on lower-level units.
 
-    ---------	-------------------------------------------------------------------------
-    0E671D~22	; FIRST AID HEALTH BUFFS
-    ---------	-------------------------------------------------------------------------
-    E8 FBE7FFFF	call 4E4F1D		; -> free space (Logistics)
-    5F		pop edi			; (displaced code)
+	---------	-------------------------------------------------------------------------
+	0E671D~22	; FIRST AID HEALTH BUFFS
+	---------	-------------------------------------------------------------------------
+	E8 FBE7FFFF	call 4E4F1D		; -> free space (Logistics)
+	5F		pop edi			; (displaced code)
 
-    ---------	-------------------------------------------------------------------------
-    0E4F1D~46	; (EXPANDED SPACE - OVERWRITES OLD LOGISTICS SPECIALTY)
-    ---------	-------------------------------------------------------------------------
-    B9 B8036700	mov ecx,6703B8		; ECX = unit data index
-    F6 44 39 10 10	test byte[ecx+edi+10],10; is unit living?
-    74 15		je 4E4899		; if no -> (displaced code)
+	---------	-------------------------------------------------------------------------
+	0E4F1D~46	; (EXPANDED SPACE - OVERWRITES OLD LOGISTICS SPECIALTY)
+	---------	-------------------------------------------------------------------------
+	B9 B8036700	mov ecx,6703B8		; ECX = unit data index
+	F6 44 39 10 10	test byte[ecx+edi+10],10; is unit living?
+	74 15		je 4E4899		; if no -> (displaced code)
 
-    8A 44 39 04	mov al,[ecx+edi+04]	; EAX = unit's level (0~6)
-    40		inc eax			; EAX +1
-    8B 4D FC	mov ecx,[ebp-04]	; ECX = hero
-    50		push eax		; store EAX
-    8A 81 E4000000	mov al,[ecx+E4]		; EAX = First Aid skill
-    59		pop ecx			; ECX = unit's level (0~6 +1)
-    0FAF C1		imul eax,ecx		; EAX * ECX
-    01 C3		add ebx,eax		; add EAX to total health bonus (EBX)
-    8B 46 4C	mov eax,[esi+4C]	; (displaced code)
-    01 D8		add eax,ebx		; ""
-    C3		ret			; return (0E489F~926 is free space)
+	8A 44 39 04	mov al,[ecx+edi+04]	; EAX = unit's level (0~6)
+	40		inc eax			; EAX +1
+	8B 4D FC	mov ecx,[ebp-04]	; ECX = hero
+	50		push eax		; store EAX
+	8A 81 E4000000	mov al,[ecx+E4]		; EAX = First Aid skill
+	59		pop ecx			; ECX = unit's level (0~6 +1)
+	0FAF C1		imul eax,ecx		; EAX * ECX
+	01 C3		add ebx,eax		; add EAX to total health bonus (EBX)
+	8B 46 4C	mov eax,[esi+4C]	; (displaced code)
+	01 D8		add eax,ebx		; ""
+	C3		ret			; return (0E489F~926 is free space)
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -1703,239 +1706,239 @@ level and then multiply it by five after loading it (or else we'd be capped at a
 set a price of 25 gold for first-level spells, we set 4A2710 to 05. A value of 0A (10 in hex) at 4A2711
 will give us a price of 50 gold for second-level spells, and so on. And now for the actual code:
 
-    ------		-------------------------------------------------------------------------
-    1CE919		; INTERACTIVE MAGE GUILDS - SPELLS ARE NOW PURCHASED INDIVIDUALLY
-    ------		-------------------------------------------------------------------------
-    E9 143DEDFF	jmp 4A2632		; -> free space
+	------		-------------------------------------------------------------------------
+	1CE919		; INTERACTIVE MAGE GUILDS - SPELLS ARE NOW PURCHASED INDIVIDUALLY
+	------		-------------------------------------------------------------------------
+	E9 143DEDFF	jmp 4A2632		; -> free space
 
-    ----------	-------------------------------------------------------------------------
-    0A262D~725	; (EXPANDED SPACE - OVERWRITES SCHOLAR ROUTINE)
-    ----------	-------------------------------------------------------------------------
-    E9 25010000 	jmp 4A2757		; frees space
+	----------	-------------------------------------------------------------------------
+	0A262D~725	; (EXPANDED SPACE - OVERWRITES SCHOLAR ROUTINE)
+	----------	-------------------------------------------------------------------------
+	E9 25010000 	jmp 4A2757		; frees space
 
-    83 FA 04	cmp edx,04		; right-click?
-    75 0A		jne 4A2641		; if no -> EAX = visiting hero ID
-    E8 C4450500	call 4F6C00		; message box
-    E9 DDC21200	jmp 5CE91E		; return
+	83 FA 04	cmp edx,04		; right-click?
+	75 0A		jne 4A2641		; if no -> EAX = visiting hero ID
+	E8 C4450500	call 4F6C00		; message box
+	E9 DDC21200	jmp 5CE91E		; return
 
-    E8 96000000	call 4A26DC		; EAX = visiting hero ID
-    74 2C		je 4A2674		; if no hero -> EDX = "no hero" text offset
+	E8 96000000	call 4A26DC		; EAX = visiting hero ID
+	74 2C		je 4A2674		; if no hero -> EDX = "no hero" text offset
 
-    E8 9D000000	call 4A26EA		; EAX = hero data
-    8B 4C 24 0C	mov ecx,[esp+0C]	; ECX = spell ID
-          80BC08EA03000001	cmp byte[eax+ecx+3EA],1	; does hero already know spell?
-    74 1C		je 4A2677		; if yes -> EDX = "spell known" text offset
+	E8 9D000000	call 4A26EA		; EAX = hero data
+	8B 4C 24 0C	mov ecx,[esp+0C]	; ECX = spell ID
+       80BC08EA03000001	cmp byte[eax+ecx+3EA],1	; does hero already know spell?
+	74 1C		je 4A2677		; if yes -> EDX = "spell known" text offset
 
-    E8 9E000000	call 4A26FE		; EAX = player data, ECX = cost, EDX = offset
-    39 88 B4000000	cmp [eax+B4],ecx	; can player afford spell?
-    7C 12		jl 4A267A		; if no -> EDX = "broke bitch" text offset
+	E8 9E000000	call 4A26FE		; EAX = player data, ECX = cost, EDX = offset
+	39 88 B4000000	cmp [eax+B4],ecx	; can player afford spell?
+	7C 12		jl 4A267A		; if no -> EDX = "broke bitch" text offset
 
-    B9 D05C6A00	mov ecx,6A5CD0		; ECX = ArrayTxt index (offset to starting point)
-    8B 0C 11	mov ecx,[ecx+edx]	; ECX + "buy spell" text offset (EDX)
-    6A 02		push 02			; 2 = ok/cancel
-    EB 13		jmp 4A2687		; -> pop EDX
+	B9 D05C6A00	mov ecx,6A5CD0		; ECX = ArrayTxt index (offset to starting point)
+	8B 0C 11	mov ecx,[ecx+edx]	; ECX + "buy spell" text offset (EDX)
+	6A 02		push 02			; 2 = ok/cancel
+	EB 13		jmp 4A2687		; -> pop EDX
 
-    83 C2 04	add edx,04		; EDX = "no hero" text offset
-    83 C2 17	add edx,17		; EDX = "spell known" text offset
-    83 C2 14	add edx,14		; EDX = "broke bitch" text offset
-    B9 D05C6A00	mov ecx,6A5CD0		; ECX = ArrayTxt index
-    8B 0C 11	mov ecx,[ecx+edx]	; ECX + text offset (EDX)
-    6A 01		push 01			; 1 = ok only
-    5A		pop edx			; EDX = 1 (ok only) or 2 (ok/cancel)
-    E8 73450500	call 4F6C00		; message box
+	83 C2 04	add edx,04		; EDX = "no hero" text offset
+	83 C2 17	add edx,17		; EDX = "spell known" text offset
+	83 C2 14	add edx,14		; EDX = "broke bitch" text offset
+	B9 D05C6A00	mov ecx,6A5CD0		; ECX = ArrayTxt index
+	8B 0C 11	mov ecx,[ecx+edx]	; ECX + text offset (EDX)
+	6A 01		push 01			; 1 = ok only
+	5A		pop edx			; EDX = 1 (ok only) or 2 (ok/cancel)
+	E8 73450500	call 4F6C00		; message box
 
-    A1 D0926900	mov eax,[6992D0]	; was "okay" clicked?
-    81783805780000	cmp [eax+38],7805	; ""
-    75 3C		jne 4A26D7		; if no (or if no cancel button) -> return
+	A1 D0926900	mov eax,[6992D0]	; was "okay" clicked?
+	81783805780000	cmp [eax+38],7805	; ""
+	75 3C		jne 4A26D7		; if no (or if no cancel button) -> return
 
-    E8 3C000000	call 4A26DC		; EAX = visiting hero ID
-    E8 45000000	call 4A26EA		; EAX = hero data
-    8B 8D 28FFFFFF	mov ecx,[ebp-D8]	; ECX = spell ID
+	E8 3C000000	call 4A26DC		; EAX = visiting hero ID
+	E8 45000000	call 4A26EA		; EAX = hero data
+	8B 8D 28FFFFFF	mov ecx,[ebp-D8]	; ECX = spell ID
 
-          80BC083004000001	cmp byte[eax+ecx+430],1	; is a scroll for this spell equipped?
-    75 08		jne 4A26BD		; if no -> increment "spell known" byte
-          C68408EA03000001	mov byte[eax+ecx+3EA],1	; set "spell known" byte to 1
-    FE8408EA030000	inc byte[eax+ecx+3EA]	; increment "spell known" byte (scroll=2, else=1)
-          C684083004000001	mov byte[eax+ecx+430],1	; set "can cast spell" byte to 1
+       80BC083004000001	cmp byte[eax+ecx+430],1	; is a scroll for this spell equipped?
+	75 08		jne 4A26BD		; if no -> increment "spell known" byte
+       C68408EA03000001	mov byte[eax+ecx+3EA],1	; set "spell known" byte to 1
+	FE8408EA030000	inc byte[eax+ecx+3EA]	; increment "spell known" byte (scroll=2, else=1)
+       C684083004000001	mov byte[eax+ecx+430],1	; set "can cast spell" byte to 1
 
-    E8 2D000000	call 4A26FE		; EAX = player data, ECX = cost
-    29 88 B4000000	sub [eax+B4],ecx	; subtract spell cost from player's gold
-    E9 42C21200	jmp 5CE91E		; return
+	E8 2D000000	call 4A26FE		; EAX = player data, ECX = cost
+	29 88 B4000000	sub [eax+B4],ecx	; subtract spell cost from player's gold
+	E9 42C21200	jmp 5CE91E		; return
 
-    A1 4C956900	mov eax,[69954C]	; EAX = town manager
-    8B 40 38	mov eax,[eax+38]	; EAX = town data
-    8B 40 10	mov eax,[eax+10]	; EAX = visiting hero ID
-    3C FF		cmp al,-01		; is there a vistiting hero?
-    C3		ret			; return
+	A1 4C956900	mov eax,[69954C]	; EAX = town manager
+	8B 40 38	mov eax,[eax+38]	; EAX = town data
+	8B 40 10	mov eax,[eax+10]	; EAX = visiting hero ID
+	3C FF		cmp al,-01		; is there a vistiting hero?
+	C3		ret			; return
 
-    8B 0D 38956900	mov ecx,[699538]	; ECX = main index
-    69 C0 92040000	imul eax,eax,492	; EAX = data range
-    8D840820160200	lea eax,[eax+ecx+21620]	; EAX = hero data
-    C3		ret			; return
+	8B 0D 38956900	mov ecx,[699538]	; ECX = main index
+	69 C0 92040000	imul eax,eax,492	; EAX = data range
+	8D840820160200	lea eax,[eax+ecx+21620]	; EAX = hero data
+	C3		ret			; return
 
-    A1 A87F6800	mov eax,[687FA8]	; EAX = spell index
-    69 C9 88000000	imul ecx,ecx,088	; ECX = data range
-    8B 4C 08 18	mov ecx,[eax+ecx+18]	; ECX = spell level
-    8B D1		mov edx,ecx		; EDX = ECX
-    6B D2 04	imul edx,04		; EDX = "buy spell" text offset (spell level*4)
-    8A 89 20274A00	mov cl,[ecx+4A2720]	; ECX = spell cost / 5
-    6B C9 05	imul ecx,ecx,05		; ECX * 5
-    A1 FCCC6900	mov eax,[69CCFC]	; EAX = active player data
-    C3		ret			; return
+	A1 A87F6800	mov eax,[687FA8]	; EAX = spell index
+	69 C9 88000000	imul ecx,ecx,088	; ECX = data range
+	8B 4C 08 18	mov ecx,[eax+ecx+18]	; ECX = spell level
+	8B D1		mov edx,ecx		; EDX = ECX
+	6B D2 04	imul edx,04		; EDX = "buy spell" text offset (spell level*4)
+	8A 89 20274A00	mov cl,[ecx+4A2720]	; ECX = spell cost / 5
+	6B C9 05	imul ecx,ecx,05		; ECX * 5
+	A1 FCCC6900	mov eax,[69CCFC]	; EAX = active player data
+	C3		ret			; return
 
-    05		; Level 1 = 05  (*5 = 25 gold)
-    0A		; Level 2 = 10  (*5 = 50 gold)
-    14		; Level 3 = 20  (*5 = 100 gold)
-    32		; Level 4 = 50  (*5 = 250 gold)
-    64		; Level 5 = 100 (*5 = 500 gold)
+	05		; Level 1 = 05  (*5 = 25 gold)
+	0A		; Level 2 = 10  (*5 = 50 gold)
+	14		; Level 3 = 20  (*5 = 100 gold)
+	32		; Level 4 = 50  (*5 = 250 gold)
+	64		; Level 5 = 100 (*5 = 500 gold)
 
-    Array.txt
-    ---------
-    #234: (Immobile)...... "Buy this spell for XX gold?"  (Lv.1)
-    #235: (Super Slow).... "Buy this spell for XX gold?"  (Lv.2)
-    #236: (Ultra Slow).... "Buy this spell for XX gold?"  (Lv.3)
-    #237: (Very Slow)..... "Buy this spell for XX gold?"  (Lv.4)
-    #238: (Extra Slow).... "Buy this spell for XX gold?"  (Lv.5)
-    #239: (Slow).......... "You can't afford this spell." (Lv.1)
-    #240: (Swift)......... "You can't afford this spell." (Lv.2)
-    #241: (Extra Swift)... "You can't afford this spell." (Lv.3)
-    #242: (Very Swift).... "You can't afford this spell." (Lv.4)
-    #243: (Ultra Swift)... "You can't afford this spell." (Lv.5)
-    #244: (Super Swift)... "You already know this spell."
-    #245: (Quick)......... "Only visiting heroes can buy spells."
+	Array.txt
+	---------
+	#234: (Immobile)...... "Buy this spell for XX gold?"  (Lv.1)
+	#235: (Super Slow).... "Buy this spell for XX gold?"  (Lv.2)
+	#236: (Ultra Slow).... "Buy this spell for XX gold?"  (Lv.3)
+	#237: (Very Slow)..... "Buy this spell for XX gold?"  (Lv.4)
+	#238: (Extra Slow).... "Buy this spell for XX gold?"  (Lv.5)
+	#239: (Slow).......... "You can't afford this spell." (Lv.1)
+	#240: (Swift)......... "You can't afford this spell." (Lv.2)
+	#241: (Extra Swift)... "You can't afford this spell." (Lv.3)
+	#242: (Very Swift).... "You can't afford this spell." (Lv.4)
+	#243: (Ultra Swift)... "You can't afford this spell." (Lv.5)
+	#244: (Super Swift)... "You already know this spell."
+	#245: (Quick)......... "Only visiting heroes can buy spells."
 
-    --------	-------------------------------------------------------------------------
-    1BE576~C	; SKIP AUTOMATIC SPELL LEARNING FOR HUMAN PLAYERS
-    --------	-------------------------------------------------------------------------
-    E9 AB41EEFF	jmp 4A2726		; -> free space (Scholar)
-    90 90 		nop			; -
+	--------	-------------------------------------------------------------------------
+	1BE576~C	; SKIP AUTOMATIC SPELL LEARNING FOR HUMAN PLAYERS
+	--------	-------------------------------------------------------------------------
+	E9 AB41EEFF	jmp 4A2726		; -> free space (Scholar)
+	90 90 		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0A2726~744	; (EXPANDED SPACE - OVERWRITES SCHOLAR ROUTINE)
-    ----------	-------------------------------------------------------------------------
-    A1 FCCC6900	mov eax,[69CCFC]	; EAX = active player data
-    8A 80 E1000000	mov al,[eax+E1]		; AL = AI flag
-    84 C0		test al,al		; AI player?
-    0F85 AFBE1100	jne 5BE5E8		; if no -> [exit]
-    0FBE8BD0000000	movsx ecx,[ebx+D0]	; (displaced code)
-    E9 38BE1100	jmp 5BE57D		; return (0A2745~56 is free space)
+	----------	-------------------------------------------------------------------------
+	0A2726~744	; (EXPANDED SPACE - OVERWRITES SCHOLAR ROUTINE)
+	----------	-------------------------------------------------------------------------
+	A1 FCCC6900	mov eax,[69CCFC]	; EAX = active player data
+	8A 80 E1000000	mov al,[eax+E1]		; AL = AI flag
+	84 C0		test al,al		; AI player?
+	0F85 AFBE1100	jne 5BE5E8		; if no -> [exit]
+	0FBE8BD0000000	movsx ecx,[ebx+D0]	; (displaced code)
+	E9 38BE1100	jmp 5BE57D		; return (0A2745~56 is free space)
 
------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------
 
-    ---------	-------------------------------------------------------------------------
-    19EE0B~29	; WISDOM REQUIRED TO CAST LV.3+ COMBAT SPELLS (OVERWRITES CURSED GROUND)
-    ---------	-------------------------------------------------------------------------
-    8B B5 6CFFFFFF	mov esi,[ebp-94]	; ESI = hero data
-    8B 15 809C6700	mov edx,[679C80]	; EDX = specialty index
-    8B 4E 1A	mov ecx,[esi+1A]	; ECX = hero ID
-    8D 0C 89	lea ecx,[ecx+ecx*4]	; ECX = data range
-    8D 0C CA	lea ecx,[edx+ecx*8]	; ""
-    EB 48		jmp 59EE6A		; -> free space (Recanter's Cloak)
-    E8 BF950000	call 5A83E6		; is Wisdom >= spell level?
-    90		nop			; -
-    7D 67		jge 59EE91		; if yes -> [allow spell]
+	---------	-------------------------------------------------------------------------
+	19EE0B~29	; WISDOM REQUIRED TO CAST LV.3+ COMBAT SPELLS (OVERWRITES CURSED GROUND)
+	---------	-------------------------------------------------------------------------
+	8B B5 6CFFFFFF	mov esi,[ebp-94]	; ESI = hero data
+	8B 15 809C6700	mov edx,[679C80]	; EDX = specialty index
+	8B 4E 1A	mov ecx,[esi+1A]	; ECX = hero ID
+	8D 0C 89	lea ecx,[ecx+ecx*4]	; ECX = data range
+	8D 0C CA	lea ecx,[edx+ecx*8]	; ""
+	EB 48		jmp 59EE6A		; -> free space (Recanter's Cloak)
+	E8 BF950000	call 5A83E6		; is Wisdom >= spell level?
+	90		nop			; -
+	7D 67		jge 59EE91		; if yes -> [allow spell]
 
-    ---------	-------------------------------------------------------------------------
-    19EE6A~7F	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    83 39 03	cmp dword [ecx],03	; spell specialist?
-    75 05		jne 59EE74		; if no -> check for scroll
+	---------	-------------------------------------------------------------------------
+	19EE6A~7F	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	83 39 03	cmp dword [ecx],03	; spell specialist?
+	75 05		jne 59EE74		; if no -> check for scroll
 
-    39 41 04	cmp [ecx+04],eax	; specialist in this spell?
-    74 1D		je 59EE91		; if yes -> [allow spell]
+	39 41 04	cmp [ecx+04],eax	; specialist in this spell?
+	74 1D		je 59EE91		; if yes -> [allow spell]
 
-          80BC30EA03000001	cmp byte[eax+esi+3EA],01; spell scroll (00 or 02)?
-    75 13		jne 59EE91		; if yes -> [allow spell]
-    EB A2		jmp 59EE22		; return (19EE80~90 + 19EEAB~F5E is free space)
+       80BC30EA03000001	cmp byte[eax+esi+3EA],01; spell scroll (00 or 02)?
+	75 13		jne 59EE91		; if yes -> [allow spell]
+	EB A2		jmp 59EE22		; return (19EE80~90 + 19EEAB~F5E is free space)
 
-    ---------	-------------------------------------------------------------------------
-    01C551~70	; WISDOM REQUIRED TO CAST LV.3+ MAP SPELLS (OVERWRITES CURSED GROUND)
-    ---------	-------------------------------------------------------------------------
-    8B 15 D0926900	mov edx,[6992D0]	; get spell ID
-    8B 42 38	mov eax,[edx+38]	; ""
-          80BC30EA03000001	cmp byte[eax+esi+3EA],01; spell scroll (00 or 02)?
-    75 79		jne 41C5DD		; if yes -> [allow spell]
+	---------	-------------------------------------------------------------------------
+	01C551~70	; WISDOM REQUIRED TO CAST LV.3+ MAP SPELLS (OVERWRITES CURSED GROUND)
+	---------	-------------------------------------------------------------------------
+	8B 15 D0926900	mov edx,[6992D0]	; get spell ID
+	8B 42 38	mov eax,[edx+38]	; ""
+       80BC30EA03000001	cmp byte[eax+esi+3EA],01; spell scroll (00 or 02)?
+	75 79		jne 41C5DD		; if yes -> [allow spell]
 
-    50		push eax		; store spell ID
-    E8 7CBE1800	call 5A83E6		; is Wisdom >= spell level?
-    58		pop eax			; retrieve spell ID
-    909090909090	nop			; -
+	50		push eax		; store spell ID
+	E8 7CBE1800	call 5A83E6		; is Wisdom >= spell level?
+	58		pop eax			; retrieve spell ID
+	909090909090	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    1A83E1~FB	; (EXPANDED SPACE - OVERWRITES CURSED GROUND & RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    89 4D F8	mov [ebp-08],ecx	; optimized code
-    EB 62		jmp 5A8448		; frees space: 1A83E6~447
+	---------	-------------------------------------------------------------------------
+	1A83E1~FB	; (EXPANDED SPACE - OVERWRITES CURSED GROUND & RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	89 4D F8	mov [ebp-08],ecx	; optimized code
+	EB 62		jmp 5A8448		; frees space: 1A83E6~447
 
-    8B 15 A87F6800	mov edx,[687FA8]	; EDX = spell index
-    6B C0 11	imul eax,eax,11		; EAX = data range
-    8A 8E D0000000	mov cl,[esi+D0]		; CL = Wisdom
-    41		inc ecx			; CL + 2
-    41		inc ecx			; ""
-    3A 4C C2 18	cmp cl,[edx+eax*8+18]	; is CL >= spell level?
-    C3		ret			; return
+	8B 15 A87F6800	mov edx,[687FA8]	; EDX = spell index
+	6B C0 11	imul eax,eax,11		; EAX = data range
+	8A 8E D0000000	mov cl,[esi+D0]		; CL = Wisdom
+	41		inc ecx			; CL + 2
+	41		inc ecx			; ""
+	3A 4C C2 18	cmp cl,[edx+eax*8+18]	; is CL >= spell level?
+	C3		ret			; return
 
-    ---------	-------------------------------------------------------------------------
-    0A5459~60	; SHRINES WILL NOT CHECK FOR WISDOM WHEN TEACHING SPELLS
-    ---------	-------------------------------------------------------------------------
-    8A 45 18	mov al,[ebp+18]		; EAX = AI player?
-    E9 E9000000	jmp 4A554A		; -> [continue] (0A5461~549 is free space)
+	---------	-------------------------------------------------------------------------
+	0A5459~60	; SHRINES WILL NOT CHECK FOR WISDOM WHEN TEACHING SPELLS
+	---------	-------------------------------------------------------------------------
+	8A 45 18	mov al,[ebp+18]		; EAX = AI player?
+	E9 E9000000	jmp 4A554A		; -> [continue] (0A5461~549 is free space)
 
-    0A409E > EB	; pyramids don't check for Wisdom when teaching spells (frees 0A40A0~EE)
-    17421A > EB 1B	; quests don't check for Wisdom when teaching spells (frees 17421C~36)
+	0A409E > EB	; pyramids don't check for Wisdom when teaching spells (frees 0A40A0~EE)
+	17421A > EB 1B	; quests don't check for Wisdom when teaching spells (frees 17421C~36)
 
------------------------------------------------------------------------------------------
+	-----------------------------------------------------------------------------------------
 
-    --------	-------------------------------------------------------------------------
-    0D9894~8	; EQUIP SPELL SCROLL
-    --------	-------------------------------------------------------------------------
-    E9 63EB0C00	jmp 5A83FC		; -> free space (Cursed Ground/Recanter's Cloak)
+	--------	-------------------------------------------------------------------------
+	0D9894~8	; EQUIP SPELL SCROLL
+	--------	-------------------------------------------------------------------------
+	E9 63EB0C00	jmp 5A83FC		; -> free space (Cursed Ground/Recanter's Cloak)
 
-    ----------	-------------------------------------------------------------------------
-    1A83FC~411	; (EXPANDED SPACE - OVERWRITES CURSED GROUND & RECANTER'S CLOAK)
-    ----------	-------------------------------------------------------------------------
-          80BC18EA03000001	cmp byte[eax+ebx+3EA],01; does hero already know this spell?
-    75 07 		jne 5A840D		; if no -> [continue]
-    FF8418EA030000	inc [eax+ebx+3EA]	; set "spell known" byte to 2
-    E9 2316F3FF	jmp 4D9A35		; -> [continue]
+	----------	-------------------------------------------------------------------------
+	1A83FC~411	; (EXPANDED SPACE - OVERWRITES CURSED GROUND & RECANTER'S CLOAK)
+	----------	-------------------------------------------------------------------------
+       80BC18EA03000001	cmp byte[eax+ebx+3EA],01; does hero already know this spell?
+	75 07 		jne 5A840D		; if no -> [continue]
+	FF8418EA030000	inc [eax+ebx+3EA]	; set "spell known" byte to 2
+	E9 2316F3FF	jmp 4D9A35		; -> [continue]
 
-    --------	-------------------------------------------------------------------------
-    0D9860~4	; UNEQUIP SPELL SCROLL
-    --------	-------------------------------------------------------------------------
-    E8 ADEB0C00	call 5A8412		; -> free space (Cursed Ground/Recanter's Cloak)
+	--------	-------------------------------------------------------------------------
+	0D9860~4	; UNEQUIP SPELL SCROLL
+	--------	-------------------------------------------------------------------------
+	E8 ADEB0C00	call 5A8412		; -> free space (Cursed Ground/Recanter's Cloak)
 
-    --------	-------------------------------------------------------------------------
-    1A8412~F	; (EXPANDED SPACE - OVERWRITES CURSED GROUND & RECANTER'S CLOAK)
-    --------	-------------------------------------------------------------------------
-    8A 08		mov cl,[eax]		; CL = "spell known" byte
-    80 F9 02	cmp cl,02		; does CL = 2?
-    75 03		jne 5A841C		; if no -> (displaced code)
-    49		dec ecx			; CL = 1
-    88 08		mov [eax],cl		; "spell known" byte = 1
-    88 0F		mov [edi],cl		; (displaced code)
-    47		inc edi			; ""
-    C3		ret			; return (1A8420~47 is free space)
+	--------	-------------------------------------------------------------------------
+	1A8412~F	; (EXPANDED SPACE - OVERWRITES CURSED GROUND & RECANTER'S CLOAK)
+	--------	-------------------------------------------------------------------------
+	8A 08		mov cl,[eax]		; CL = "spell known" byte
+	80 F9 02	cmp cl,02		; does CL = 2?
+	75 03		jne 5A841C		; if no -> (displaced code)
+	49		dec ecx			; CL = 1
+	88 08		mov [eax],cl		; "spell known" byte = 1
+	88 0F		mov [edi],cl		; (displaced code)
+	47		inc edi			; ""
+	C3		ret			; return (1A8420~47 is free space)
 
-    --------	-------------------------------------------------------------------------
-    0E5402~6	; SCROLLS CAST AT BASIC LEVEL
-    --------	-------------------------------------------------------------------------
-    E9 FBCBFAFF	jmp 492002		; -> free space (Cursed Ground, unit casters)
+	--------	-------------------------------------------------------------------------
+	0E5402~6	; SCROLLS CAST AT BASIC LEVEL
+	--------	-------------------------------------------------------------------------
+	E9 FBCBFAFF	jmp 492002		; -> free space (Cursed Ground, unit casters)
 
-    ---------	-------------------------------------------------------------------------
-    092000~1C	; (EXPANDED SPACE - OVERWRITES CURSED GROUND, UNIT CASTERS)
-    ---------	-------------------------------------------------------------------------
-    EB 1B		jmp 49201D		; frees space: 092009~1C
-    83 FE 46	cmp esi,46		; is ESI a spell ID instead of hero data?
-    7C 0F		jl 492016		; if yes -> (cleanup)
-          80BC3EEA03000001	cmp byte[esi+edi+3EA],1	; spell scroll (00 or 02)?
-    74 05		je 492016		; if no -> (cleanup)
-    3C 00		cmp al,00		; Unskilled?
-    7F 01		jg 492016		; if no -> (cleanup)
-    40		inc eax			; Skill +1
-    5B		pop ebx			; (cleanup)
-    5D		pop ebp			; ""
-    C2 0800		ret 08			; return
-    90 90		nop			; -
+	---------	-------------------------------------------------------------------------
+	092000~1C	; (EXPANDED SPACE - OVERWRITES CURSED GROUND, UNIT CASTERS)
+	---------	-------------------------------------------------------------------------
+	EB 1B		jmp 49201D		; frees space: 092009~1C
+	83 FE 46	cmp esi,46		; is ESI a spell ID instead of hero data?
+	7C 0F		jl 492016		; if yes -> (cleanup)
+       80BC3EEA03000001	cmp byte[esi+edi+3EA],1	; spell scroll (00 or 02)?
+	74 05		je 492016		; if no -> (cleanup)
+	3C 00		cmp al,00		; Unskilled?
+	7F 01		jg 492016		; if no -> (cleanup)
+	40		inc eax			; Skill +1
+	5B		pop ebx			; (cleanup)
+	5D		pop ebp			; ""
+	C2 0800		ret 08			; return
+	90 90		nop			; -
 
 As you can see, fundamentally altering how Wisdom works has mandated that we change several other things
 that it ties directly into, such as spell shrines and scrolls. The above is, for the most part, the bare
@@ -1966,55 +1969,55 @@ and the fact that it provides spell evasion rather than reduction means that it 
 lower levels and overpowered at higher levels. Let's instead make resistance reduce spell damage using
 the rest of the Recanter's Cloak space we freed up above with the Wisdom/mage guild change.
 
-    ---------	-------------------------------------------------------------------------
-    04A5AF~B3	; RESISTANCE DOES NOT BLOCK DAMAGE SPELLS
-    ---------	-------------------------------------------------------------------------
-    E9 F7481500	jmp 59EEAB		; -> free space (Recanter's Cloak)
+	---------	-------------------------------------------------------------------------
+	04A5AF~B3	; RESISTANCE DOES NOT BLOCK DAMAGE SPELLS
+	---------	-------------------------------------------------------------------------
+	E9 F7481500	jmp 59EEAB		; -> free space (Recanter's Cloak)
 
-    ---------	-------------------------------------------------------------------------
-    19EEAB~DA	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    83 7D F0 13	cmp [ebp-10],13		; Chain Lightning? (prevents lockups)
-    74 21		je 59EED2		; if yes -> (cleanup)
-    8B 3D A87F6800	mov edi,[687FA8]	; EDI = spell index
-    8B 75 F0	mov esi,[ebp-10]	; ESI = spell ID
-    69 F6 88000000	imul esi,88		; ESI = data range
-    8B 5C 3E 0C	mov ebx,[esi+edi+0C]	; EBX = spell flags
-    C1 EB 09	shr ebx,09		; EBX = "damage spell" flag
-    F6 C3 01	test bl,01		; damage spell?
-    74 06		je 59EED2		; if no -> (cleanup)
-    D9 05 E0B66300	fld dword ptr [63B6E0]	; spell always hits
-    5F		pop edi			; (cleanup)
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C2 0800		ret 0008		; ""
+	---------	-------------------------------------------------------------------------
+	19EEAB~DA	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	83 7D F0 13	cmp [ebp-10],13		; Chain Lightning? (prevents lockups)
+	74 21		je 59EED2		; if yes -> (cleanup)
+	8B 3D A87F6800	mov edi,[687FA8]	; EDI = spell index
+	8B 75 F0	mov esi,[ebp-10]	; ESI = spell ID
+	69 F6 88000000	imul esi,88		; ESI = data range
+	8B 5C 3E 0C	mov ebx,[esi+edi+0C]	; EBX = spell flags
+	C1 EB 09	shr ebx,09		; EBX = "damage spell" flag
+	F6 C3 01	test bl,01		; damage spell?
+	74 06		je 59EED2		; if no -> (cleanup)
+	D9 05 E0B66300	fld dword ptr [63B6E0]	; spell always hits
+	5F		pop edi			; (cleanup)
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C2 0800		ret 0008		; ""
 
-    ---------	-------------------------------------------------------------------------
-    1A7F7E~8D	; RESISTANCE LOWERS SPELL DAMAGE
-    ---------	-------------------------------------------------------------------------
-    A1 20946900	mov eax,[699420]	; EAX = combat manager
-    8B 8F F4000000	mov ecx,[edi+F4]	; ECX = unit's owner
-    E9 4D6FFFFF	jmp 59EEDB		; -> free space (Recanter's Cloak)
+	---------	-------------------------------------------------------------------------
+	1A7F7E~8D	; RESISTANCE LOWERS SPELL DAMAGE
+	---------	-------------------------------------------------------------------------
+	A1 20946900	mov eax,[699420]	; EAX = combat manager
+	8B 8F F4000000	mov ecx,[edi+F4]	; ECX = unit's owner
+	E9 4D6FFFFF	jmp 59EEDB		; -> free space (Recanter's Cloak)
 
-    ---------	-------------------------------------------------------------------------
-    19EEDB~F07	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    8B8C88CC530000	mov ecx,[eax+ecx*4+53CC]; ECX = unit's hero
-    85 C9		test ecx,ecx		; does unit have a hero?
-    74 1B		je 59EF01		; if no -> EAX = damage
-    E8 655AF4FF	call 4E4950		; (Resistance)
-    DD 5D F0	fstp qword [ebp-10]	; store Resistance reduction
-    DB 45 08	fild dword [ebp+08]	; load damage (integer)
-    DD 5D F8	fstp qword [ebp-08]	; store damage as floating value
-    DD 45 F8	fld qword [ebp-08]	; load damage (float)
-    DC 4D F0	fmul qword [ebp-10]	; apply Resistance reduction
-    E8 95900700	call 617F94		; convert result to integer (EAX)
-    EB 03		jmp 59EF04		; -> (cleanup)
-    8B 45 08	mov eax,[ebp+08]	; EAX = damage
-    5D		pop ebp			; (cleanup)
-    C2 0C00		ret 0C			; return
+	---------	-------------------------------------------------------------------------
+	19EEDB~F07	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	8B8C88CC530000	mov ecx,[eax+ecx*4+53CC]; ECX = unit's hero
+	85 C9		test ecx,ecx		; does unit have a hero?
+	74 1B		je 59EF01		; if no -> EAX = damage
+	E8 655AF4FF	call 4E4950		; (Resistance)
+	DD 5D F0	fstp qword [ebp-10]	; store Resistance reduction
+	DB 45 08	fild dword [ebp+08]	; load damage (integer)
+	DD 5D F8	fstp qword [ebp-08]	; store damage as floating value
+	DD 45 F8	fld qword [ebp-08]	; load damage (float)
+	DC 4D F0	fmul qword [ebp-10]	; apply Resistance reduction
+	E8 95900700	call 617F94		; convert result to integer (EAX)
+	EB 03		jmp 59EF04		; -> (cleanup)
+	8B 45 08	mov eax,[ebp+08]	; EAX = damage
+	5D		pop ebp			; (cleanup)
+	C2 0C00		ret 0C			; return
 
 More drastically, we can expand our definition of magical damage to include ranged attacks from certain
 types of units, such as Mages or Gogs, and use Resistance in place of Armorer to lower their damage. We
@@ -2023,31 +2026,32 @@ projectile is set to 255 (effectively unlimited) shots, but you can use any valu
 attacks, we restrict this effect solely to Psychic and Magic Elementals lest stacking Resistance allow
 you to completely shut down a Conflux opponent with no possible counterplay.
 
-    ---------	-------------------------------------------------------------------------
-    043D82~6	; RESISTANCE LOWERS NON-PHYSICAL ATTACK DAMAGE INSTEAD OF ARMORER
-    ---------	-------------------------------------------------------------------------
-    E8 81B11500	call 59EF08		; -> free space (Recanter's Cloak)
+	---------	-------------------------------------------------------------------------
+	043D82~6	; RESISTANCE LOWERS NON-PHYSICAL ATTACK DAMAGE INSTEAD OF ARMORER
+	---------	-------------------------------------------------------------------------
+	E8 81B11500	call 59EF08		; -> free space (Recanter's Cloak)
 
-    ---------	-------------------------------------------------------------------------
-    19EF08~38	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    8B 43 34	mov eax,[ebx+34]	; EAX = unit ID
-    83 7D 10 01	cmp [ebp+10],01		; ranged attack?
-    75 0C		jne 59EF23		; if no -> Psychic Elementals?
-    6B C0 74	imul eax,74		; EAX = data range
-    83 7C 10 64 FF 	cmp [eax+edx+64],-01	; 255 shots?
-    75 12		jne 59EF33		; if no -> (Armorer)
-    EB 0A		jmp 59EF2D		; -> (Resistance)
+	---------	-------------------------------------------------------------------------
+	19EF08~38	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	8B 43 34	mov eax,[ebx+34]	; EAX = unit ID
+	83 7D 10 01	cmp [ebp+10],01		; ranged attack?
+	75 0C		jne 59EF23		; if no -> Psychic Elementals?
+	6B C0 74	imul eax,74		; EAX = data range
+	83 7C 10 64 FF 	cmp [eax+edx+64],-01	; 255 shots?
+	75 12		jne 59EF33		; if no -> (Armorer)
+	EB 0A		jmp 59EF2D		; -> (Resistance)
 
-    83 F8 78	cmp eax,78		; Psychic Elementals?
-    74 05		je 59EF2D		; if yes -> (Resistance)
-    83 F8 79	cmp eax,79		; Magic Elementals?
-    75 06		jne 59EF33		; if no -> (Armorer)
-    E8 1E5AF4FF	call 4E4950		; (Resistance)
-    C3		ret			; return
-    E8 4856F4FF	call 4E4580		; (Armorer)
-    C3		ret			; return
+	83 F8 78	cmp eax,78		; Psychic Elementals?
+	74 05		je 59EF2D		; if yes -> (Resistance)
+	83 F8 79	cmp eax,79		; Magic Elementals?
+	75 06		jne 59EF33		; if no -> (Armorer)
+	E8 1E5AF4FF	call 4E4950		; (Resistance)
+	C3		ret			; return
+	E8 4856F4FF	call 4E4580		; (Armorer)
+	C3		ret			; return
+
 
 -----------------------------------------------------------------------------------------
 
@@ -2055,143 +2059,143 @@ Importantly, Resistance also defends against negative statuses set not only by s
 units. The issue there is that it does so invisibly in the latter case, so players rarely see Resistance
 being beneficial. The below code will inform the player whenever Resistance blocks an enemy status:
 
-    ---------	-------------------------------------------------------------------------
-    040315~22	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS DISEASE
-    ---------	-------------------------------------------------------------------------
-    6A 49		push 49			; 49 = Disease
-    5E		pop esi			; ""
-    E8 03811600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
-    89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
+	---------	-------------------------------------------------------------------------
+	040315~22	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS DISEASE
+	---------	-------------------------------------------------------------------------
+	6A 49		push 49			; 49 = Disease
+	5E		pop esi			; ""
+	E8 03811600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
+	89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
 
-    ---------	-------------------------------------------------------------------------
-    0404EE~FF	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS PETRIFY
-    ---------	-------------------------------------------------------------------------
-    6A 46		push 46			; 46 = Petrify
-    5E		pop esi			; ""
-    E8 2A7F1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
-    89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
-    90 90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	0404EE~FF	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS PETRIFY
+	---------	-------------------------------------------------------------------------
+	6A 46		push 46			; 46 = Petrify
+	5E		pop esi			; ""
+	E8 2A7F1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
+	89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
+	90 90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    040385~96	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS FEAR
-    ---------	-------------------------------------------------------------------------
-    6A 3E		push 3E			; 3E = Fear
-    5E		pop esi			; ""
-    E8 93801600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
-    89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
-    90 90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	040385~96	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS FEAR
+	---------	-------------------------------------------------------------------------
+	6A 3E		push 3E			; 3E = Fear
+	5E		pop esi			; ""
+	E8 93801600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
+	89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
+	90 90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    04032D~36	; "" (MOVES MIND RESISTANCE CHECK TO PREVENT FALSE POSITIVES)
-    ---------	-------------------------------------------------------------------------
-    E9 EA3E1300	jmp 57421C		; -> free space (Wisdom Quest Check)
-    5A		pop edx			; (displaced/optimized code)
-    31 C9		xor ecx,ecx		; ""
-    41		inc ecx			; ""
-    90		nop 			; -
+	---------	-------------------------------------------------------------------------
+	04032D~36	; "" (MOVES MIND RESISTANCE CHECK TO PREVENT FALSE POSITIVES)
+	---------	-------------------------------------------------------------------------
+	E9 EA3E1300	jmp 57421C		; -> free space (Wisdom Quest Check)
+	5A		pop edx			; (displaced/optimized code)
+	31 C9		xor ecx,ecx		; ""
+	41		inc ecx			; ""
+	90		nop 			; -
 
-    ---------	-------------------------------------------------------------------------
-    17421C~36	; (EXPANDED SPACE - OVERWRITES WISDOM QUEST CHECK)
-    ---------	-------------------------------------------------------------------------
-    8B 7D 08	mov edi,[ebp+08]	; EDI = defending stack
-    8B 87 84000000	mov eax,[edi+84]	; EAX = unit data
-    C1 E8 0A	shr eax,0A		; shift to mind immunity flag
-    A8 01		test al,01		; immune?
-    0F85 7EC0ECFF	jne 4402AE		; if yes -> [exit]
-    6A 64		push 64			; (displaced/optimized code)
-    E9 FBC0ECFF	jmp 440332		; return
+	---------	-------------------------------------------------------------------------
+	17421C~36	; (EXPANDED SPACE - OVERWRITES WISDOM QUEST CHECK)
+	---------	-------------------------------------------------------------------------
+	8B 7D 08	mov edi,[ebp+08]	; EDI = defending stack
+	8B 87 84000000	mov eax,[edi+84]	; EAX = unit data
+	C1 E8 0A	shr eax,0A		; shift to mind immunity flag
+	A8 01		test al,01		; immune?
+	0F85 7EC0ECFF	jne 4402AE		; if yes -> [exit]
+	6A 64		push 64			; (displaced/optimized code)
+	E9 FBC0ECFF	jmp 440332		; return
 
-    ---------	-------------------------------------------------------------------------
-    0402A0~D	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS AGING
-    ---------	-------------------------------------------------------------------------
-    6A 4B		push 4B			; 4B = Aging
-    5E		pop esi			; ""
-    E8 78811600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
-    89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
+	---------	-------------------------------------------------------------------------
+	0402A0~D	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS AGING
+	---------	-------------------------------------------------------------------------
+	6A 4B		push 4B			; 4B = Aging
+	5E		pop esi			; ""
+	E8 78811600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
+	89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
 
-    ---------	-------------------------------------------------------------------------
-    0405A4~B5	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS POISON
-    ---------	-------------------------------------------------------------------------
-    6A 47		push 47			; 47 = Poison
-    5E		pop esi			; ""
-    E8 747E1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
-    89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
-    90 90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	0405A4~B5	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS POISON
+	---------	-------------------------------------------------------------------------
+	6A 47		push 47			; 47 = Poison
+	5E		pop esi			; ""
+	E8 747E1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
+	89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
+	90 90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    040618~2A	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS PARALYZE
-    ---------	-------------------------------------------------------------------------
-    6A 4A		push 4A			; 4A = Paralyze
-    5E		pop esi			; ""
-    E8 007E1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
-    89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
-    90 90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	040618~2A	; SHOW ANIMATION/BATTLE TEXT WHEN RESISTANCE BLOCKS PARALYZE
+	---------	-------------------------------------------------------------------------
+	6A 4A		push 4A			; 4A = Paralyze
+	5E		pop esi			; ""
+	E8 007E1600	call 5A8420		; -> free space (Cursed Ground/Recanter's Cloak)
+	89 B7 EC000000	mov [edi+EC],esi	; set status to be applied
+	90 90 90 90	nop			; -
 
-    --------	-------------------------------------------------------------------------
-    1A8420~D	; (EXPANDED SPACE - OVERWRITES CURSED GROUND/RECANTER'S CLOAK)
-    --------	-------------------------------------------------------------------------
-    84 C0		test al,al		; was status resisted?
-    75 09		jne 5A842D		; if no -> return
-    6A 1B		push 1B			; 1B = Shield (graphic only)
-    5E		pop esi			; ""
-    FF 05 023B6700	inc [673B02]		; set "temp" flag
-    C3		ret			; return
+	--------	-------------------------------------------------------------------------
+	1A8420~D	; (EXPANDED SPACE - OVERWRITES CURSED GROUND/RECANTER'S CLOAK)
+	--------	-------------------------------------------------------------------------
+	84 C0		test al,al		; was status resisted?
+	75 09		jne 5A842D		; if no -> return
+	6A 1B		push 1B			; 1B = Shield (graphic only)
+	5E		pop esi			; ""
+	FF 05 023B6700	inc [673B02]		; set "temp" flag
+	C3		ret			; return
 
-    --------	-------------------------------------------------------------------------
-    1A1393~9	; DO NOT APPLY RESISTED STATUS
-    --------	-------------------------------------------------------------------------
-    E9 96700000	jmp 5A842E		; -> free space (Cursed Ground/Recanter's Cloak)
-    51		push ecx		; (displaced code)
-    90		nop			; -
+	--------	-------------------------------------------------------------------------
+	1A1393~9	; DO NOT APPLY RESISTED STATUS
+	--------	-------------------------------------------------------------------------
+	E9 96700000	jmp 5A842E		; -> free space (Cursed Ground/Recanter's Cloak)
+	51		push ecx		; (displaced code)
+	90		nop			; -
 
-    --------	-------------------------------------------------------------------------
-    1A18D7~D	; ""
-    --------	-------------------------------------------------------------------------
-    31 C9		xor ecx,ecx		; (displaced code)
-    E9 606B0000	jmp 5A843E		; -> free space (Cursed Ground/Recanter's Cloak)
+	--------	-------------------------------------------------------------------------
+	1A18D7~D	; ""
+	--------	-------------------------------------------------------------------------
+	31 C9		xor ecx,ecx		; (displaced code)
+	E9 606B0000	jmp 5A843E		; -> free space (Cursed Ground/Recanter's Cloak)
 
-    ---------	-------------------------------------------------------------------------
-    1A842E~47	; (EXPANDED SPACE - OVERWRITES CURSED GROUND/RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    A0 023B6700	mov al,[673B02]		; AL = temp flag
-    84 C0		test al,al		; is flag set?
-    0F85 698FFFFF	jne 5A13A4		; if yes -> [do not apply status]
-    8B 4D EC	mov ecx,[ebp-14]	; (displaced code)
-    8B 45 1C	mov eax,[ebp+1C]	; (displaced code)
-    E9 528FFFFF	jmp 5A1398		; -> [continue]
-    90 90		nop			; -
+	---------	-------------------------------------------------------------------------
+	1A842E~47	; (EXPANDED SPACE - OVERWRITES CURSED GROUND/RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	A0 023B6700	mov al,[673B02]		; AL = temp flag
+	84 C0		test al,al		; is flag set?
+	0F85 698FFFFF	jne 5A13A4		; if yes -> [do not apply status]
+	8B 4D EC	mov ecx,[ebp-14]	; (displaced code)
+	8B 45 1C	mov eax,[ebp+1C]	; (displaced code)
+	E9 528FFFFF	jmp 5A1398		; -> [continue]
+	90 90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    1A8EC8~F03	; BATTLE TEXT FOR RESISTED STATUSES
-    ----------	-------------------------------------------------------------------------
-    74 16		je 5A8EE0		; (optimized code)
-    8D 48 FF	lea ecx,[eax-01]	; ""
-    8A 40 FF	mov al,[eax-01]		; ""
-    84 C0		test al,al		; ""
-    74 02		je 5A8ED6		; ""
-    3C FF		cmp al,-01		; ""
-    0F84 45060000	je 5A9521		; ""
-    FE C8		dec al			; ""
-    88 01		mov [ecx],al		; ""
-    E9 45060000	jmp 5A952A		; ""
-    A0 023B6700	mov al,[673B02]		; AL = temp flag
-    84 C0		test al,al		; is flag set?
-    74 10		je 5A8EFE		; if no -> free space (Recanter's Cloak)
-    A1 045D6A00	mov eax,[6A5D04]	; EAX = ArrayTxt, line 246
-    FF 0D 023B6700	dec [673B02]		; unset temp flag
-    E9 DF000000 	jmp 5A8FDD		; -> [continue]
-    E8 3660FFFF	call 59EF39		; -> free space (Recanter's Cloak)
-    90		nop 			; -
+	----------	-------------------------------------------------------------------------
+	1A8EC8~F03	; BATTLE TEXT FOR RESISTED STATUSES
+	----------	-------------------------------------------------------------------------
+	74 16		je 5A8EE0		; (optimized code)
+	8D 48 FF	lea ecx,[eax-01]	; ""
+	8A 40 FF	mov al,[eax-01]		; ""
+	84 C0		test al,al		; ""
+	74 02		je 5A8ED6		; ""
+	3C FF		cmp al,-01		; ""
+	0F84 45060000	je 5A9521		; ""
+	FE C8		dec al			; ""
+	88 01		mov [ecx],al		; ""
+	E9 45060000	jmp 5A952A		; ""
+	A0 023B6700	mov al,[673B02]		; AL = temp flag
+	84 C0		test al,al		; is flag set?
+	74 10		je 5A8EFE		; if no -> free space (Recanter's Cloak)
+	A1 045D6A00	mov eax,[6A5D04]	; EAX = ArrayTxt, line 246
+	FF 0D 023B6700	dec [673B02]		; unset temp flag
+	E9 DF000000 	jmp 5A8FDD		; -> [continue]
+	E8 3660FFFF	call 59EF39		; -> free space (Recanter's Cloak)
+	90		nop 			; -
 
-    1A8CDA > 07	; update jump pointer
+	1A8CDA > 07	; update jump pointer
 
-    ---------	-------------------------------------------------------------------------
-    19EF39~4F	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
-    ---------	-------------------------------------------------------------------------
-    B9 0A000000	mov ecx,0A		; (displaced/optimized code)
-    8B 45 0C	mov eax,[ebp+0C]	; ""
-    83 C0 D6	add eax,-2A		; ""
-    83 F8 24	cmp eax,24		; ""
-    77 06		ja 59EF4F		; ""
-    8A 88 D4955A00	mov cl,[eax+5A95D4]	; ""
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	19EF39~4F	; (EXPANDED SPACE - OVERWRITES RECANTER'S CLOAK)
+	---------	-------------------------------------------------------------------------
+	B9 0A000000	mov ecx,0A		; (displaced/optimized code)
+	8B 45 0C	mov eax,[ebp+0C]	; ""
+	83 C0 D6	add eax,-2A		; ""
+	83 F8 24	cmp eax,24		; ""
+	77 06		ja 59EF4F		; ""
+	8A 88 D4955A00	mov cl,[eax+5A95D4]	; ""
+	C3		ret			; return

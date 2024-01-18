@@ -209,38 +209,38 @@ containing one byte for each unit within its range. The offsets for each unit ar
 
 ---------------------------------------------------------------------------------------------------------
 
-				UNIT DATA (116 bytes)
-				---------------------
+					UNIT DATA (116 bytes)
+					---------------------
 
-	BYTE 01: Alignment			BYTE 05: Level (0-6)
+		BYTE 01: Alignment			BYTE 05: Level (0-6)
 
-	 00 = Castle      05 = Dungeon		BYTE 09: Small portrait
-	 01 = Rampart     06 = Stronghold
-	 02 = Tower       07 = Fortress		BYTE 13: Large portrait
-	 03 = Inferno     08 = Conflux
-	 04 = Necropolis  FF = Neutral		-----------------------
+		 00 = Castle      05 = Dungeon		BYTE 09: Small portrait
+		 01 = Rampart     06 = Stronghold
+		 02 = Tower       07 = Fortress		BYTE 13: Large portrait
+		 03 = Inferno     08 = Conflux
+		 04 = Necropolis  FF = Neutral		-----------------------
 
-	BYTE 17: Ability flags			BYTE 18: Ability flags
+		BYTE 17: Ability flags			BYTE 18: Ability flags
 
-	 BIT 1 (01) Unit occupies 2 hexes	 BIT 1 (01) Slayer lv. 2
-	 BIT 2 (02) Flying			 BIT 2 (02) Slayer lv. 3
-	 BIT 3 (04) Ranged attack		 BIT 3 (04) Mind immunity
-	 BIT 4 (08) Attack hits 2 hexes		 BIT 4 (08) Shoots beam (GFX)
-	 BIT 5 (10) Living unit			 BIT 5 (10) No melee penalty
-	 BIT 6 (20) Can attack walls		 BIT 6 (20) (-)
-	 BIT 7 (40) War Machine			 BIT 7 (40) Fire immunity
-	 BIT 8 (80) Slayer lv. 1		 BIT 8 (80) Attacks twice
+		 BIT 1 (01) Unit occupies 2 hexes	 BIT 1 (01) Slayer lv. 2
+		 BIT 2 (02) Flying			 BIT 2 (02) Slayer lv. 3
+		 BIT 3 (04) Ranged attack		 BIT 3 (04) Mind immunity
+		 BIT 4 (08) Attack hits 2 hexes		 BIT 4 (08) Shoots beam (GFX)
+		 BIT 5 (10) Living unit			 BIT 5 (10) No melee penalty
+		 BIT 6 (20) Can attack walls		 BIT 6 (20) (-)
+		 BIT 7 (40) War Machine			 BIT 7 (40) Fire immunity
+		 BIT 8 (80) Slayer lv. 1		 BIT 8 (80) Attacks twice
 
-	BYTE 19: Ability flags			BYTE 20: Ability flags
+		BYTE 19: Ability flags			BYTE 20: Ability flags
 
-	 BIT 1 (01) No enemy retaliation	 BIT 1 (01) (-)
-	 BIT 2 (02) Morale has no effect	 BIT 2 (02) (-)
-	 BIT 3 (04) Undead unit			 BIT 3 (04) (-)
-	 BIT 4 (08) AoE melee attack		 BIT 4 (08) (-)
-	 BIT 5 (10) *AoE ranged attack		 BIT 5 (10) (-)
-	 BIT 6 (20) (-)				 BIT 6 (20) (-)
-	 BIT 7 (40) (-)				 BIT 7 (40) (-)
-	 BIT 8 (80) (-)				 BIT 8 (80) Unit is a dragon
+		 BIT 1 (01) No enemy retaliation	 BIT 1 (01) (-)
+		 BIT 2 (02) Morale has no effect	 BIT 2 (02) (-)
+		 BIT 3 (04) Undead unit			 BIT 3 (04) (-)
+		 BIT 4 (08) AoE melee attack		 BIT 4 (08) (-)
+		 BIT 5 (10) *AoE ranged attack		 BIT 5 (10) (-)
+		 BIT 6 (20) (-)				 BIT 6 (20) (-)
+		 BIT 7 (40) (-)				 BIT 7 (40) (-)
+		 BIT 8 (80) (-)				 BIT 8 (80) Unit is a dragon
 
 		(*AI flag only; the actual ability is specified elsewhere)
 
@@ -259,76 +259,76 @@ that's what you're trying to do. In the below example, we'll use the free space 
 table (see above) to set the four basic elemental units to level three and their upgrades to level four;
 Psychic and Magic Elementals are set to five and six, respectively.
 
-    ------		-------------------------------------------------------------------------
-    0C910E		; ELEMENTAL UNIT LEVELS (RANDOM UNITS)
-    ------		-------------------------------------------------------------------------
-    EB 72		jmp 4C9182		; hop to long jump
-    90 90		nop			; -
+	------		-------------------------------------------------------------------------
+	0C910E		; ELEMENTAL UNIT LEVELS (RANDOM UNITS)
+	------		-------------------------------------------------------------------------
+	EB 72		jmp 4C9182		; hop to long jump
+	90 90		nop			; -
 
-    ------		-------------------------------------------------------------------------
-    0C9182		; ""
-    ------		-------------------------------------------------------------------------
-    E8 4D9DFCFF	call 492ED4		; -> free space (redundant spell table)
-    EB 89		jmp 4C9112		; return
+	------		-------------------------------------------------------------------------
+	0C9182		; ""
+	------		-------------------------------------------------------------------------
+	E8 4D9DFCFF	call 492ED4		; -> free space (redundant spell table)
+	EB 89		jmp 4C9112		; return
 
-    ------		-------------------------------------------------------------------------
-    0E62BD		; ELEMENTAL UNIT LEVELS (SPELL SPECIALTIES)
-    ------		-------------------------------------------------------------------------
-    57		push edi		; store EDI
-    E8 17CCFAFF	call 492EDA		; -> free space (redundant spell table)
-    5F		pop edi			; retrieve EDI
+	------		-------------------------------------------------------------------------
+	0E62BD		; ELEMENTAL UNIT LEVELS (SPELL SPECIALTIES)
+	------		-------------------------------------------------------------------------
+	57		push edi		; store EDI
+	E8 17CCFAFF	call 492EDA		; -> free space (redundant spell table)
+	5F		pop edi			; retrieve EDI
 
-    ------		-------------------------------------------------------------------------
-    0E8021		; ELEMENTAL UNIT LEVELS (HILL FORTS)
-    ------		-------------------------------------------------------------------------
-    E8 C6AEFAFF	call 492EEC		; -> free space (redundant spell table)
-    90		nop			; -
+	------		-------------------------------------------------------------------------
+	0E8021		; ELEMENTAL UNIT LEVELS (HILL FORTS)
+	------		-------------------------------------------------------------------------
+	E8 C6AEFAFF	call 492EEC		; -> free space (redundant spell table)
+	90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    092ED4~F1E	; (EXPANDED SPACE - OVERWRITES REDUNDANT SPELL TABLE)
-    ----------	-------------------------------------------------------------------------
-    8B 44 31 04	mov eax,[ecx+esi+04]	; (RANDOM UNITS:) EAX = unit's level
-    EB 1B		jmp 492EF5		;
+	----------	-------------------------------------------------------------------------
+	092ED4~F1E	; (EXPANDED SPACE - OVERWRITES REDUNDANT SPELL TABLE)
+	----------	-------------------------------------------------------------------------
+	8B 44 31 04	mov eax,[ecx+esi+04]	; (RANDOM UNITS:) EAX = unit's level
+	EB 1B		jmp 492EF5		;
 
-    8B 7E 34	mov edi,[esi+34]	; (SPELL SPECIALTIES:) EDI = unit ID
-    8B C1		mov eax,ecx		; EAX = unit's level
-    E8 11000000	call 492EF5		;
-    8B0485C4EA6300	mov eax,[eax*4+63EAC4]	; (displaced code)
-    C3		ret			; return
+	8B 7E 34	mov edi,[esi+34]	; (SPELL SPECIALTIES:) EDI = unit ID
+	8B C1		mov eax,ecx		; EAX = unit's level
+	E8 11000000	call 492EF5		;
+	8B0485C4EA6300	mov eax,[eax*4+63EAC4]	; (displaced code)
+	C3		ret			; return
 
-    8B 44 82 04	mov eax,[edx+eax*4+04]	; (HILL FORTS:) EAX = unit's level
-    8B 13		mov edx,[ebx]		; (displaced code)
-    8B 79 40	mov edi,[ecx+40]	; ""
+	8B 44 82 04	mov eax,[edx+eax*4+04]	; (HILL FORTS:) EAX = unit's level
+	8B 13		mov edx,[ebx]		; (displaced code)
+	8B 79 40	mov edi,[ecx+40]	; ""
 
-    83 FF 70	cmp edi,70		; Air Elementals?
-    74 20		je 492F1A		; if yes -> EAX +1
+	83 FF 70	cmp edi,70		; Air Elementals?
+	74 20		je 492F1A		; if yes -> EAX +1
 
-    83 FF 72	cmp edi,72		; Fire Elementals?
-    74 1E		je 492F1D		; if yes -> EAX -1
+	83 FF 72	cmp edi,72		; Fire Elementals?
+	74 1E		je 492F1D		; if yes -> EAX -1
 
-    83 FF 71	cmp edi,71		; Earth Elementals?
-    74 18		je 492F1C		; if yes -> EAX -2
+	83 FF 71	cmp edi,71		; Earth Elementals?
+	74 18		je 492F1C		; if yes -> EAX -2
 
-    83 FF 7F	cmp edi,7F		; Storm Elementals?
-    74 10		je 492F19		; if yes -> EAX +2
+	83 FF 7F	cmp edi,7F		; Storm Elementals?
+	74 10		je 492F19		; if yes -> EAX +2
 
-    83 FF 7B	cmp edi,7B		; Ice Elementals?
-    74 0C		je 492F1A		; if yes -> EAX +1
+	83 FF 7B	cmp edi,7B		; Ice Elementals?
+	74 0C		je 492F1A		; if yes -> EAX +1
 
-    83 FF 7D	cmp edi,7D		; Magma Elementals?
-    74 0A		je 492F1D		; if yes -> EAX -1
+	83 FF 7D	cmp edi,7D		; Magma Elementals?
+	74 0A		je 492F1D		; if yes -> EAX -1
 
-    83 FF 78	cmp edi,78		; Mind Elementals?
-    74 05		je 492F1D		; if yes -> EAX -1
-    C3		ret			; return
+	83 FF 78	cmp edi,78		; Mind Elementals?
+	74 05		je 492F1D		; if yes -> EAX -1
+	C3		ret			; return
 
-    40		inc eax			; EAX +2
-    40		inc eax			; EAX +1
-    C3		ret			; return
+	40		inc eax			; EAX +2
+	40		inc eax			; EAX +1
+	C3		ret			; return
 
-    48		dec eax			; EAX +2
-    48		dec eax			; EAX -1
-    C3		ret			; return (092F1F~4F is free space)
+	48		dec eax			; EAX +2
+	48		dec eax			; EAX -1
+	C3		ret			; return (092F1F~4F is free space)
 
 Regarding ranged attacks, removing them is as simple as unsetting the "ranged" flag and	setting the shot
 count to 0 in CrTraits.txt. Adding a ranged attack is far more complicated outside of Centaurs, who were
@@ -449,67 +449,68 @@ Regarding fire immunity and its failure to distinguish between beneficial and ha
 thankfully exactly enough space in the immunity code to rewrite it into something that makes more sense.
 Note that this will replace immunity to Meteor Shower (which is dumb) with fire immunity (much better).
 
-    ---------	---------------------------------------------------------------
-    04A4EE~0E	; FIRE IMMUNITY (REPLACES METEOR SHOWER IMMUNITY)
-    ---------	---------------------------------------------------------------
-    8B 45 F0	mov eax,[ebp-10]	; EAX = spell ID
-    83 F8 0D	cmp eax,0D		; Fire Wall?
-    74 0A		je 44A4FB		; if yes -> immunity
+ 	---------	---------------------------------------------------------------
+	04A4EE~0E	; FIRE IMMUNITY (REPLACES METEOR SHOWER IMMUNITY)
+	---------	---------------------------------------------------------------
+	8B 45 F0	mov eax,[ebp-10]	; EAX = spell ID
+	83 F8 0D	cmp eax,0D		; Fire Wall?
+	74 0A		je 44A4FB		; if yes -> immunity
 
-    83 F8 15	cmp eax,15		; Fireball?
-    74 05		je 44A4FB		; if yes -> immunity
+	83 F8 15	cmp eax,15		; Fireball?
+	74 05		je 44A4FB		; if yes -> immunity
 
-    83 F8 16	cmp eax,16		; Inferno? (the spell)
-    75 C5		jne 44A4C5		; if no -> [exit]
+	83 F8 16	cmp eax,16		; Inferno? (the spell)
+	75 C5		jne 44A4C5		; if no -> [exit]
 
-    D9 05 64AC6300	fld [63AC64]		; immunity (load "0" value)
-    5F 5E 5B	pop edi			; cleanup
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C2 08 00	ret 0008		; return
+	D9 05 64AC6300	fld [63AC64]		; immunity (load "0" value)
+	5F 5E 5B	pop edi			; cleanup
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C2 08 00	ret 0008		; return
 
-    ---------	---------------------------------------------------------------
-    04A50F~2F	; LIGHTNING IMMUNITY
-    ---------	---------------------------------------------------------------
-    8B 45 F0	mov eax,[ebp-10]	; EAX = spell ID
-    83 F8 11	cmp eax,11		; Lightning Bolt?
-    74 0A		je 44A521		; if yes -> immunity
+	---------	---------------------------------------------------------------
+	04A50F~2F	; LIGHTNING IMMUNITY
+	---------	---------------------------------------------------------------
+	8B 45 F0	mov eax,[ebp-10]	; EAX = spell ID
+	83 F8 11	cmp eax,11		; Lightning Bolt?
+	74 0A		je 44A521		; if yes -> immunity
 
-    83 F8 13	cmp eax,13		; Chain Lightning?
-    74 05		je 44A521		; if yes -> immunity
+	83 F8 13	cmp eax,13		; Chain Lightning?
+	74 05		je 44A521		; if yes -> immunity
 
-    83 F8 4D	cmp eax,4D		; Thunder? (unit ability)
-    75 A4		jne 44A4C5		; if no -> [exit]
+	83 F8 4D	cmp eax,4D		; Thunder? (unit ability)
+	75 A4		jne 44A4C5		; if no -> [exit]
 
-    D9 05 64AC6300	fld [63AC64]		; immunity (load "0" value)
-    5F 5E 5B	pop edi			; cleanup
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C2 08 00	ret 0008		; return
+	D9 05 64AC6300	fld [63AC64]		; immunity (load "0" value)
+	5F 5E 5B	pop edi			; cleanup
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C2 08 00	ret 0008		; return
 
-    04A64C > 0F	; moves Lightning Immunity exit pointer to new address
+	04A64C > 0F	; moves Lightning Immunity exit pointer to new address
 
-    ------		---------------------------------------------------------------
-    04A530		; ICE IMMUNITY
-    ------		---------------------------------------------------------------
-    8B 45 F0	mov eax,[ebp-10]	; EAX = spell ID
-    83 F8 10	cmp eax,10		; Ice Bolt?
-    74 05		je 44A53D		; if yes -> immunity
+	------		---------------------------------------------------------------
+	04A530		; ICE IMMUNITY
+	------		---------------------------------------------------------------
+	8B 45 F0	mov eax,[ebp-10]	; EAX = spell ID
+	83 F8 10	cmp eax,10		; Ice Bolt?
+	74 05		je 44A53D		; if yes -> immunity
 
-    83 F8 14	cmp eax,14		; Frost Ring?
-    75 88		jne 44A4C5		; if no -> [exit]
+	83 F8 14	cmp eax,14		; Frost Ring?
+	75 88		jne 44A4C5		; if no -> [exit]
 
-    D9 05 64AC6300	fld [63AC64]		; immunity (load "0" value)
-    5F 5E 5B	pop edi			; cleanup
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C2 08 00	ret 0008		; return
+	D9 05 64AC6300	fld [63AC64]		; immunity (load "0" value)
+	5F 5E 5B	pop edi			; cleanup
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C2 08 00	ret 0008		; return
+
 
 This code does take a few creative liberties, most notably by adding the Thunderbird proc to lightning
 immunity and removing Armageddon immunity for balance reasons (Armageddon spam strats are bullshit, yo).
@@ -552,49 +553,49 @@ Dendroids). If we do this, however, we only have enough room at 04B18C to push t
 Azure and Crystal Dragons before we run out of space. Thankfully, there's a way to fudge it that doesn't
 even require any free space if we replace the 85% and 95% resistance routines with 33% and 66%.
 
-    ------		-------------------------------------------------------------------------
-    04B187		; ADD DENDROIDS & FAERIE/RUST DRAGONS TO "RESISTANCE B" TABLE
-    ------		-------------------------------------------------------------------------
-    E9 A7000000	jmp 44B233		; -> free space (85%/95% spell damage resistance)
-    90		nop			; -
+	------		-------------------------------------------------------------------------
+	04B187		; ADD DENDROIDS & FAERIE/RUST DRAGONS TO "RESISTANCE B" TABLE
+	------		-------------------------------------------------------------------------
+	E9 A7000000	jmp 44B233		; -> free space (85%/95% spell damage resistance)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    04B233~44	; (EXPANDED SPACE - OVERWRITES 85%/95% SPELL DAMAGE RESISTANCE)
-    ---------	-------------------------------------------------------------------------
-    8D 70 EA	lea esi,[eax-16]	; ESI = Unit ID -16
-    83 FE 01	cmp esi,01		; is ESI <= 01? (Dendroid or Great Dendroid)
-    77 02		ja 44B23D		; if no -> continue
-    EB AB		jmp 44B1E8		; -> [X-Fire]
-    4E		dec esi			; ESI = Unit ID -18 (table start = Unicorns)
-    4E		dec esi			; ""
-    83 FE 6F	cmp esi,6F		; is ESI > 6F? (table end = Rust Dragons)
-    E9 46FFFFFF	jmp 44B18D		; return
-    90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	04B233~44	; (EXPANDED SPACE - OVERWRITES 85%/95% SPELL DAMAGE RESISTANCE)
+	---------	-------------------------------------------------------------------------
+	8D 70 EA	lea esi,[eax-16]	; ESI = Unit ID -16
+	83 FE 01	cmp esi,01		; is ESI <= 01? (Dendroid or Great Dendroid)
+	77 02		ja 44B23D		; if no -> continue
+	EB AB		jmp 44B1E8		; -> [X-Fire]
+	4E		dec esi			; ESI = Unit ID -18 (table start = Unicorns)
+	4E		dec esi			; ""
+	83 FE 6F	cmp esi,6F		; is ESI > 6F? (table end = Rust Dragons)
+	E9 46FFFFFF	jmp 44B18D		; return
+	90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    04B220~32	; 33% SPELL DAMAGE RESISTANCE
-    ---------	-------------------------------------------------------------------------
-    B8 56555555	mov eax,55555556	; EAX = divisor
-    6B C9 02	imul ecx,02		; ECX*2
-    F7 E9		imul ecx		; EDX = 2/3 damage
-    8B CA		mov ecx,edx		; cleanup
-    8B C1		mov eax,ecx		; ""
-    5E		pop esi			; ""
-    5D		pop ebp			; ""
-    C2 04 00	ret 0004		; return
+	---------	-------------------------------------------------------------------------
+	04B220~32	; 33% SPELL DAMAGE RESISTANCE
+	---------	-------------------------------------------------------------------------
+	B8 56555555	mov eax,55555556	; EAX = divisor
+	6B C9 02	imul ecx,02		; ECX*2
+	F7 E9		imul ecx		; EDX = 2/3 damage
+	8B CA		mov ecx,edx		; cleanup
+	8B C1		mov eax,ecx		; ""
+	5E		pop esi			; ""
+	5D		pop ebp			; ""
+	C2 04 00	ret 0004		; return
 
-    ---------	-------------------------------------------------------------------------
-    04B24A~59	; 66% SPELL DAMAGE RESISTANCE
-    ---------	-------------------------------------------------------------------------
-    B8 56555555	mov eax,55555556	; EAX = divisor
-    F7 E9		imul ecx		; EDX = 1/3 damage
-    8B CA		mov ecx,edx		; cleanup
-    8B C1		mov eax,ecx		; "" (note: default exit points here)
-    5E		pop esi			; ""
-    5D		pop ebp			; ""
-    C2 04 00	ret 0004		; return
+	---------	-------------------------------------------------------------------------
+	04B24A~59	; 66% SPELL DAMAGE RESISTANCE
+	---------	-------------------------------------------------------------------------
+	B8 56555555	mov eax,55555556	; EAX = divisor
+	F7 E9		imul ecx		; EDX = 1/3 damage
+	8B CA		mov ecx,edx		; cleanup
+	8B C1		mov eax,ecx		; "" (note: default exit points here)
+	5E		pop esi			; ""
+	5D		pop ebp			; ""
+	C2 04 00	ret 0004		; return
 
-    04B278 > 4A	; update exit pointer for 95% (now 66%) routine
+	04B278 > 4A	; update exit pointer for 95% (now 66%) routine
 
 In short, what we're doing here is setting the table to run from Unicorns to Rust Dragons, which is all
 that the space will allow. We check specifically for Dendroids/Great Dendroids before we head into the
@@ -612,13 +613,13 @@ As mentioned above, the ability of elementals to do extra damage to each other i
 the "hate" mechanic, more commonly recognized as the tendency of certain units to deal extra damage to
 their perennial rivals. The units who hate each other are named at the following addresses:
 
-    0431B5	Devil		0431C5	Angel		04314A	Air		043157	Earth
-    0431BA	Archdevil	0431CA	Archangel	04314F	Storm		04315C	Magma
-    -----------------	-----------------	-------------		-------------
-    0431D5	Genie		0431E5	Efreet		043166	Fire		043182	Water
-    0431DA	Master G	0431EA	Sultan		04316A	Energy(*)	043187	Ice
-    ----------------	--------------
-    0431F5	Titan		0431FA	Black D		*this is a long/unsigned CMP function
+	0431B5	Devil		0431C5	Angel		04314A	Air		043157	Earth
+	0431BA	Archdevil	0431CA	Archangel	04314F	Storm		04315C	Magma
+	-----------------	-----------------	-------------		-------------
+	0431D5	Genie		0431E5	Efreet		043166	Fire		043182	Water
+	0431DA	Master G	0431EA	Sultan		04316A	Energy(*)	043187	Ice
+	----------------	--------------
+	0431F5	Titan		0431FA	Black D		*this is a long/unsigned CMP function
 
 >(Note that only Titans and Black Dragons hate each other; Giants and Red Dragons do not)
 
@@ -626,163 +627,163 @@ Where this all comes together is that I think we can do much better than this. H
 idea to begin with, but elemental units respecting the elemental resistances and immunities of other
 units with their attacks is a much better one that just needs a little fleshing out.
 
-    ---------	------------------------------------------------------------------------
-    04312B~A3	; PHYSICAL ATTACKS CONSIDER ELEMENTAL WEAKNESSES (OVERWRITES HATE)
-    ---------	------------------------------------------------------------------------
-    8B 4B 34	mov ecx,[ebx+34]	; ECX = Attacker
-    8B 47 34	mov eax,[edi+34]	; EAX = Defender
+	---------	------------------------------------------------------------------------
+	04312B~A3	; PHYSICAL ATTACKS CONSIDER ELEMENTAL WEAKNESSES (OVERWRITES HATE)
+	---------	------------------------------------------------------------------------
+	8B 4B 34	mov ecx,[ebx+34]	; ECX = Attacker
+	8B 47 34	mov eax,[edi+34]	; EAX = Defender
 
-    8D 40 EA	lea eax,[eax-16]	; EAX -16
-    83 F8 01	cmp eax,01		; is EAX <= 01? (Dendroid or Great Dendroid)
-    77 02		ja 44313B		; if no -> EAX = Unit ID -18
-    EB 12		jmp 44314D		; -> Gogs?
+	8D 40 EA	lea eax,[eax-16]	; EAX -16
+	83 F8 01	cmp eax,01		; is EAX <= 01? (Dendroid or Great Dendroid)
+	77 02		ja 44313B		; if no -> EAX = Unit ID -18
+	EB 12		jmp 44314D		; -> Gogs?
 
-    48		dec eax			; EAX = Unit ID -18 (table start = Unicorns)
-    48		dec eax			; ""
-    83 F8 6F	cmp eax,6F		; is EAX > 6F? (table end = Rust Dragons)
-    77 5D		ja 44319F		; if yes -> exit
+	48		dec eax			; EAX = Unit ID -18 (table start = Unicorns)
+	48		dec eax			; ""
+	83 F8 6F	cmp eax,6F		; is EAX > 6F? (table end = Rust Dragons)
+	77 5D		ja 44319F		; if yes -> exit
 
-    8A 80 80B24400	mov al,[eax+44B280]	; AL = Resistance B (Weakness)
+	8A 80 80B24400	mov al,[eax+44B280]	; AL = Resistance B (Weakness)
 
-    83 F8 05	cmp eax,05		; X-Fire? (if no -> X-Ice?)
-    75 14		jne 443161		; ""
-    83 F9 2C	cmp ecx,2C		; Gogs? (if yes -> +50% damage)
-    74 40		je 443192		; ""
-    83 F9 2D	cmp ecx,2D		; Magogs? (if yes -> "")
-    74 3B		je 443192		; ""
-    83 F9 72	cmp ecx,72		; Fire Elementals? (if yes -> "")
-    74 36		je 443192		; ""
-    83 F9 7D	cmp ecx,7D		; Magma Elementals? (if yes -> "")
-    74 31		je 443192		; ""
+	83 F8 05	cmp eax,05		; X-Fire? (if no -> X-Ice?)
+	75 14		jne 443161		; ""
+	83 F9 2C	cmp ecx,2C		; Gogs? (if yes -> +50% damage)
+	74 40		je 443192		; ""
+	83 F9 2D	cmp ecx,2D		; Magogs? (if yes -> "")
+	74 3B		je 443192		; ""
+	83 F9 72	cmp ecx,72		; Fire Elementals? (if yes -> "")
+	74 36		je 443192		; ""
+	83 F9 7D	cmp ecx,7D		; Magma Elementals? (if yes -> "")
+	74 31		je 443192		; ""
 
-    83 F8 04	cmp eax,04		; X-Ice? (if no -> X-Ice?)
-    75 0A		jne 443170		; ""
-    83 F9 73	cmp ecx,73		; Water Elementals? (if yes -> +50% damage)
-    74 27		je 443192		; ""
-    83 F9 7B	cmp ecx,7B		; Ice Elementals? (if yes -> "")
-    74 22		je 443192		; ""
+	83 F8 04	cmp eax,04		; X-Ice? (if no -> X-Ice?)
+	75 0A		jne 443170		; ""
+	83 F9 73	cmp ecx,73		; Water Elementals? (if yes -> +50% damage)
+	74 27		je 443192		; ""
+	83 F9 7B	cmp ecx,7B		; Ice Elementals? (if yes -> "")
+	74 22		je 443192		; ""
 
-    83 F8 02	cmp eax,02		; X-Lightning? (if no -> Troglodyte Soldiers?)
-    75 0D		jne 443182		; ""
-    83 F9 7F	cmp ecx,7F		; Storm Elementals? (if yes -> +50% damage)
-    74 18		je 443192		; ""
-    81 F9 81000000	cmp ecx,81		; Energy Elementals? (if yes -> "")
-    74 10		je 443192		; ""
+	83 F8 02	cmp eax,02		; X-Lightning? (if no -> Troglodyte Soldiers?)
+	75 0D		jne 443182		; ""
+	83 F9 7F	cmp ecx,7F		; Storm Elementals? (if yes -> +50% damage)
+	74 18		je 443192		; ""
+	81 F9 81000000	cmp ecx,81		; Energy Elementals? (if yes -> "")
+	74 10		je 443192		; ""
 
-    83 F9 47	cmp ecx,47		; Troglodyte Soldiers? (if no -> exit)
-    75 18		jne 44319F		; ""
-    8A 8F 90020000	mov cl,[edi+290]	; CL = target's "Blind" duration
-    80 F9 00	cmp cl,00		; Blind? (if no -> exit)
-    74 0D		je 44319F		; ""
-    8B 55 08	mov edx,[ebp+08]	; +50% damage
-    8B 45 F0	mov eax,[ebp-10]	; ""
-    01 D0		add eax,edx		; ""
-    89 45 F0	mov [ebp-10],eax	; ""
-    EB 67		jmp 443206		; continue
-    E9 6C020000	jmp 443410		; exit (0431A2~220 is free space - see below)
+	83 F9 47	cmp ecx,47		; Troglodyte Soldiers? (if no -> exit)
+	75 18		jne 44319F		; ""
+	8A 8F 90020000	mov cl,[edi+290]	; CL = target's "Blind" duration
+	80 F9 00	cmp cl,00		; Blind? (if no -> exit)
+	74 0D		je 44319F		; ""
+	8B 55 08	mov edx,[ebp+08]	; +50% damage
+	8B 45 F0	mov eax,[ebp-10]	; ""
+	01 D0		add eax,edx		; ""
+	89 45 F0	mov [ebp-10],eax	; ""
+	EB 67		jmp 443206		; continue
+	E9 6C020000	jmp 443410		; exit (0431A2~220 is free space - see below)
 
-    ------		------------------------------------------------------------------------
-    04394D		; PHYSICAL ATTACKS CONSIDER ELEMENTAL IMMUNITIES
-    ------		------------------------------------------------------------------------
-    8B 4B 34	mov ecx,[ebx+34]	; ECX = Defender
-    E9 4FF8FFFF	jmp 4431A4		; -> free space (hate)
+	------		------------------------------------------------------------------------
+	04394D		; PHYSICAL ATTACKS CONSIDER ELEMENTAL IMMUNITIES
+	------		------------------------------------------------------------------------
+	8B 4B 34	mov ecx,[ebx+34]	; ECX = Defender
+	E9 4FF8FFFF	jmp 4431A4		; -> free space (hate)
 
-    ---------	------------------------------------------------------------------------
-    0431A4~FD	; (EXPANDED SPACE - OVERWRITES HATE)
-    ---------	------------------------------------------------------------------------
-    8D 49 F0	lea ecx,[ecx-10]	; ECX = Defender -10
-    83 F9 77	cmp ecx,77		; is ECX > 77? (table end = Rust Dragons)
-    77 4D		ja 4431F9		; if yes -> exit
+	---------	------------------------------------------------------------------------
+	0431A4~FD	; (EXPANDED SPACE - OVERWRITES HATE)
+	---------	------------------------------------------------------------------------
+	8D 49 F0	lea ecx,[ecx-10]	; ECX = Defender -10
+	83 F9 77	cmp ecx,77		; is ECX > 77? (table end = Rust Dragons)
+	77 4D		ja 4431F9		; if yes -> exit
 
-    8A 89 58A64400	mov cl,[ecx+44A658]	; CL = Resistance A
+	8A 89 58A64400	mov cl,[ecx+44A658]	; CL = Resistance A
 
-    83 F9 05	cmp ecx,05		; O-Fire? (if no -> O-Ice?)
-    75 14		jne 4431CB		; ""
-    83 F8 2C	cmp eax,2C		; Gogs? (if yes -> [half damage])
-    74 37		je 4431F3		; ""
-    83 F8 2D	cmp eax,2D		; Magogs? (if yes -> "")
-    74 32		je 4431F3		; ""
-    83 F8 72	cmp eax,72		; Fire Elementals? (if yes -> "")
-    74 2D		je 4431F1		; ""
-    83 F8 7D	cmp eax,7D		; Magma Elementals? (if yes -> "")
-    74 28		je 4431F1		; ""
+	83 F9 05	cmp ecx,05		; O-Fire? (if no -> O-Ice?)
+	75 14		jne 4431CB		; ""
+	83 F8 2C	cmp eax,2C		; Gogs? (if yes -> [half damage])
+	74 37		je 4431F3		; ""
+	83 F8 2D	cmp eax,2D		; Magogs? (if yes -> "")
+	74 32		je 4431F3		; ""
+	83 F8 72	cmp eax,72		; Fire Elementals? (if yes -> "")
+	74 2D		je 4431F1		; ""
+	83 F8 7D	cmp eax,7D		; Magma Elementals? (if yes -> "")
+	74 28		je 4431F1		; ""
 
-    83 F9 06	cmp ecx,06		; O-Ice? (if no -> O-Lightning?)
-    75 0A		jne 4431DA		; ""
-    83 F8 73	cmp eax,73		; Water Elementals? (if yes -> [half damage])
-    74 1E		je 4431F3		; ""
-    83 F8 7B	cmp eax,7B		; Ice Elementals? (if yes -> "")
-    74 19		je 4431F3		; ""
+	83 F9 06	cmp ecx,06		; O-Ice? (if no -> O-Lightning?)
+	75 0A		jne 4431DA		; ""
+	83 F8 73	cmp eax,73		; Water Elementals? (if yes -> [half damage])
+	74 1E		je 4431F3		; ""
+	83 F8 7B	cmp eax,7B		; Ice Elementals? (if yes -> "")
+	74 19		je 4431F3		; ""
 
-    83 F9 05	cmp ecx,05		; O-Lightning? (if no -> O-Magic?)
-    75 0C		jne 4431EB		; ""
-    83 F8 7F	cmp eax,7F		; Storm Elementals? (if yes -> [half damage])
-    74 0F		je 4431F3		; ""
-    3D 81000000	cmp eax,81		; Energy Elementals? (if yes -> "")
-    74 08		je 4431F3		; ""
+	83 F9 05	cmp ecx,05		; O-Lightning? (if no -> O-Magic?)
+	75 0C		jne 4431EB		; ""
+	83 F8 7F	cmp eax,7F		; Storm Elementals? (if yes -> [half damage])
+	74 0F		je 4431F3		; ""
+	3D 81000000	cmp eax,81		; Energy Elementals? (if yes -> "")
+	74 08		je 4431F3		; ""
 
-    83 F9 04	cmp ecx,04		; O-Magic? (if no -> exit)
-    75 09		jne 4431F9		; ""
-    83 F8 79	cmp eax,79		; Magic Elementals? (if yes -> [half damage])
-    0F84 66070000	je 44395F		; ""
+	83 F9 04	cmp ecx,04		; O-Magic? (if no -> exit)
+	75 09		jne 4431F9		; ""
+	83 F8 79	cmp eax,79		; Magic Elementals? (if yes -> [half damage])
+	0F84 66070000	je 44395F		; ""
 
-    E9 6D070000	jmp 44396B		; -> [continue]
-    90 90 90 90	nop			; -
-    90 90 90 90	nop			; -
+	E9 6D070000	jmp 44396B		; -> [continue]
+	90 90 90 90	nop			; -
+	90 90 90 90	nop			; -
 
-    ------		-------------------------------------------------------------------------
-    03F8E7		; FIRE IMMUNITY NEGATES DAMAGE FROM EXPLOSIVE FIREBALLS (MAGOGS)
-    ------		-------------------------------------------------------------------------
-    E9 DC3B0000	jmp 4434C8		; -> free space (hate)
-    90		nop			; -
+	------		-------------------------------------------------------------------------
+	03F8E7		; FIRE IMMUNITY NEGATES DAMAGE FROM EXPLOSIVE FIREBALLS (MAGOGS)
+	------		-------------------------------------------------------------------------
+	E9 DC3B0000	jmp 4434C8		; -> free space (hate)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0434C8~F1	; (EXPANDED SPACE - OVERWRITES HATE)
-    ---------	-------------------------------------------------------------------------
-    83 FF 06	cmp edi,06		; is defender the main target of the attack?
-    74 1A		je 4434E7		; if yes -> (displaced code)
+	---------	-------------------------------------------------------------------------
+	0434C8~F1	; (EXPANDED SPACE - OVERWRITES HATE)
+	---------	-------------------------------------------------------------------------
+	83 FF 06	cmp edi,06		; is defender the main target of the attack?
+	74 1A		je 4434E7		; if yes -> (displaced code)
 
-    8B 48 34	mov ecx,[eax+34]	; ECX = Defender
-    8D 49 F0	lea ecx,[ecx-10]	; ECX -10
-    83 F9 77	cmp ecx,77		; is ECX > 77? (table end = Rust Dragons)
-    77 0F		ja 4434E7		; if yes -> (displaced code)
+	8B 48 34	mov ecx,[eax+34]	; ECX = Defender
+	8D 49 F0	lea ecx,[ecx-10]	; ECX -10
+	83 F9 77	cmp ecx,77		; is ECX > 77? (table end = Rust Dragons)
+	77 0F		ja 4434E7		; if yes -> (displaced code)
 
-    8A 89 58A64400	mov cl,[ecx+44A658]	; CL = Resistance A
-    83 F9 05	cmp ecx,05		; O-Fire?
-    0F84 9BC4FFFF	je 43F982		; if yes -> [no damage]
-    8B 0D 20946900	mov ecx,[699420]	; (displaced code)
-    E9 FBC3FFFF	jmp 43F8ED		; -> [continue]
+	8A 89 58A64400	mov cl,[ecx+44A658]	; CL = Resistance A
+	83 F9 05	cmp ecx,05		; O-Fire?
+	0F84 9BC4FFFF	je 43F982		; if yes -> [no damage]
+	8B 0D 20946900	mov ecx,[699420]	; (displaced code)
+	E9 FBC3FFFF	jmp 43F8ED		; -> [continue]
 
-    --------	-------------------------------------------------------------------------
-    04396B~F	; RESISTANCE SPELLS REDUCE DAMAGE FROM ELEMENTALS
-    --------	-------------------------------------------------------------------------
-    E9 82FBFFFF	jmp 4434F2		; -> free space (hate)
+	--------	-------------------------------------------------------------------------
+	04396B~F	; RESISTANCE SPELLS REDUCE DAMAGE FROM ELEMENTALS
+	--------	-------------------------------------------------------------------------
+	E9 82FBFFFF	jmp 4434F2		; -> free space (hate)
 
-    ----------	-------------------------------------------------------------------------
-    0434F2~543	; (EXPANDED SPACE - OVERWRITES HATE)
-    ----------	-------------------------------------------------------------------------
-    83 7E 34 70	cmp [esi+34],70		; Air Elementals? (if no -> Earth Elementals?)
-    75 09		jne 443501		; ""
-    80BB1002000000	cmp byte [ebx+210],0	; Air Resistance? (if yes -> half damage)
-    7F 2D		jg 44352E		; ""
-    83 7E 34 71	cmp [esi+34],71		; Earth Elementals? (if no -> Fire Elementals?)
-    75 09		jne 443510		; ""
-    80BB1C02000000	cmp byte [ebx+21C],0	; Earth Resistance? (if yes -> half damage)
-    7F 1E		jg 44352E		; ""
-    83 7E 34 72	cmp [esi+34],72		; Fire Elementals? (if no -> Water Elementals?)
-    75 09		jne 44351F		; ""
-    80BB1402000000	cmp byte [ebx+214],0	; Fire Resistance? (if yes -> half damage)
-    7F 0F		jg 44352E		; ""
-    83 7E 34 73	cmp [esi+34],73		; Water Elementals? (if no -> displaced code)
-    75 15		jne 44353A		; ""
-    80BB1802000000	cmp byte [ebx+218],0	; Water Resistance? (if no -> displaced code)
-    74 0C		je 44353A		; ""
-    DD 45 F8	fld qword [ebp-08]	; load damage
-    DC 0D 70AC6300	fmul qword [63AC70]	; damage * 0.50
-    DD 5D F8	fstp qword [ebp-08]	; store damage
-    8A 45 0C	mov al,[ebp+0C]		; (displaced code)
-    84 C0		test al,al		; ""
-    E9 2C040000	jmp 443970		; return (043544~5F is free space)
+	----------	-------------------------------------------------------------------------
+	0434F2~543	; (EXPANDED SPACE - OVERWRITES HATE)
+	----------	-------------------------------------------------------------------------
+	83 7E 34 70	cmp [esi+34],70		; Air Elementals? (if no -> Earth Elementals?)
+	75 09		jne 443501		; ""
+	80BB1002000000	cmp byte [ebx+210],0	; Air Resistance? (if yes -> half damage)
+	7F 2D		jg 44352E		; ""
+	83 7E 34 71	cmp [esi+34],71		; Earth Elementals? (if no -> Fire Elementals?)
+	75 09		jne 443510		; ""
+	80BB1C02000000	cmp byte [ebx+21C],0	; Earth Resistance? (if yes -> half damage)
+	7F 1E		jg 44352E		; ""
+	83 7E 34 72	cmp [esi+34],72		; Fire Elementals? (if no -> Water Elementals?)
+	75 09		jne 44351F		; ""
+	80BB1402000000	cmp byte [ebx+214],0	; Fire Resistance? (if yes -> half damage)
+	7F 0F		jg 44352E		; ""
+	83 7E 34 73	cmp [esi+34],73		; Water Elementals? (if no -> displaced code)
+	75 15		jne 44353A		; ""
+	80BB1802000000	cmp byte [ebx+218],0	; Water Resistance? (if no -> displaced code)
+	74 0C		je 44353A		; ""
+	DD 45 F8	fld qword [ebp-08]	; load damage
+	DC 0D 70AC6300	fmul qword [63AC70]	; damage * 0.50
+	DD 5D F8	fstp qword [ebp-08]	; store damage
+	8A 45 0C	mov al,[ebp+0C]		; (displaced code)
+	84 C0		test al,al		; ""
+	E9 2C040000	jmp 443970		; return (043544~5F is free space)
 
 So, what's going on here? Simply put, elemental damage from physical attacks is multiplied by 1.5 on a
 weakness and halved on resistance, either unit-inherent or from a spell. This code assumes that you've
@@ -818,20 +819,20 @@ In any case, if you use the new code above (or even if you don't), you'll probab
 GenrlTxt.txt file and rewrite the "burning with anger" to something closer to "strikes a weakness".
 
 
-	ATTACK A					ATTACK B
-	--------					--------
-    00 = Life Drain	    (Vampire Lord)		00 = Entangle	    (Dendroid)
-    01 = Thunderbolt    (Thunderbird)		01 = Blind	    (Unicorn)
-    02 = Death Stare    (Mighty Gorgon)		02 = Disease	    (Zombie)
-    03 = Dispel	    (Serpent Fly)		03 = Curse	    (Black Knight & Mummy)
-    04 = *Acid Breath   (Rust Dragon)		04 = Aging	    (Ghost Dragon)
-    05 = None					05 = Petrify	    (Medusa & Basilisk)
-     ---					06 = Paralyze	    (Scorpicore)
-     ---					07 = Poison	    (Wyvern Monarch)
-     ---					08 = *Acid Breath   (Rust Dragon)
-     ---					09 = None
+		ATTACK A					ATTACK B
+		--------					--------
+	00 = Life Drain	    (Vampire Lord)		00 = Entangle	    (Dendroid)
+	01 = Thunderbolt    (Thunderbird)		01 = Blind	    (Unicorn)
+	02 = Death Stare    (Mighty Gorgon)		02 = Disease	    (Zombie)
+	03 = Dispel	    (Serpent Fly)		03 = Curse	    (Black Knight & Mummy)
+	04 = *Acid Breath   (Rust Dragon)		04 = Aging	    (Ghost Dragon)
+	05 = None					05 = Petrify	    (Medusa & Basilisk)
+	     ---					06 = Paralyze	    (Scorpicore)
+	     ---					07 = Poison	    (Wyvern Monarch)
+	     ---					08 = *Acid Breath   (Rust Dragon)
+	     ---					09 = None
 
-     (*Attack A is the chance for extra damage, Attack B is the defense reduction)
+	     (*Attack A is the chance for extra damage, Attack B is the defense reduction)
 
 
 Many of the abilities specified above - as well as several that aren't - have a random
@@ -869,18 +870,18 @@ will retaliate at the strength specified in SpTraits.txt if attacked). Paralyzed
 when attacked, will retaliate at half strength. If desired, we can make them inable to
 retaliate at all - which is notably separate from paralyze not being removed when hit.
 
-    ---------	-------------------------------------------------------------------------
-    041ACD~E9	; PARALYZED UNITS WILL NOT BE ABLE TO RETALIATE
-    ---------	-------------------------------------------------------------------------
-    8B 4D 08	mov ecx,[ebp+08]	; (shifted code)
-    51		push ecx		; ""
-    56		push esi		; ""
-    8B CF		mov ecx,edi		; ""
-    E8 57F8FFFF	call 441330		; ""
-    8B 8E C0020000	mov ecx,[esi+2C0]	; ECX = defender's paralyze duration
-    85 C9		test ecx,ecx		; is defender paralyzed?
-    0F85 9E000000	jne 441B85		; if yes -> [no retaliation]
-    90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	041ACD~E9	; PARALYZED UNITS WILL NOT BE ABLE TO RETALIATE
+	---------	-------------------------------------------------------------------------
+	8B 4D 08	mov ecx,[ebp+08]	; (shifted code)
+	51		push ecx		; ""
+	56		push esi		; ""
+	8B CF		mov ecx,edi		; ""
+	E8 57F8FFFF	call 441330		; ""
+	8B 8E C0020000	mov ecx,[esi+2C0]	; ECX = defender's paralyze duration
+	85 C9		test ecx,ecx		; is defender paralyzed?
+	0F85 9E000000	jne 441B85		; if yes -> [no retaliation]
+	90 90 90	nop			; -
 
 The half damage to petrified units is specified by a QWORD pointer at 043D49. Changing
 the DC at 043D47 to D8 switches this to a DWORD pointer and gives us some more options:
@@ -914,7 +915,7 @@ We can also set it to lower speed by an adjustable amount with the following rew
     89 8E D0040000	mov [esi+4D0],ecx	; store above for when status is removed
 
     6A XX		push XX			; EDX = SPD magnitude (XX)
-    5A		pop edx			; ""
+    5A		        pop edx			; ""
     8B BE C4000000	mov edi,[esi+C4]	; EDI = target's SPD
     39 D7		cmp edi,edx		; is target's ATK less than the magnitude?
     7D 02		jnl 444C2A		; if no -> subtract defense
@@ -922,7 +923,7 @@ We can also set it to lower speed by an adjustable amount with the following rew
 
     29 96 C4000000	sub [esi+C4],edx	; subtract SPD
     89 96 D4040000	mov [esi+4D4],edx	; store above for when status is removed
-    90 90 90	nop			; -
+    90 90 90	nop			        ; -
 
     ---------	-------------------------------------------------------------------------
     0444B9~E0	; "" (WHEN REMOVING STATUS)
@@ -933,14 +934,14 @@ We can also set it to lower speed by an adjustable amount with the following rew
     00 AE CC000000	add [esi+CC],ch		; restore DEF
     01 96 C4000000	add [esi+C4],edx	; restore SPD
     90 90 90 90 90	nop			; -
-    90 90 90 90	nop			; -
+    90 90 90 90	        nop			        ; -
 
     ---------	-------------------------------------------------------------------------
     0443B3~C5	; "" (UPDATE STONESKIN REMOVAL TO NO LONGER SHARE ABOVE CODE)
     ---------	-------------------------------------------------------------------------
     8B 86 70040000	mov eax,[esi+470]	; EAX = DEF to remove
     29 86 CC000000	sub [esi+CC],eax	; remove DEF
-    E9 1D010000	jmp 4444E1		; -> [continue]
+    E9 1D010000	        jmp 4444E1		; -> [continue]
     90 90		nop			; -
 
 The value of the defense reduction of Acid Breath B is specified at 1A2188 (FD, or -3).
@@ -957,25 +958,25 @@ are DWORD pointers, as we should know by now, so remember that they're written b
 will thus point to 440496. This address doesn't actually exist in the .exe file because runtime offsets
 all memory by 400000. Thus, in a hex editor, this points to 040496.
 
-    ---------	-------------------------------------------------------------------------
-    0411BF~D7	; PETRIFY IMMUNITY CHECK (OVERWRITES "ACID BREATH A")
-    ---------	-------------------------------------------------------------------------
-    8B 7D 08	mov edi,[ebp+08]	; EDI = defender
-    8B 87 84000000	mov eax,[edi+84]	; EAX = defending unit data
-    C1 E8 04	shr eax,04		; shift to "living" flag
-    A8 01		test al,01		; is unit alive?
-    0F 84 DBF0FFFF	je 4402AE		; if no -> [exit]
-    E9 BEF2FFFF	jmp 440496		; -> [petrify]
+	---------	-------------------------------------------------------------------------
+	0411BF~D7	; PETRIFY IMMUNITY CHECK (OVERWRITES "ACID BREATH A")
+	---------	-------------------------------------------------------------------------
+	8B 7D 08	mov edi,[ebp+08]	; EDI = defender
+	8B 87 84000000	mov eax,[edi+84]	; EAX = defending unit data
+	C1 E8 04	shr eax,04		; shift to "living" flag
+	A8 01		test al,01		; is unit alive?
+	0F 84 DBF0FFFF	je 4402AE		; if no -> [exit]
+	E9 BEF2FFFF	jmp 440496		; -> [petrify]
 
-    ---------	-------------------------------------------------------------------------
-    0411D8~F0	; PARALYZE IMMUNITY CHECK (OVERWRITES "ACID BREATH A")
-    ---------	-------------------------------------------------------------------------
-    8B 7D 08	mov edi,[ebp+08]	; EDI = defender
-    8B 87 84000000	mov eax,[edi+84]	; EAX = defending unit data
-    C1 E8 04	shr eax,04		; shift to "living" flag
-    A8 01		test al,01		; is unit alive?
-    0F 84 C2F0FFFF	je 4402AE		; if no -> [exit]
-    E9 CFF3FFFF	jmp 4405C0		; -> [paralyze] (0411F1~2AA is free space)
+	---------	-------------------------------------------------------------------------
+	0411D8~F0	; PARALYZE IMMUNITY CHECK (OVERWRITES "ACID BREATH A")
+	---------	-------------------------------------------------------------------------
+	8B 7D 08	mov edi,[ebp+08]	; EDI = defender
+	8B 87 84000000	mov eax,[edi+84]	; EAX = defending unit data
+	C1 E8 04	shr eax,04		; shift to "living" flag
+	A8 01		test al,01		; is unit alive?
+	0F 84 C2F0FFFF	je 4402AE		; if no -> [exit]
+	E9 CFF3FFFF	jmp 4405C0		; -> [paralyze] (0411F1~2AA is free space)
 
 Now, suppose we want to take these immunities one step farther and tie them to a different flag so that
 certain "living" units (Angels or Genies, for example) can be given them. Bit 6 on byte 18 is unused, so
@@ -986,10 +987,10 @@ XX XX XX XX) to "jump if not equal" (75 XX or 0F 85 XX XX XX XX).
 
 The abilities which already check the "living" flag can be edited at the following addresses:
 
-        DISEASE		    POISON		     AGING		  DEATH STARE
-    ---------------		---------------		---------------		----------------
-    0402C3: 04 > 0D		040545: 04 > 0D		04024D: 04 > 0D		040BE3: 04 > 0D
-    0402C6: 74 > 75		04054A: 84 > 85		040251: 74 > 75		040BE8: 84 > 85
+	    DISEASE		    POISON		     AGING		  DEATH STARE
+	---------------		---------------		---------------		----------------
+	0402C3: 04 > 0D		040545: 04 > 0D		04024D: 04 > 0D		040BE3: 04 > 0D
+	0402C6: 74 > 75		04054A: 84 > 85		040251: 74 > 75		040BE8: 84 > 85
 
 
 Continuing with the space we freed from "Acid Breath A", let's allow variable odds of "Attack B" effects
@@ -998,101 +999,101 @@ to have a higher success rate. The below code will specify a 30% chance of succe
 relatively even in size with a variance of up to +/-20% if either side is outnumbered by more than 3:1.
 After that, certain units will have their success rate doubled - potentially allowing for 100% odds.
 
-    ----------	-------------------------------------------------------------------------
-    0411F1~286	; VARIABLE "ATTACK B" ODDS (OVERWRITES "ACID BREATH A")
-    ----------	-------------------------------------------------------------------------
-    E8 CAB50C00	call 50C7C0		; EAX = 0~64 (displaced code)
+	----------	-------------------------------------------------------------------------
+	0411F1~286	; VARIABLE "ATTACK B" ODDS (OVERWRITES "ACID BREATH A")
+	----------	-------------------------------------------------------------------------
+	E8 CAB50C00	call 50C7C0		; EAX = 0~64 (displaced code)
 
-    8B 4E 4C	mov ecx,[esi+4C]	; ECX = # of attackers
-    8B 57 4C	mov edx,[edi+4C]	; EDX = # of defenders
-    39 D1		cmp ecx,edx		; more attackers than defenders?
-    7F 35		jg 441235		; if yes ->
+	8B 4E 4C	mov ecx,[esi+4C]	; ECX = # of attackers
+	8B 57 4C	mov edx,[edi+4C]	; EDX = # of defenders
+	39 D1		cmp ecx,edx		; more attackers than defenders?
+	7F 35		jg 441235		; if yes ->
 
-    01 C9		add ecx,ecx		; do defenders outnumber more than 2:1?
-    39 D1		cmp ecx,edx		; ""
-    7F 12		jg 441218		; if yes -> next check
+	01 C9		add ecx,ecx		; do defenders outnumber more than 2:1?
+	39 D1		cmp ecx,edx		; ""
+	7F 12		jg 441218		; if yes -> next check
 
-    03 4E 4C	add ecx,[esi+4C]	; do defenders outnumber more than 1.5:1?
-    C1 F9 02	sar ecx,02		; ""
-    39 D1		cmp ecx,edx		; ""
-    7F 04		jg 441214		; if yes -> 25% odds
-    6A 1E		push 1E			; 30% odds
-    EB 50		jmp 441264		; ""
-    6A 19		push 19			; 25% odds
-    EB 4C		jmp 441264		; ""
+	03 4E 4C	add ecx,[esi+4C]	; do defenders outnumber more than 1.5:1?
+	C1 F9 02	sar ecx,02		; ""
+	39 D1		cmp ecx,edx		; ""
+	7F 04		jg 441214		; if yes -> 25% odds
+	6A 1E		push 1E			; 30% odds
+	EB 50		jmp 441264		; ""
+	6A 19		push 19			; 25% odds
+	EB 4C		jmp 441264		; ""
 
-    01 C9		add ecx,ecx		; do defenders outnumber more than 3:1?
-    39 D1		cmp ecx,edx		; ""
-    7F 11		jg 44122F		; if yes -> 10% odds
+	01 C9		add ecx,ecx		; do defenders outnumber more than 3:1?
+	39 D1		cmp ecx,edx		; ""
+	7F 11		jg 44122F		; if yes -> 10% odds
 
-    03 4E 4C	add ecx,[esi+4C]	; do defenders outnumber more than 2.5:1?
-    D1 F9		sar ecx,1		; ""
-    39 D1		cmp ecx,edx		; ""
-    7F 04		jg 44122B		; if yes -> 15% odds
-    6A 14		push 14			; 20% odds
-    EB 39		jmp 441264		; ""
-    6A 0F		push 0F			; 15% odds
-    EB 35		jmp 441264		; ""
-    6A 0A		push 0A			; 10% odds
-    EB 31		jmp 441264		; ""
+	03 4E 4C	add ecx,[esi+4C]	; do defenders outnumber more than 2.5:1?
+	D1 F9		sar ecx,1		; ""
+	39 D1		cmp ecx,edx		; ""
+	7F 04		jg 44122B		; if yes -> 15% odds
+	6A 14		push 14			; 20% odds
+	EB 39		jmp 441264		; ""
+	6A 0F		push 0F			; 15% odds
+	EB 35		jmp 441264		; ""
+	6A 0A		push 0A			; 10% odds
+	EB 31		jmp 441264		; ""
 
-    01 D2		add edx,edx		; do attackers outnumber more than 2:1?
-    39 D1		cmp ecx,edx		; ""
-    7F 12		jg 44124B		; if yes -> next check
+	01 D2		add edx,edx		; do attackers outnumber more than 2:1?
+	39 D1		cmp ecx,edx		; ""
+	7F 12		jg 44124B		; if yes -> next check
 
-    03 57 4C	add edx,[edi+4C]	; do attackers outnumber more than 1.5:1?
-    C1 FA 02	sar edx,02		; ""
-    39 D1		cmp ecx,edx		; ""
-    7F 04		jg 441247		; if yes -> 35% odds
-    6A 1E		push 1E			; 30% odds
-    EB 1D		jmp 441264		; ""
-    6A 23		push 23			; 35% odds
-    EB 19		jmp 441264		; ""
+	03 57 4C	add edx,[edi+4C]	; do attackers outnumber more than 1.5:1?
+	C1 FA 02	sar edx,02		; ""
+	39 D1		cmp ecx,edx		; ""
+	7F 04		jg 441247		; if yes -> 35% odds
+	6A 1E		push 1E			; 30% odds
+	EB 1D		jmp 441264		; ""
+	6A 23		push 23			; 35% odds
+	EB 19		jmp 441264		; ""
 
-    01 D2		add edx,edx		; do attackers outnumber more than 3:1?
-    39 D1		cmp ecx,edx		; ""
-    7F 11		jg 441262		; if yes -> 50% odds
+	01 D2		add edx,edx		; do attackers outnumber more than 3:1?
+	39 D1		cmp ecx,edx		; ""
+	7F 11		jg 441262		; if yes -> 50% odds
 
-    03 57 4C	add edx,[edi+4C]	; do attackers outnumber more than 2.5:1?
-    D1 F9		sar ecx,1		; ""
-    39 D2		cmp edx,edx		; ""
-    7F 04		jg 44125E		; if yes -> 45% odds
-    6A 28		push 28			; 40% odds
-    EB 06		jmp 441264		; ""
-    6A 2D		push 2D			; 45% odds
-    EB 02		jmp 441264		; ""
-    6A 32		push 32			; 50% odds
-    59		pop ecx			; ECX = odds
+	03 57 4C	add edx,[edi+4C]	; do attackers outnumber more than 2.5:1?
+	D1 F9		sar ecx,1		; ""
+	39 D2		cmp edx,edx		; ""
+	7F 04		jg 44125E		; if yes -> 45% odds
+	6A 28		push 28			; 40% odds
+	EB 06		jmp 441264		; ""
+	6A 2D		push 2D			; 45% odds
+	EB 02		jmp 441264		; ""
+	6A 32		push 32			; 50% odds
+	59		pop ecx			; ECX = odds
 
-    8B 56 34	mov edx,[esi+34]	; EDX = unit ID
+	8B 56 34	mov edx,[esi+34]	; EDX = unit ID
 
-    83 FA 3B   	cmp edx,3B		; Zombies?
-    74 17		je 441284		; if yes -> double odds
+	83 FA 3B   	cmp edx,3B		; Zombies?
+	74 17		je 441284		; if yes -> double odds
 
-    83 FA 4D	cmp edx,4D		; Medusa Queens?
-    74 12		je 441284		; if yes -> 2/3 odds
+	83 FA 4D	cmp edx,4D		; Medusa Queens?
+	74 12		je 441284		; if yes -> 2/3 odds
 
-    83 FA 69	cmp edx,69		; Dragonflies?
-    74 0D		je 441284		; if yes -> 2/3 odds
+	83 FA 69	cmp edx,69		; Dragonflies?
+	74 0D		je 441284		; if yes -> 2/3 odds
 
-    83 FA 6B	cmp edx,6B		; Greater Basilisks?
-    74 08		je 441284		; if yes -> 2/3 odds
+	83 FA 6B	cmp edx,6B		; Greater Basilisks?
+	74 08		je 441284		; if yes -> 2/3 odds
 
-    81 FA 8D000000	cmp edx,8D		; Mummies?
-    75 02		jne 441286		; if no -> return
+	81 FA 8D000000	cmp edx,8D		; Mummies?
+	75 02		jne 441286		; if no -> return
 
-    01 C9		add ecx,ecx		; double odds
-    C3		ret 			; return
+	01 C9		add ecx,ecx		; double odds
+	C3		ret 			; return
 
-...and then we just call this code as desired from the following routines like so:
+	...and then we just call this code as desired from the following routines like so:
 
-		Curse      04042C > E8 C00D0000 39 C8 90
-		Blind      040337 > E8 B50E0000 39 C8 90
-		Disease    0402D2 > E8 1A0F0000 39 C8 90
-		Petrify    0404A0 > E8 4C0D0000 39 C8 90
-		Paralyze   0405CA > E8 220C0000 39 C8 90
-		Poison     040559 > E8 930C0000 39 C8 90
-		Aging      04025D > E8 8F0F0000 39 C8 90
+			Curse      04042C > E8 C00D0000 39 C8 90
+			Blind      040337 > E8 B50E0000 39 C8 90
+			Disease    0402D2 > E8 1A0F0000 39 C8 90
+			Petrify    0404A0 > E8 4C0D0000 39 C8 90
+			Paralyze   0405CA > E8 220C0000 39 C8 90
+			Poison     040559 > E8 930C0000 39 C8 90
+			Aging      04025D > E8 8F0F0000 39 C8 90
 
 
 Next, let's look at setting variable durations for unit-set statuses depending on the status being set.
@@ -1100,33 +1101,33 @@ The below code takes the somewhat-obvious route of reducing the ones that comple
 turns while substantially raising the others to the point that either a First Aid Tent or the Cure spell
 will be needed to get rid of them in a timely manner.
 
-    ------		-------------------------------------------------------------------------
-    068CD8		; VARIABLE "ATTACK B" DURATION
-    ------		-------------------------------------------------------------------------
-    E9 AA85FDFF	jmp 441287		; -> free space (Acid Breath A)
-    90		nop			; -
+	------		-------------------------------------------------------------------------
+	068CD8		; VARIABLE "ATTACK B" DURATION
+	------		-------------------------------------------------------------------------
+	E9 AA85FDFF	jmp 441287		; -> free space (Acid Breath A)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    041287~AA	; (EXPANDED SPACE - OVERWRITES "ACID BREATH A")
-    ---------	-------------------------------------------------------------------------
-    83 F8 46	cmp eax,46		; Petrify?
-    74 0A		je 441296		; if yes -> 2 turns
+	---------	-------------------------------------------------------------------------
+	041287~AA	; (EXPANDED SPACE - OVERWRITES "ACID BREATH A")
+	---------	-------------------------------------------------------------------------
+	83 F8 46	cmp eax,46		; Petrify?
+	74 0A		je 441296		; if yes -> 2 turns
 
-    83 F8 4A	cmp eax,4A		; Paralyze?
-    74 05		je 441296		; if yes -> 2 turns
+	83 F8 4A	cmp eax,4A		; Paralyze?
+	74 05		je 441296		; if yes -> 2 turns
 
-    83 F8 3E	cmp eax,3E		; Blind?(*)
-    75 06		jne 44129C		; if no -> 5 turns
+	83 F8 3E	cmp eax,3E		; Blind?(*)
+	75 06		jne 44129C		; if no -> 5 turns
 
-    6A 02		push 02			; 2 turns
-    6A 02		push 02			; advanced level (for Blind)
-    EB 04		jmp 4412A0		; -> (displaced code)
+	6A 02		push 02			; 2 turns
+	6A 02		push 02			; advanced level (for Blind)
+	EB 04		jmp 4412A0		; -> (displaced code)
 
-    6A 05		push 05			; 5 turns (Disease, Poison, Aging)
-    6A 00		push 00			; unskilled (for Acid Breath B - see below)
-    6A FF		push -01		; (displaced code)
-    E9 377A0200	jmp 468CDE		; return
-    90 90 90 90	nop			; -
+	6A 05		push 05			; 5 turns (Disease, Poison, Aging)
+	6A 00		push 00			; unskilled (for Acid Breath B - see below)
+	6A FF		push -01		; (displaced code)
+	E9 377A0200	jmp 468CDE		; return
+	90 90 90 90	nop			; -
 
 >(*This is important if you changed Blind's duration earlier to depend on skill level)
 
@@ -1151,47 +1152,47 @@ Also note: since we're flat-out casting Disrupting Ray with this effect, the mag
 to whatever the spell itself is set to. The desired skill level can be adjusted in the "Variable Attack
 B Duration" code above - see the "unskilled" push, which will only affect this ability.
 
-    ---------	-------------------------------------------------------------------------
-    04050A~39	; DISRUPTING RAY & ENRAGE (FORMERLY "ACID BREATH B")
-    ---------	-------------------------------------------------------------------------
-    8B 45 08	mov eax,[ebp+08]	; EAX = defender
-    8B 48 4C	mov ecx,[eax+4C]	; ECX = # of units in defending stack
-    85 C9		test ecx,ecx		; is defender is dead?
-    7E 1C		jle 440530		; if yes -> exit
+	---------	-------------------------------------------------------------------------
+	04050A~39	; DISRUPTING RAY & ENRAGE (FORMERLY "ACID BREATH B")
+	---------	-------------------------------------------------------------------------
+	8B 45 08	mov eax,[ebp+08]	; EAX = defender
+	8B 48 4C	mov ecx,[eax+4C]	; ECX = # of units in defending stack
+	85 C9		test ecx,ecx		; is defender is dead?
+	7E 1C		jle 440530		; if yes -> exit
 
-    8B 4E 34	mov ecx,[esi+34]	; ECX = attacking unit ID
-    83 F9 4F	cmp ecx,4F		; Minotaur Kings?
-    75 0B		jne 440527		; if no -> Disrupting Ray
-    6A 50		push 50			; 50 = Enrage
-    59		pop ecx			; ""
-    89 8E EC000000	mov [esi+EC],ecx	; move to attacker's stack data
-    EB 09		jmp 440530		; -> [exit]
+	8B 4E 34	mov ecx,[esi+34]	; ECX = attacking unit ID
+	83 F9 4F	cmp ecx,4F		; Minotaur Kings?
+	75 0B		jne 440527		; if no -> Disrupting Ray
+	6A 50		push 50			; 50 = Enrage
+	59		pop ecx			; ""
+	89 8E EC000000	mov [esi+EC],ecx	; move to attacker's stack data
+	EB 09		jmp 440530		; -> [exit]
 
-    6A 2F		push 2F			; 2F = Disrupting Ray
-    59		pop ecx			; ""
-    89 88 EC000000	mov [eax+EC],ecx	; move to defender's stack data
-    E9 79FDFFFF	jmp 4402AE		; -> [exit]
-    9090909090	nop			; -
+	6A 2F		push 2F			; 2F = Disrupting Ray
+	59		pop ecx			; ""
+	89 88 EC000000	mov [eax+EC],ecx	; move to defender's stack data
+	E9 79FDFFFF	jmp 4402AE		; -> [exit]
+	9090909090	nop			; -
 
-    --------	-------------------------------------------------------------------------
-    1A2180~8	; ENRAGE (ATTACK UP INSTEAD OF DEFENSE DOWN)
-    --------	-------------------------------------------------------------------------
-    8387C8000000XX	add [edi+C8],XX		; Attack +X
-    EB 14		jmp 5A219D		; -> [continue] 1A2189~9C is free
+	--------	-------------------------------------------------------------------------
+	1A2180~8	; ENRAGE (ATTACK UP INSTEAD OF DEFENSE DOWN)
+	--------	-------------------------------------------------------------------------
+	8387C8000000XX	add [edi+C8],XX		; Attack +X
+	EB 14		jmp 5A219D		; -> [continue] 1A2189~9C is free
 
-    ---------	-------------------------------------------------------------------------
-    2884A0~CF	; ENRAGE TEXT (CHANGED FROM ACID BREATH)
-    ---------	-------------------------------------------------------------------------
-    54 68 65 20 61 74 74 61 63 6B 20 6F 66 20 74 68	; "The attack of the %s increases by %i"
-    65 20 25 73 20 69 6E 63 72 65 61 73 65 73 20 62	; ""
-    79 20 25 69 00 00 00 00 00 00 00 00 00 00 00 00	; ""
+	---------	-------------------------------------------------------------------------
+	2884A0~CF	; ENRAGE TEXT (CHANGED FROM ACID BREATH)
+	---------	-------------------------------------------------------------------------
+	54 68 65 20 61 74 74 61 63 6B 20 6F 66 20 74 68	; "The attack of the %s increases by %i"
+	65 20 25 73 20 69 6E 63 72 65 61 73 65 73 20 62	; ""
+	79 20 25 69 00 00 00 00 00 00 00 00 00 00 00 00	; ""
 
-    ---------	-------------------------------------------------------------------------
-    1A222A~35	; ENRAGE TEXT (VALUE OF %I)
-    ---------	-------------------------------------------------------------------------
-    8D 55 88	lea edx,[ebp-78]	; (displaced code)
-    6A XX		push XX			; Attack +X
-    90909090909090	nop			; -
+	---------	-------------------------------------------------------------------------
+	1A222A~35	; ENRAGE TEXT (VALUE OF %I)
+	---------	-------------------------------------------------------------------------
+	8D 55 88	lea edx,[ebp-78]	; (displaced code)
+	6A XX		push XX			; Attack +X
+	90909090909090	nop			; -
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -1298,42 +1299,42 @@ but it's a fairly simple matter to rewrite the Master Genie routine to suit your
 examples below: one to give them a single spell and one to give them a custom pool. Both will free up a
 substantial amount of space since the routine to pick any available spell was quite suboptimal.
 
-    048464 > F1 7B	; update exit pointer (needed for both of the below, frees 048351~D)
+	048464 > F1 7B	; update exit pointer (needed for both of the below, frees 048351~D)
 
-    ----------	-------------------------------------------------------------------------
-    047BF1~C0E	; MASTER GENIE SPELLCAST TO A SPECIFIC SPELL
-    ----------	-------------------------------------------------------------------------
-    8B 45 08	mov eax,[ebp+08]	; EAX = target
-    8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
-    6A XX		push XX			; XX = magic power
-    6A XX		push XX			; XX = skill level (0~3)
-    6A FF		push -01		; ???
-    6A 01		push 01			; ???
-    50		push eax		; push target
-    6A XX		push XX			; XX = spell ID
-    E8 36851500	call 5A0140		; cast spell
-    E9 CE070000	jmp 4483DD		; -> [continue]
+	----------	-------------------------------------------------------------------------
+	047BF1~C0E	; MASTER GENIE SPELLCAST TO A SPECIFIC SPELL
+	----------	-------------------------------------------------------------------------
+	8B 45 08	mov eax,[ebp+08]	; EAX = target
+	8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
+	6A XX		push XX			; XX = magic power
+	6A XX		push XX			; XX = skill level (0~3)
+	6A FF		push -01		; ???
+	6A 01		push 01			; ???
+	50		push eax		; push target
+	6A XX		push XX			; XX = spell ID
+	E8 36851500	call 5A0140		; cast spell
+	E9 CE070000	jmp 4483DD		; -> [continue]
 
-    ----------	-------------------------------------------------------------------------
-    047BF1~C1D	; MASTER GENIE SPELLCAST TO A SPELL POOL
-    ----------	-------------------------------------------------------------------------
-    31 C9		xor ecx,ecx		; ECX = 0
-    6A XX		push XX			; XX = number of spells in pool -1
-    5A		pop edx			; EDX = XX
-    E8 C54B0C00 	call 50C7C0		; EAX = 0~XX
-    8A 80 1E7C4400	mov al,[eax+00447C1E]	; EAX = spell ID
-    8B 55 08 	mov edx,[ebp+08]	; EDX = target
-    8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
-    6A XX		push XX			; XX = magic power
-    6A XX		push XX			; XX = skill level (0~3)
-    6A FF		push -01		; ???
-    6A 01		push 01			; ???
-    52		push edx		; push target
-    50		push eax		; push spell ID
-    E8 27851500	call 5A0140		; cast spell
-    E9 BF070000	jmp 4483DD		; -> [continue]
+	----------	-------------------------------------------------------------------------
+	047BF1~C1D	; MASTER GENIE SPELLCAST TO A SPELL POOL
+	----------	-------------------------------------------------------------------------
+	31 C9		xor ecx,ecx		; ECX = 0
+	6A XX		push XX			; XX = number of spells in pool -1
+	5A		pop edx			; EDX = XX
+	E8 C54B0C00 	call 50C7C0		; EAX = 0~XX
+	8A 80 1E7C4400	mov al,[eax+00447C1E]	; EAX = spell ID
+	8B 55 08 	mov edx,[ebp+08]	; EDX = target
+	8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
+	6A XX		push XX			; XX = magic power
+	6A XX		push XX			; XX = skill level (0~3)
+	6A FF		push -01		; ???
+	6A 01		push 01			; ???
+	52		push edx		; push target
+	50		push eax		; push spell ID
+	E8 27851500	call 5A0140		; cast spell
+	E9 BF070000	jmp 4483DD		; -> [continue]
 
-    447C1E > XX XX XX... ; spell ID 1, 2, 3... (space is free up to 047BFF)
+	447C1E > XX XX XX... ; spell ID 1, 2, 3... (space is free up to 047BFF)
 
 Again, the only limitations here are that they must be friendly spells (unless you like killing your own
 units) and must require no further input (Teleport won't work). While there's no "weighting" like in the
@@ -1347,24 +1348,24 @@ spell. For a specific spell, we'll need to update that check. We do so by runnin
 Magi through the same routine and simply adjusting one variable as needed, which frees up a significant
 amount of space from the old Master Genie routine (03C0EE~24B).
 
-    ---------	-------------------------------------------------------------------------
-    43BF76~92	; COMBINE MASTER GENIE & OGRE MAGI STATUS CHECK ROUTINES (INLINE EDIT)
-    ---------	-------------------------------------------------------------------------
-    55		push ebp		; (shifted code)
-    8B EC		mov ebp,esp		; ""
-    83 EC 3C	sub esp,3C		; ""
-    53		push ebx		; ""
-    56		push esi		; ""
-    8B 5D 08	mov ebx,[ebp+08]	; ""
-    8B F1		mov esi,ecx		; ""
-    BA 58020000	mov edx,258		; EDX = 258 (Prayer)
-    83 F8 25	cmp eax,25		; Master Genies?
-    74 03		je 43BF90		; if no -> EAX = unit's status duration
-    83 C2 20	add edx,20		; EDX +20 (278 = Frenzy)
-    8B 04 1A	mov eax,[edx+ebx]	; EAX = unit's status duration
+	---------	-------------------------------------------------------------------------
+	43BF76~92	; COMBINE MASTER GENIE & OGRE MAGI STATUS CHECK ROUTINES (INLINE EDIT)
+	---------	-------------------------------------------------------------------------
+	55		push ebp		; (shifted code)
+	8B EC		mov ebp,esp		; ""
+	83 EC 3C	sub esp,3C		; ""
+	53		push ebx		; ""
+	56		push esi		; ""
+	8B 5D 08	mov ebx,[ebp+08]	; ""
+	8B F1		mov esi,ecx		; ""
+	BA 58020000	mov edx,258		; EDX = 258 (Prayer)
+	83 F8 25	cmp eax,25		; Master Genies?
+	74 03		je 43BF90		; if no -> EAX = unit's status duration
+	83 C2 20	add edx,20		; EDX +20 (278 = Frenzy)
+	8B 04 1A	mov eax,[edx+ebx]	; EAX = unit's status duration
 
-    020FC0 > 05	; Master Genies to same routine as Ogre Magi (020FD7~E5 is free space)
-    020FCE > A4	; adjust call to status check routine to use prior free space
+	020FC0 > 05	; Master Genies to same routine as Ogre Magi (020FD7~E5 is free space)
+	020FCE > A4	; adjust call to status check routine to use prior free space
 
 As you can see in the above example, we have selected Prayer as our Master Genie spell and Frenzy as our
 Ogre Magi spell. We initially set EDX to 258 for Prayer and then add 20 to get 278 for Ogre Magi. Adjust
@@ -1406,23 +1407,23 @@ With the addition of the Sharpshooter's Bow in the SoD expansion, the Golden Bow
 feeling weirdly redundant. Should you choose to remove it from the game (we'll go over
 how to do so later on), here's some code to transfer its bonus to two more units:
 
-    ---------	-------------------------------------------------------------------------
-    067214~40	; NO RANGE PENALTY: MARKSMEN & TITANS (OVERWRITES GOLDEN BOW)
-    ---------	-------------------------------------------------------------------------
-    74 12		je 467228		; (shortened jump)
-    68 89000000	push 89			; Sharpshooter's Bow?
-    E8 40220700	call 4D9460		; ""
-    84 C0		test al,al		; ""
-    0F85 E7010000	jne 46740F		; if yes -> [pass]
+	---------	-------------------------------------------------------------------------
+	067214~40	; NO RANGE PENALTY: MARKSMEN & TITANS (OVERWRITES GOLDEN BOW)
+	---------	-------------------------------------------------------------------------
+	74 12		je 467228		; (shortened jump)
+	68 89000000	push 89			; Sharpshooter's Bow?
+	E8 40220700	call 4D9460		; ""
+	84 C0		test al,al		; ""
+	0F85 E7010000	jne 46740F		; if yes -> [pass]
 
-    8B 47 34	mov eax,[edi+34]	; EAX = attacker unit ID
+	8B 47 34	mov eax,[edi+34]	; EAX = attacker unit ID
 
-    83 F8 03	cmp eax,03		; Marksmen?
-    0F84 DB010000	je 46740F		; if yes -> [pass]
+	83 F8 03	cmp eax,03		; Marksmen?
+	0F84 DB010000	je 46740F		; if yes -> [pass]
 
-    83 F8 29	cmp eax,29		; Titans?
-    0F84 D2010000	je 46740F		; if yes -> [pass]
-    90 90 90 90	nop			; -
+	83 F8 29	cmp eax,29		; Titans?
+	0F84 D2010000	je 46740F		; if yes -> [pass]
+	90 90 90 90	nop			; -
 
 -----------------------------------------------------------------------------------------
 
@@ -1466,125 +1467,126 @@ the check for Pikemen (ID 0) is a 2-byte command which can only check for a zero
 This is a pretty lame bonus, however, so I opted to overwrite it with code that doubles
 the jousting bonus from 5% per hex to 10% for Champions.
 
-    ---------	-------------------------------------------------------------------------
-    043077~94	; 2X JOUSTING BONUS FOR CHAMPIONS
-    ---------	-------------------------------------------------------------------------
-    DB 45 08	fild [ebp+08]		; (original code shifted upward)
-    DD 5D E4	fstp [ebp-1C]		; ""
-    DB 45 18	fild [ebp+18]		; ""
-    DD 5D EC	fstp [ebp-14]		; ""
-    DD 45 E4	fld [ebp-1C]		; ""
-    DC 4D EC	fmul [ebp-14]		; ""
+	---------	-------------------------------------------------------------------------
+	043077~94	; 2X JOUSTING BONUS FOR CHAMPIONS
+	---------	-------------------------------------------------------------------------
+	DB 45 08	fild [ebp+08]		; (original code shifted upward)
+	DD 5D E4	fstp [ebp-1C]		; ""
+	DB 45 18	fild [ebp+18]		; ""
+	DD 5D EC	fstp [ebp-14]		; ""
+	DD 45 E4	fld [ebp-1C]		; ""
+	DC 4D EC	fmul [ebp-14]		; ""
 
-    83 F8 0A	cmp eax,0A		; Champions?
-    74 07		je 443095		; if no -> [exit]
+	83 F8 0A	cmp eax,0A		; Champions?
+	74 07		je 443095		; if no -> [exit]
 
-    DC 0D 40AC6300	fmul [63AC40]		; doubles Jousting bonus
-    90		nop			; -
+	DC 0D 40AC6300	fmul [63AC40]		; doubles Jousting bonus
+	90		nop			; -
+
 
 As for Pikemen, let's dive into the "Fear" space we cleared out above and use it for two
 new abililities: double bonus to defense when defending (for Pikemen and Halberdiers) and
 first-strike retaliation when defending (Halberdiers only).
 
-    ------		-------------------------------------------------------------------------
-    0790C3		; 2x DEFENSE BONUS WHEN DEFENDING (PIKEMEN & HALBERDIERS)
-    ------		-------------------------------------------------------------------------
-    E8 5BB8FEFF	call 464923		; -> free space (Fear)
+	------		-------------------------------------------------------------------------
+	0790C3		; 2x DEFENSE BONUS WHEN DEFENDING (PIKEMEN & HALBERDIERS)
+	------		-------------------------------------------------------------------------
+	E8 5BB8FEFF	call 464923		; -> free space (Fear)
 
-    ---------	-------------------------------------------------------------------------
-    064923~31	;  (EXPANDED SPACE - OVERWRITES FEAR)
-    ---------	-------------------------------------------------------------------------
-    83 7B 34 01	cmp [ebx+34],01		; is unit ID <= 01? (Pikeman or Halberdier)
-    7F 03		jg 46492C		; if higher -> (displaced code)
-    6B C9 02	imul ecx,02		; double defense bonus
-    8B 43 4C	mov eax,[ebx+4C]	; (displaced code)
-    39 F8		cmp eax,edi		; ""
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	064923~31	;  (EXPANDED SPACE - OVERWRITES FEAR)
+	---------	-------------------------------------------------------------------------
+	83 7B 34 01	cmp [ebx+34],01		; is unit ID <= 01? (Pikeman or Halberdier)
+	7F 03		jg 46492C		; if higher -> (displaced code)
+	6B C9 02	imul ecx,02		; double defense bonus
+	8B 43 4C	mov eax,[ebx+4C]	; (displaced code)
+	39 F8		cmp eax,edi		; ""
+	C3		ret			; return
 
-    ------		-------------------------------------------------------------------------
-    041A22		; FIRST-STRIKE RETALIATION WHEN DEFENDING (HALBERDIERS)
-    ------		-------------------------------------------------------------------------
-    E9 0B2F0200	jmp 464932		; -> free space (Fear)
-    90 90 90	nop			; -
+	------		-------------------------------------------------------------------------
+	041A22		; FIRST-STRIKE RETALIATION WHEN DEFENDING (HALBERDIERS)
+	------		-------------------------------------------------------------------------
+	E9 0B2F0200	jmp 464932		; -> free space (Fear)
+	90 90 90	nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    064932~78	; (EXPANDED SPACE - OVERWRITES FEAR)
-    ---------	-------------------------------------------------------------------------
-    85 F6		test esi,esi		; is there a valid defender? (displaced code)
-    0F84 4CD3FDFF	je 441C86		; if no -> [exit] ""
+	---------	-------------------------------------------------------------------------
+	064932~78	; (EXPANDED SPACE - OVERWRITES FEAR)
+	---------	-------------------------------------------------------------------------
+	85 F6		test esi,esi		; is there a valid defender? (displaced code)
+	0F84 4CD3FDFF	je 441C86		; if no -> [exit] ""
 
-    83 7E 34 01	cmp [esi+34],01		; Halberdier?
-    75 34		jne 464974		; if no -> return
+	83 7E 34 01	cmp [esi+34],01		; Halberdier?
+	75 34		jne 464974		; if no -> return
 
-    8B 96 84000000	mov edx,[esi+84]	; EDX = defender unit data
-    C1 EA 1B	shr edx,1B		; shift to "defending" flag
-    F6 C2 01	test dl,01		; is unit defending?
-    74 26		je 464974		; if no -> return
+	8B 96 84000000	mov edx,[esi+84]	; EDX = defender unit data
+	C1 EA 1B	shr edx,1B		; shift to "defending" flag
+	F6 C2 01	test dl,01		; is unit defending?
+	74 26		je 464974		; if no -> return
 
-    8B 8E 54040000	mov ecx,[esi+454]	; ECX = defender's retaliations
-    85 C9		test ecx,ecx		; any left?
-    74 1C		je 464974		; if no -> return
+	8B 8E 54040000	mov ecx,[esi+454]	; ECX = defender's retaliations
+	85 C9		test ecx,ecx		; any left?
+	74 1C		je 464974		; if no -> return
 
-    FF 8E 54040000	dec [esi+454]		; defender's retaliations -1
-    FF 87 54040000	inc [edi+454]		; attacker's retaliations +1
-    FF 86 57040000	inc [esi+457]		; set attacker's "retaliation" flag (see below)
-    FF 87 57040000	inc [edi+457]		; set defender's "retaliation" flag ("")
-    57		push edi		; swap attacker and defender
-    56		push esi		; ""
-    5F		pop edi			; ""
-    5E		pop esi			; ""
-    E9 B1D0FDFF	jmp 441A2A		; return
+	FF 8E 54040000	dec [esi+454]		; defender's retaliations -1
+	FF 87 54040000	inc [edi+454]		; attacker's retaliations +1
+	FF 86 57040000	inc [esi+457]		; set attacker's "retaliation" flag (see below)
+	FF 87 57040000	inc [edi+457]		; set defender's "retaliation" flag ("")
+	57		push edi		; swap attacker and defender
+	56		push esi		; ""
+	5F		pop edi			; ""
+	5E		pop esi			; ""
+	E9 B1D0FDFF	jmp 441A2A		; return
 
 The flags we set to indicate a retaliation in the above code aren't strictly necessary
 for the effect to function, but rather are for compatibility with the Counterstrike edit
 from earlier. It will also allow for compatibility with a brand new effect, which allows
 Battle Dwarves (or any other unit) to inherently deal more damage with retaliations:
 
-    ---------	-------------------------------------------------------------------------
-    04172E~32	; 25% DAMAGE BONUS WHEN RETALIATING (BATTLE DWARVES)
-    ---------	-------------------------------------------------------------------------
-    E9 46320200	jmp 464979		; -> free space (Fear)
+	---------	-------------------------------------------------------------------------
+	04172E~32	; 25% DAMAGE BONUS WHEN RETALIATING (BATTLE DWARVES)
+	---------	-------------------------------------------------------------------------
+	E9 46320200	jmp 464979		; -> free space (Fear)
 
-    ---------	-------------------------------------------------------------------------
-    064979~8E	; (EXPANDED SPACE - OVERWRITES FEAR)
-    ---------	-------------------------------------------------------------------------
-    E8 E2F2FDFF	call 443C60		; (displaced code)
-    83 7E 34 11	cmp [esi+34],11		; Battle Dwarves?
-    75 06		jne 46498A		; if no -> ECX = Counterstrike level
-    6B C0 05	imul eax,05		; damage * 5
-    C1 F8 02	sar eax,02		; damage / 4 (result: 125%)
-    E9 A4CDFDFF	jmp 441733		; return
+	---------	-------------------------------------------------------------------------
+	064979~8E	; (EXPANDED SPACE - OVERWRITES FEAR)
+	---------	-------------------------------------------------------------------------
+	E8 E2F2FDFF	call 443C60		; (displaced code)
+	83 7E 34 11	cmp [esi+34],11		; Battle Dwarves?
+	75 06		jne 46498A		; if no -> ECX = Counterstrike level
+	6B C0 05	imul eax,05		; damage * 5
+	C1 F8 02	sar eax,02		; damage / 4 (result: 125%)
+	E9 A4CDFDFF	jmp 441733		; return
 
-    ---------	-------------------------------------------------------------------------
-    041B5D~61	; SET RETALIATION FLAG FOR BATTLE DWARVES(*)
-    ---------	-------------------------------------------------------------------------
-    E8 2D2E0200	call 46498F		; -> free space (Fear)
+	---------	-------------------------------------------------------------------------
+	041B5D~61	; SET RETALIATION FLAG FOR BATTLE DWARVES(*)
+	---------	-------------------------------------------------------------------------
+	E8 2D2E0200	call 46498F		; -> free space (Fear)
 
-    041B4D > 90 90	; NOP out pushes to be moved to free space
+	041B4D > 90 90	; NOP out pushes to be moved to free space
 
-    ---------	-------------------------------------------------------------------------
-    06498F~9D	; (EXPANDED SPACE - OVERWRITES FEAR)
-    ---------	-------------------------------------------------------------------------
-    53		push ebx		; (displaced code)
-    57		push edi		; ""
-    80B65704000001	xor byte [esi+457],01	; toggle "temp" flag before calling damage routine
-    E8 93C9FDFF	call 441330		; damage routine (retaliation)
-    C3 		ret			; return
-    ---------	-------------------------------------------------------------------------
-    041B78~92	; UNSET RETALIATION FLAG(*)
-    ---------	-------------------------------------------------------------------------
-    FF 8E 54040000	dec [esi+454]		; (optimized code)
-    31 C0		xor eax,eax		; ""
-    8986C0040000	mov [esi+4C0],eax	; ""
-    C6865704000000	mov byte [esi+457],00	; unflag retaliation
-    909090909090	nop			; -
+	---------	-------------------------------------------------------------------------
+	06498F~9D	; (EXPANDED SPACE - OVERWRITES FEAR)
+	---------	-------------------------------------------------------------------------
+	53		push ebx		; (displaced code)
+	57		push edi		; ""
+	80B65704000001	xor byte [esi+457],01	; toggle "temp" flag before calling damage routine
+	E8 93C9FDFF	call 441330		; damage routine (retaliation)
+	C3 		ret			; return
+	---------	-------------------------------------------------------------------------
+	041B78~92	; UNSET RETALIATION FLAG(*)
+	---------	-------------------------------------------------------------------------
+	FF 8E 54040000	dec [esi+454]		; (optimized code)
+	31 C0		xor eax,eax		; ""
+	8986C0040000	mov [esi+4C0],eax	; ""
+	C6865704000000	mov byte [esi+457],00	; unflag retaliation
+	909090909090	nop			; -
 
-    041B20 > 5D	; update jump pointer(*)
-    041B24 > 59	; ""
-    041B16 > 67	; ""
-    041B0C > 71	; ""
-    041AFB > 7F	; ""
-    041AE3 > 97	; ""
+	041B20 > 5D	; update jump pointer(*)
+	041B24 > 59	; ""
+	041B16 > 67	; ""
+	041B0C > 71	; ""
+	041AFB > 7F	; ""
+	041AE3 > 97	; ""
 
 >*These edits are redundant with the Counterstrike overhaul; only one set is needed
 
@@ -1601,59 +1603,59 @@ while a value of "88 13" (5,000 retaliations) is specified at 03D6C7 & 046E98.
 It's possible to optimize the code so that we can add this ability to more units; the
 below example will add a second retaliation to Naga Queens and Boars:
 
-    ---------	-------------------------------------------------------------------------
-    03D6A0~CA	; ADD EXTRA RETALIATIONS TO NAGA QUEENS AND HOBGOBLINS
-    ---------	-------------------------------------------------------------------------
-    89 4E 5C	mov [esi+5C],ecx	; (shifted code)
+	---------	-------------------------------------------------------------------------
+	03D6A0~CA	; ADD EXTRA RETALIATIONS TO NAGA QUEENS AND HOBGOBLINS
+	---------	-------------------------------------------------------------------------
+	89 4E 5C	mov [esi+5C],ecx	; (shifted code)
 
-    83 F8 04	cmp eax,04		; Griffins?
-    74 15		je 43D6BD		; if yes -> 2 retaliations
+	83 F8 04	cmp eax,04		; Griffins?
+	74 15		je 43D6BD		; if yes -> 2 retaliations
 
-    83 F8 05	cmp eax,05		; Royal Griffins?
-    74 14		je 43D6C1		; if yes -> infinite retaliations
+	83 F8 05	cmp eax,05		; Royal Griffins?
+	74 14		je 43D6C1		; if yes -> infinite retaliations
 
-    83 F8 27	cmp eax,27		; Naga Queens?
-    74 0B		je 43D6BD		; if yes -> 2 retaliations
+	83 F8 27	cmp eax,27		; Naga Queens?
+	74 0B		je 43D6BD		; if yes -> 2 retaliations
 
-    3D 8C000000	cmp eax,8C		; Boars?
-    74 04		je 43D6BD		; if yes -> 2 retaliations
+	3D 8C000000	cmp eax,8C		; Boars?
+	74 04		je 43D6BD		; if yes -> 2 retaliations
 
-    6A 01		push 01			; 1 retaliation
-    EB 06		jmp 43D6C3		; -> EAX = retaliations
-    6A 02		push 02			; 2 retaliations
-    EB 02		jmp 43D6C3		; -> EAX = retaliations
-    6A 69		push 69			; infinite retaiations (nice)
-    58		pop eax			; EAX = retaliations
-    89 86 54040000	mov [esi+454],eax	; store retaliations
-    90		nop			; -
+	6A 01		push 01			; 1 retaliation
+	EB 06		jmp 43D6C3		; -> EAX = retaliations
+	6A 02		push 02			; 2 retaliations
+	EB 02		jmp 43D6C3		; -> EAX = retaliations
+	6A 69		push 69			; infinite retaiations (nice)
+	58		pop eax			; EAX = retaliations
+	89 86 54040000	mov [esi+454],eax	; store retaliations
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    046E65~9B	; ""
-    ---------	-------------------------------------------------------------------------
-    89 9E 84000000	mov [esi+84],ebx	; (shifted code)
-    8B CB		mov ecx,ebx		; ""
-    C686F004000000	mov byte [esi+4F0],00	; ""
+	---------	-------------------------------------------------------------------------
+	046E65~9B	; ""
+	---------	-------------------------------------------------------------------------
+	89 9E 84000000	mov [esi+84],ebx	; (shifted code)
+	8B CB		mov ecx,ebx		; ""
+	C686F004000000	mov byte [esi+4F0],00	; ""
 
-    83 F8 04	cmp eax,04		; Griffins?
-    74 15		je 446E8E		; if yes -> 2 retaliations
+	83 F8 04	cmp eax,04		; Griffins?
+	74 15		je 446E8E		; if yes -> 2 retaliations
 
-    83 F8 05	cmp eax,05		; Royal Griffins?
-    74 14		je 446E92		; if yes -> infinite retaliations
+	83 F8 05	cmp eax,05		; Royal Griffins?
+	74 14		je 446E92		; if yes -> infinite retaliations
 
-    83 F8 27	cmp eax,27		; Naga Queens?
-    74 0B		je 446E8E		; if yes -> 2 retaliations
+	83 F8 27	cmp eax,27		; Naga Queens?
+	74 0B		je 446E8E		; if yes -> 2 retaliations
 
-    3D 8C000000	cmp eax,8C		; Boars?
-    74 04		je 446E8E		; if yes -> 2 retaliations
+	3D 8C000000	cmp eax,8C		; Boars?
+	74 04		je 446E8E		; if yes -> 2 retaliations
 
-    6A 01		push 01			; 1 retaliation
-    EB 06		jmp 446E94		; -> EAX = retaliations
-    6A 02		push 02			; 2 retaliations
-    EB 02		jmp 446E94		; -> EAX = retaliations
-    6A 69		push 69			; infinite retaiations (nice)
-    58		pop eax			; EAX = retaliations
-    89 86 54040000	mov [esi+454],eax	; store retaliations
-    90		nop			; -
+	6A 01		push 01			; 1 retaliation
+	EB 06		jmp 446E94		; -> EAX = retaliations
+	6A 02		push 02			; 2 retaliations
+	EB 02		jmp 446E94		; -> EAX = retaliations
+	6A 69		push 69			; infinite retaiations (nice)
+	58		pop eax			; EAX = retaliations
+	89 86 54040000	mov [esi+454],eax	; store retaliations
+	90		nop			; -
 
 -----------------------------------------------------------------------------------------
 
@@ -1681,59 +1683,59 @@ both cases the amount is dependent on the spell's level. Making this an inline e
 requires no free space does limit you to just one unit for the discount, however; I went
 with Familiars since this actually seemed like a more fitting ability for them.
 
-    ---------	-------------------------------------------------------------------------
-    0E5530~9F	; SPELL DAMPER TO ARTIFACT & DISCOUNT TO ONLY WORK ON UNIT'S TURN
-    ---------	-------------------------------------------------------------------------
-    57		push edi		; store EDI (repositioned code)
-    8B 15 A87F6800	mov edx,[687FA8]	; EDX = spell index
-    69 F6 88000000	imul esi,88		; ESI = data range
-    8B 7C 32 18	mov edi,[edx+esi+18]	; EDI = spell level
-    8D 34 86	lea esi,[esi+eax*4]	; ESI + skill level
-    8B 74 32 20	mov esi,[edx+esi+20]	; ESI = spell cost
-    8B 45 0C	mov eax,[ebp+0C]	; EAX = defending army (if in combat)
-    85 C0		test eax,eax		; are we in combat?
-    74 48		je 4E5597		; if no -> (cleanup)
+	---------	-------------------------------------------------------------------------
+	0E5530~9F	; SPELL DAMPER TO ARTIFACT & DISCOUNT TO ONLY WORK ON UNIT'S TURN
+	---------	-------------------------------------------------------------------------
+	57		push edi		; store EDI (repositioned code)
+	8B 15 A87F6800	mov edx,[687FA8]	; EDX = spell index
+	69 F6 88000000	imul esi,88		; ESI = data range
+	8B 7C 32 18	mov edi,[edx+esi+18]	; EDI = spell level
+	8D 34 86	lea esi,[esi+eax*4]	; ESI + skill level
+	8B 74 32 20	mov esi,[edx+esi+20]	; ESI = spell cost
+	8B 45 0C	mov eax,[ebp+0C]	; EAX = defending army (if in combat)
+	85 C0		test eax,eax		; are we in combat?
+	74 48		je 4E5597		; if no -> (cleanup)
 
-    A1 20946900	mov eax,[699420]	; EAX = combat manager
-    8B 90 C8320100	mov edx,[eax+132C8]	; EDX = active stack data
-    85 D2		test edx,edx		; is there an active unit?
-    74 39		je 4E5597		; if no -> (cleanup)
-    83 7A 34 2B	cmp [edx+34],2B		; Familiars?
-    75 02		jne 4E5566		; if no -> ECX = active stack's owner
-    29 FE		sub esi,edi		; subtract spell level from cost
+	A1 20946900	mov eax,[699420]	; EAX = combat manager
+	8B 90 C8320100	mov edx,[eax+132C8]	; EDX = active stack data
+	85 D2		test edx,edx		; is there an active unit?
+	74 39		je 4E5597		; if no -> (cleanup)
+	83 7A 34 2B	cmp [edx+34],2B		; Familiars?
+	75 02		jne 4E5566		; if no -> ECX = active stack's owner
+	29 FE		sub esi,edi		; subtract spell level from cost
 
-    8B 8A F4000000	mov ecx,[edx+F4]	; ECX = active stack's owner (0/1)
-    83BA8802000000	cmp [edx+288],00	; is stack Hypnotized?
-    74 03		je 4E5578		; if yes -> ECX = enemy hero data
-    83 F1 01	xor ecx,01		; invert ECX
-    8B8C88CC530000	mov ecx,[eax+ecx*4+53CC]; ECX = enemy hero data
-    85 C9		test ecx,ecx		; is there any enemy hero?
-    74 14		je 4E5597		; if no -> (cleanup)
+	8B 8A F4000000	mov ecx,[edx+F4]	; ECX = active stack's owner (0/1)
+	83BA8802000000	cmp [edx+288],00	; is stack Hypnotized?
+	74 03		je 4E5578		; if yes -> ECX = enemy hero data
+	83 F1 01	xor ecx,01		; invert ECX
+	8B8C88CC530000	mov ecx,[eax+ecx*4+53CC]; ECX = enemy hero data
+	85 C9		test ecx,ecx		; is there any enemy hero?
+	74 14		je 4E5597		; if no -> (cleanup)
 
-    68 8A000000	push 8A			; 8A = Wizard's Well
-    E8 D33EFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 06		je 4E5597		; if no -> is spell cost <=0?
-    47		inc edi			; EDI (spell level) + 1
-    6B FF 05	imul edi,05		; EDI * 5
-    01 FE		add esi,edi		; add EDI to spell cost
+	68 8A000000	push 8A			; 8A = Wizard's Well
+	E8 D33EFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 06		je 4E5597		; if no -> is spell cost <=0?
+	47		inc edi			; EDI (spell level) + 1
+	6B FF 05	imul edi,05		; EDI * 5
+	01 FE		add esi,edi		; add EDI to spell cost
 
-    8B C6		mov eax,esi		; (cleanup)
-    5F		pop edi			; ""
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    5D		pop ebp			; ""
-    EB 44		jmp 4E55E3		; -> free space
-    90		nop			; -
+	8B C6		mov eax,esi		; (cleanup)
+	5F		pop edi			; ""
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	5D		pop ebp			; ""
+	EB 44		jmp 4E55E3		; -> free space
+	90		nop			; -
 
-    --------	-------------------------------------------------------------------------
-    0E55E3~C	; (EXPANDED SPACE - UNUSED IN ORIGINAL GAME)
-    --------	-------------------------------------------------------------------------
-    3C 00		cmp al,00		; has spell cost been reduced below 1?
-    7F 03		jg 4E55EA		; if no -> return
-    31 C0		xor eax,eax		; spell cost = 1
-    40		inc eax			; ""
-    C2 0C00		ret 0C			; return
+	--------	-------------------------------------------------------------------------
+	0E55E3~C	; (EXPANDED SPACE - UNUSED IN ORIGINAL GAME)
+	--------	-------------------------------------------------------------------------
+	3C 00		cmp al,00		; has spell cost been reduced below 1?
+	7F 03		jg 4E55EA		; if no -> return
+	31 C0		xor eax,eax		; spell cost = 1
+	40		inc eax			; ""
+	C2 0C00		ret 0C			; return
 
 -----------------------------------------------------------------------------------------
 
@@ -1754,32 +1756,31 @@ Like the above, this ability has the issue of continuing to work for the remaind
 battle even after the units are dead. And like the damper effect specifically, it's one
 that I felt was better suited to an artifact rather than a unit.
 
-    ---------	-------------------------------------------------------------------------
-    1A2493~E7	; MAGIC CHANNEL TO ARTIFACT ABILITY
-    ---------	-------------------------------------------------------------------------
-    68 8B000000	push 8B			; 8B = Ring of the Magi
-    8B C8		mov ecx,eax		; ECX = hero data
-    E8 C16FF3FF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    0F84 F3050000 	je 5A2A9A		; if no -> [exit]
-    31 F6		xor esi,esi		; ESI = 0
-    8B 45 98	mov eax,[ebp-68]	; (shifted code, swaps use of EAX and ECX)
-    89 45 14	mov [ebp+14],eax	; ""
-    66 01 41 18	add [ecx+18],ax		; ""
-    8B CB		mov ecx,ebx		; ""
-    E8 C67BECFF	call 46A080		; ""
-    84 C0		test al,al		; ""
-    0F85 D8050000	jne 5A2A9A		; ""
-    8A 55 13	mov dl,[ebp+13]		; ""
-    88 55 D8	mov [ebp-28],dl		; ""
-    89 45 DC	mov [ebp-24],eax	; ""
-    89 45 E0	mov [ebp-20],eax	; ""
-    89 45 E4	mov [ebp-1C],eax	; ""
-    8B 15 680B6600	mov edx,[660B68]	; ""
-    8B 82 60110000	mov eax,[edx+1160]	; "" (see below)
-    8B 0D C45D6A00	mov ecx,[6A5DC4]	; ""
-    E9 75020000	jmp 5A275D		; -> [continue] (1A24E8~75C is free space)
-
+	---------	-------------------------------------------------------------------------
+	1A2493~E7	; MAGIC CHANNEL TO ARTIFACT ABILITY
+	---------	-------------------------------------------------------------------------
+	68 8B000000	push 8B			; 8B = Ring of the Magi
+	8B C8		mov ecx,eax		; ECX = hero data
+	E8 C16FF3FF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	0F84 F3050000 	je 5A2A9A		; if no -> [exit]
+	31 F6		xor esi,esi		; ESI = 0
+	8B 45 98	mov eax,[ebp-68]	; (shifted code, swaps use of EAX and ECX)
+	89 45 14	mov [ebp+14],eax	; ""
+	66 01 41 18	add [ecx+18],ax		; ""
+	8B CB		mov ecx,ebx		; ""
+	E8 C67BECFF	call 46A080		; ""
+	84 C0		test al,al		; ""
+	0F85 D8050000	jne 5A2A9A		; ""
+	8A 55 13	mov dl,[ebp+13]		; ""
+	88 55 D8	mov [ebp-28],dl		; ""
+	89 45 DC	mov [ebp-24],eax	; ""
+	89 45 E0	mov [ebp-20],eax	; ""
+	89 45 E4	mov [ebp-1C],eax	; ""
+	8B 15 680B6600	mov edx,[660B68]	; ""
+	8B 82 60110000	mov eax,[edx+1160]	; "" (see below)
+	8B 0D C45D6A00	mov ecx,[6A5DC4]	; ""
+	E9 75020000	jmp 5A275D		; -> [continue] (1A24E8~75C is free space)
 To change the artifact in the above code, simply replace 8B in the first instruction with
 the ID of the desired artifact and edit the (mov eax,[edx+1160]) instruction for the text
 string. Similar to changing the text for a unit's spellcast, we get the value of 1160 by
@@ -1810,21 +1811,20 @@ Fire Shield up) is a DWORD pointer located at 042E69 (0063B8B4 = 0.20). We can r
 the code here so that the effect is instead stackable with the Fire Shield spell, as
 well as specifying whatever magnitude we wish (the below example uses 33%).
 
-    ---------	-------------------------------------------------------------------------
-    042E50~78	; EFREETI SULTAN FIRE SHIELD IS STACKABLE WITH THE SPELL
-    ---------	-------------------------------------------------------------------------
-    83 79 34 35	cmp [ecx+34],35		; Efreeti Sultan?
-    75 08		jne 442E5E		; if no -> load 0%
-    D9 05 752E4400	fld dword [442E75]	; load custom floating value
-    EB 06		jmp 442E64		; -> EAX = Fire Shield magnitude
-    D9 05 64AC6300	fld dword [63AC64]	; load 0%
-    8B 81 0C020000	mov eax,[ecx+20C]	; EAX = Fire Shield magnitude
-    85 C0		test eax,eax		; Fire Shield?
-    74 06		je 442E74		; if no -> return
-    D8 81 A0040000	fadd dword [ecx+4A0]	; add Fire Shield magnitude
-    C3		ret			; return
-    AB AA AA 3E	33% (floating value)	; -
-
+	---------	-------------------------------------------------------------------------
+	042E50~78	; EFREETI SULTAN FIRE SHIELD IS STACKABLE WITH THE SPELL
+	---------	-------------------------------------------------------------------------
+	83 79 34 35	cmp [ecx+34],35		; Efreeti Sultan?
+	75 08		jne 442E5E		; if no -> load 0%
+	D9 05 752E4400	fld dword [442E75]	; load custom floating value
+	EB 06		jmp 442E64		; -> EAX = Fire Shield magnitude
+	D9 05 64AC6300	fld dword [63AC64]	; load 0%
+	8B 81 0C020000	mov eax,[ecx+20C]	; EAX = Fire Shield magnitude
+	85 C0		test eax,eax		; Fire Shield?
+	74 06		je 442E74		; if no -> return
+	D8 81 A0040000	fadd dword [ecx+4A0]	; add Fire Shield magnitude
+	C3		ret			; return
+	AB AA AA 3E	33% (floating value)	; -
 -----------------------------------------------------------------------------------------
 
 ### BAD LUCK (DEVILS & ARCHDEVILS)
@@ -1934,61 +1934,61 @@ Since we'll be putting this new effect on Wraiths, who are just outside the "Att
 table, we'll need to change 040908 from C1 (-3F) to C3 (-3D) and edit the other entries
 on the table to account for the 2-byte shift like we did earlier with Resistance B.
 
-    ---------	-------------------------------------------------------------------------
-    041141~83	; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (OVERWRITES WEAKNESS PROC)
-    ---------	-------------------------------------------------------------------------
-    E9 65010000	jmp 4412AB		; frees space: 041146~BE
-    8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
-    8B 97 84000000	mov edx,[edi+84]	; EDX = defender unit data
-    C1 EA 04	shr edx,04		; shift to "living" flag"
-    F6 C2 01	test dl,01		; is unit alive?
-    74 17		je 441171		; if no -> (cleanup)
+	---------	-------------------------------------------------------------------------
+	041141~83	; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (OVERWRITES WEAKNESS PROC)
+	---------	-------------------------------------------------------------------------
+	E9 65010000	jmp 4412AB		; frees space: 041146~BE
+	8B 0D 20946900	mov ecx,[699420]	; ECX = combat manager
+	8B 97 84000000	mov edx,[edi+84]	; EDX = defender unit data
+	C1 EA 04	shr edx,04		; shift to "living" flag"
+	F6 C2 01	test dl,01		; is unit alive?
+	74 17		je 441171		; if no -> (cleanup)
 
-    8B 55 3C	mov edx,[ebp+3C]	; EDX = units killed
-    85 D2		test edx,edx		; were any units killed?
-    74 10		je 441171		; if no -> (cleanup)
+	8B 55 3C	mov edx,[ebp+3C]	; EDX = units killed
+	85 D2		test edx,edx		; were any units killed?
+	74 10		je 441171		; if no -> (cleanup)
 
-    52		push edx		; power = # of units killed
-    6A 00		push 00			; unskilled
-    6A FF		push -01		; ???
-    6A 01		push 01			; ???
-    6A 00		push 00			; "temp" flag
-    6A 42		push 42			; spell ID
-    E8 CFEF1500	call 5A0140		; -> [cast spell]
+	52		push edx		; power = # of units killed
+	6A 00		push 00			; unskilled
+	6A FF		push -01		; ???
+	6A 01		push 01			; ???
+	6A 00		push 00			; "temp" flag
+	6A 42		push 42			; spell ID
+	E8 CFEF1500	call 5A0140		; -> [cast spell]
 
-    5F 		pop edi			; (cleanup)
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B 4D F4	mov ecx,[ebp-0C]	; ""
-    64890D00000000	mov fs:[0],ecx		; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C2 1000		ret 0010		; return
+	5F 		pop edi			; (cleanup)
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B 4D F4	mov ecx,[ebp-0C]	; ""
+	64890D00000000	mov fs:[0],ecx		; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C2 1000		ret 0010		; return
 
-    ------		-------------------------------------------------------------------------
-    1A2040		; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (CONT.)
-    ------		-------------------------------------------------------------------------
-    E9 3FF1E9FF	jmp 441184		; -> free space
+	------		-------------------------------------------------------------------------
+	1A2040		; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (CONT.)
+	------		-------------------------------------------------------------------------
+	E9 3FF1E9FF	jmp 441184		; -> free space
 
-    ---------	-------------------------------------------------------------------------
-    041184~98	; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (CONT.)
-    ---------	-------------------------------------------------------------------------
-    52		push edx		; (displaced code)
-    8A 55 0C	mov dl,[ebp+0C]		; EDX = "temp" flag (00 = ability, else spell)
-    84 D2		test dl,dl		; ability?
-    74 04		je 441190		; if yes -> Wights
-    6A 72		push 72			; Fire Elementals
-    EB 02		jmp 441192		; -> (displaced code)
-    6A 3C		push 3C			; Wights
-    6A 42		push 42			; (displaced code)
-    E9 AC0E1600	jmp 5A2045		; return (041199~BE is free space)
+	---------	-------------------------------------------------------------------------
+	041184~98	; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (CONT.)
+	---------	-------------------------------------------------------------------------
+	52		push edx		; (displaced code)
+	8A 55 0C	mov dl,[ebp+0C]		; EDX = "temp" flag (00 = ability, else spell)
+	84 D2		test dl,dl		; ability?
+	74 04		je 441190		; if yes -> Wights
+	6A 72		push 72			; Fire Elementals
+	EB 02		jmp 441192		; -> (displaced code)
+	6A 3C		push 3C			; Wights
+	6A 42		push 42			; (displaced code)
+	E9 AC0E1600	jmp 5A2045		; return (041199~BE is free space)
 
-    ------		-------------------------------------------------------------------------
-    1A7579		; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (CONT.)
-    ------		-------------------------------------------------------------------------
-    68 95866800	push 688695		; pushes null text instead of hero name
-    8B 80 900A0000	mov eax,[eax+A90]	; (original code shifted upward)
-    90 90 90909090	nop			; -
+	------		-------------------------------------------------------------------------
+	1A7579		; WRAITHS SUMMON WIGHTS FROM SLAIN FOES (CONT.)
+	------		-------------------------------------------------------------------------
+	68 95866800	push 688695		; pushes null text instead of hero name
+	8B 80 900A0000	mov eax,[eax+A90]	; (original code shifted upward)
+	90 90 90909090	nop			; -
 
 This will remove the hero name from the summon text, which the Wraith ability will then
 share; I rewrote it to say "The void sends forth%s %d %s" (note that we still need to
@@ -2000,30 +2000,30 @@ include the variable string for the hero name even though it's now blank).
 is that they all trigger only on melee strikes. And at least one of those abilities makes
 a lot more sense as a ranged ability, so without further ado...
 
-    ----------	-------------------------------------------------------------------------
-    03FAFF~B04	; ARCHMAGE SHOTS DISPEL POSITIVE STATUSES
-    ----------	-------------------------------------------------------------------------
-    E9 95160000	jmp 441199		; -> free space
-    90		nop			; -
+	----------	-------------------------------------------------------------------------
+	03FAFF~B04	; ARCHMAGE SHOTS DISPEL POSITIVE STATUSES
+	----------	-------------------------------------------------------------------------
+	E9 95160000	jmp 441199		; -> free space
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    041199~BE	; (EXPANDED SPACE - OVERWRITES WEAKNESS PROC)
-    ---------	-------------------------------------------------------------------------
-    83 7E 34 23	cmp [esi+34],23		; Archmage?
-    75 15		jne 4411B4		; if no -> displaced code
-    56		push esi		; push attacker onto the stack
-    56		push esi		; (garbage push needed for subroutine call)
-    56		push esi		; ""
-    56		push esi		; ""
-    56		push esi		; ""
-    E8 02000000	call 4411AB		; -> prepare to enter subroutine
-    EB 08		jmp 4411B3		; -> cleanup
-    55		push ebp		; prepare to enter subroutine
-    8B EC		mov ebp,esp		; ""
-    E9 34FFFFFF	jmp 4410E7		; -> [dispel subroutine]
-    5E		pop esi			; cleanup
-    8B B6 7C010000	mov esi,[esi+17C]	; (displaced code)
-    E9 46E9FFFF	jmp 43FB05		; return
+	---------	-------------------------------------------------------------------------
+	041199~BE	; (EXPANDED SPACE - OVERWRITES WEAKNESS PROC)
+	---------	-------------------------------------------------------------------------
+	83 7E 34 23	cmp [esi+34],23		; Archmage?
+	75 15		jne 4411B4		; if no -> displaced code
+	56		push esi		; push attacker onto the stack
+	56		push esi		; (garbage push needed for subroutine call)
+	56		push esi		; ""
+	56		push esi		; ""
+	56		push esi		; ""
+	E8 02000000	call 4411AB		; -> prepare to enter subroutine
+	EB 08		jmp 4411B3		; -> cleanup
+	55		push ebp		; prepare to enter subroutine
+	8B EC		mov ebp,esp		; ""
+	E9 34FFFFFF	jmp 4410E7		; -> [dispel subroutine]
+	5E		pop esi			; cleanup
+	8B B6 7C010000	mov esi,[esi+17C]	; (displaced code)
+	E9 46E9FFFF	jmp 43FB05		; return
 
 The above is quite janky, to say the least. On the surface, it's actually a very simple
 matter of jumping away at the end of the ranged attack routine and checking to see if we
@@ -2088,75 +2088,75 @@ undead units to receive a bonus on cursed ground or elemental units to recieve o
 We can address both of these with an inline edit thanks to a largely unneccessary bit of code that sets
 the four basic elementals to factionless (for native terrain purposes) on ROE maps:
 
-    ----------	-------------------------------------------------------------------------
-    03D492~543	; NOMADS RECEIVE NATIVE TERRAIN BONUS ON SAND + SPECIAL TERRAIN BONUSES
-    ----------	-------------------------------------------------------------------------
-    8B 0D B0476700	mov ecx,[6747B0]	; (shifted code)
-    8B 14 0A	mov edx,[edx+ecx]	; ""
-    8B 4D 10	mov ecx,[ebp+10]	; ""
-    8D 73 74	lea esi,[ebx+74]	; ""
-    89 16		mov [esi],edx		; ""
-    33 FF		xor edi,edi		; ""
-    39 F9		cmp ecx,edi		; ""
-    74 07		je 43D4B0		; ""
-    56		push esi		; ""
-    50		push eax		; ""
-    E8 E08E0A00	call 4E6390		; ""
+	----------	-------------------------------------------------------------------------
+	03D492~543	; NOMADS RECEIVE NATIVE TERRAIN BONUS ON SAND + SPECIAL TERRAIN BONUSES
+	----------	-------------------------------------------------------------------------
+	8B 0D B0476700	mov ecx,[6747B0]	; (shifted code)
+	8B 14 0A	mov edx,[edx+ecx]	; ""
+	8B 4D 10	mov ecx,[ebp+10]	; ""
+	8D 73 74	lea esi,[ebx+74]	; ""
+	89 16		mov [esi],edx		; ""
+	33 FF		xor edi,edi		; ""
+	39 F9		cmp ecx,edi		; ""
+	74 07		je 43D4B0		; ""
+	56		push esi		; ""
+	50		push eax		; ""
+	E8 E08E0A00	call 4E6390		; ""
 
-    A1 20946900	mov eax,[699420]	; EAX = combat manager
-    8B B0 94530000	mov esi,[eax+5394]	; ESI = terrain
-    8B 80 C0530000	mov eax,[eax+53C0]	; EAX = special terrain
-    31 C9		xor ecx,ecx		; ECX = 0
+	A1 20946900	mov eax,[699420]	; EAX = combat manager
+	8B B0 94530000	mov esi,[eax+5394]	; ESI = terrain
+	8B 80 C0530000	mov eax,[eax+53C0]	; EAX = special terrain
+	31 C9		xor ecx,ecx		; ECX = 0
 
-    83 F8 02	cmp eax,02		; Cursed Ground?
-    75 10		jne 43D4D8		; if no -> EDX = unit ID
-    8B 93 84000000	mov edx,[ebx+84]	; EDX = unit data
-    C1 EA 12	shr edx,12		; Shift to "undead" bit
-    F6 C2 01	test dl,01		; is unit undead?
-    74 51		je 43D527		; if yes -> native terrain (+2)
-    EB 46		jmp 43D51E		; -> not native terrain
+	83 F8 02	cmp eax,02		; Cursed Ground?
+	75 10		jne 43D4D8		; if no -> EDX = unit ID
+	8B 93 84000000	mov edx,[ebx+84]	; EDX = unit data
+	C1 EA 12	shr edx,12		; Shift to "undead" bit
+	F6 C2 01	test dl,01		; is unit undead?
+	74 51		je 43D527		; if yes -> native terrain (+2)
+	EB 46		jmp 43D51E		; -> not native terrain
 
-    8B 53 34	mov edx,[ebx+34]	; EDX = unit ID
-    83 FA 73	cmp edx,73		; Water Elemental?
-    75 05		jne 43D4E5		; if no -> next check
-    83 F8 06	cmp eax,06		; Lucid Pools?
-    74 41		je 43D526		; if yes -> native terrain (+3)
+	8B 53 34	mov edx,[ebx+34]	; EDX = unit ID
+	83 FA 73	cmp edx,73		; Water Elemental?
+	75 05		jne 43D4E5		; if no -> next check
+	83 F8 06	cmp eax,06		; Lucid Pools?
+	74 41		je 43D526		; if yes -> native terrain (+3)
 
-    83 FA 72	cmp edx,72		; Fire Elemental?
-    75 05		jne 43D4EF		; if no -> next check
-    83 F8 07	cmp eax,07		; Fire Fields?
-    74 37		je 43D526		; if yes -> native terrain (+3)
+	83 FA 72	cmp edx,72		; Fire Elemental?
+	75 05		jne 43D4EF		; if no -> next check
+	83 F8 07	cmp eax,07		; Fire Fields?
+	74 37		je 43D526		; if yes -> native terrain (+3)
 
-    83 FA 71	cmp edx,71		; Earth Elemental?
-    75 05		jne 43D4F9		; if no -> next check
-    83 F8 08	cmp eax,08		; Rocky Flats?
-    74 2D		je 43D526		; if yes -> native terrain (+3)
+	83 FA 71	cmp edx,71		; Earth Elemental?
+	75 05		jne 43D4F9		; if no -> next check
+	83 F8 08	cmp eax,08		; Rocky Flats?
+	74 2D		je 43D526		; if yes -> native terrain (+3)
 
-    83 FA 70	cmp edx,70		; Air Elemental?
-    75 05		jne 43D503		; if no -> next check
-    83 F8 09	cmp eax,09		; Heavy Clouds?
-    74 23		je 43D526		; if yes -> native terrain (+3)
+	83 FA 70	cmp edx,70		; Air Elemental?
+	75 05		jne 43D503		; if no -> next check
+	83 F8 09	cmp eax,09		; Heavy Clouds?
+	74 23		je 43D526		; if yes -> native terrain (+3)
 
-    81 FA 8E000000	cmp edx,8E		; Nomads?
-    75 05		jne 43D510		; if no -> EDX = unit faction
-    83 FE 01	cmp esi,01		; Sand?
-    74 16		je 43D526		; if yes -> native terrain (+3)
+	81 FA 8E000000	cmp edx,8E		; Nomads?
+	75 05		jne 43D510		; if no -> EDX = unit faction
+	83 FE 01	cmp esi,01		; Sand?
+	74 16		je 43D526		; if yes -> native terrain (+3)
 
-    8B 53 74	mov edx,[ebx+74]	; EDX = unit faction
-    8B1495A8366400	mov edx,[edx*4+6436A8]	; EDX = faction's native terrain
-    39 F2		cmp edx,esi		; Natrive terrain?
-    74 0A		je 43D528		; if yes -> native terrain (+1)
-    88 8B D8040000	mov [ebx+4D8],cl	; not native terrain (set bit to 0)
-    EB 1C		jmp 43D542		; -> cleanup
+	8B 53 74	mov edx,[ebx+74]	; EDX = unit faction
+	8B1495A8366400	mov edx,[edx*4+6436A8]	; EDX = faction's native terrain
+	39 F2		cmp edx,esi		; Natrive terrain?
+	74 0A		je 43D528		; if yes -> native terrain (+1)
+	88 8B D8040000	mov [ebx+4D8],cl	; not native terrain (set bit to 0)
+	EB 1C		jmp 43D542		; -> cleanup
 
-    41		inc ecx			; native terrain (+3)
-    41		inc ecx			; native terrain (+2)
-    41		inc ecx			; native terrain (+1)
-    C683D804000001	mov byte [ebx+4D8],01	; set "native terrain" bit to 1
-    01 8B C4000000	add [ebx+C4],ecx	; +Speed
-    01 8B C8000000	add [ebx+C8],ecx	; +Attack
-    01 8B CC000000	add [ebx+CC],ecx	; +Defense
-    B1 02		mov cl,02		; (cleanup)
+	41		inc ecx			; native terrain (+3)
+	41		inc ecx			; native terrain (+2)
+	41		inc ecx			; native terrain (+1)
+	C683D804000001	mov byte [ebx+4D8],01	; set "native terrain" bit to 1
+	01 8B C4000000	add [ebx+C4],ecx	; +Speed
+	01 8B C8000000	add [ebx+C8],ecx	; +Attack
+	01 8B CC000000	add [ebx+CC],ecx	; +Defense
+	B1 02		mov cl,02		; (cleanup)
 
 While nice, the above code only addresses specific units and does not function to make units properly
 native to the terrain in question. Thankfully, doing so is a relatively simple matter. Aside from native
@@ -2164,16 +2164,16 @@ terrain, the only thing that faction alignment affects is the morale penalty for
 Thus, we can simply set a neutral unit's faction to one that shares its desired native terrain, i.e.
 Trolls to Fortress, and then manually adjust them when checking the army composition for morale:
 
-    ---------	-------------------------------------------------------------------------
-    04A8CF~E3	; PEASANTS CAN MIX INTO ANY ARMY + NEUTRAL UNITS CAN HAVE NATIVE TERRAIN
-    ---------	-------------------------------------------------------------------------
-    3D 8B000000	cmp eax,8B		; Peasants?
-    74 21		je 44A8F7		; if yes -> [do not add to faction pool]
-    3D 84000000	cmp eax,84		; unit ID 84 (Azure Dragons)?
-    72 14		jb 44A8F1		; if below -> [get faction]
-    31 C0		xor eax,eax		; EAX = -1 (no faction)
-    48		dec eax			; ""
-    EB 11		jmp 44A8F3		; -> [add to pool] (04A8E2~F0 is free space)
+	---------	-------------------------------------------------------------------------
+	04A8CF~E3	; PEASANTS CAN MIX INTO ANY ARMY + NEUTRAL UNITS CAN HAVE NATIVE TERRAIN
+	---------	-------------------------------------------------------------------------
+	3D 8B000000	cmp eax,8B		; Peasants?
+	74 21		je 44A8F7		; if yes -> [do not add to faction pool]
+	3D 84000000	cmp eax,84		; unit ID 84 (Azure Dragons)?
+	72 14		jb 44A8F1		; if below -> [get faction]
+	31 C0		xor eax,eax		; EAX = -1 (no faction)
+	48		dec eax			; ""
+	EB 11		jmp 44A8F3		; -> [add to pool] (04A8E2~F0 is free space)
 
 This will manually set any neutral units except for Gold and Diamond Golems (which, quite frankly, have
 no business NOT being classified as Tower units in this case) to factionless for the purposes of morale.
@@ -2185,39 +2185,40 @@ With just the above change in place, however, the background displayed in the un
 will change from the neutral "wasteland" appearance to that of whichever faction they are set to. We can
 correct this with a bit of free space, which we can get by removing the "spying" ability from Rogues.
 
-    ------		-------------------------------------------------------------------------
-    03D49E		; NEUTRAL UNITS CAN HAVE NATIVE TERRAIN (CORRECTS BACKGROUND GFX)
-    ------		-------------------------------------------------------------------------
-    E8 B88B0A00	call 4E605B		; -> free space (Spying)
+	------		-------------------------------------------------------------------------
+	03D49E		; NEUTRAL UNITS CAN HAVE NATIVE TERRAIN (CORRECTS BACKGROUND GFX)
+	------		-------------------------------------------------------------------------
+	E8 B88B0A00	call 4E605B		; -> free space (Spying)
 
-    ------		-------------------------------------------------------------------------
-    15000F		; ""
-    ------		-------------------------------------------------------------------------
-    E8 5760F9FF	call 4E606B		; -> free space (Spying)
-    90 90		nop			; ""
+	------		-------------------------------------------------------------------------
+	15000F		; ""
+	------		-------------------------------------------------------------------------
+	E8 5760F9FF	call 4E606B		; -> free space (Spying)
+	90 90		nop			; ""
 
-    ---------	-------------------------------------------------------------------------
-    0E6053~7F	; (EXPANDED SPACE - OVERWRITES SPYING)
-    ---------	-------------------------------------------------------------------------
-    8B 86 29010000	mov eax,[esi+129]	; frees space
-    5E		pop esi			; ""
-    C3		ret			; ""
+	---------	-------------------------------------------------------------------------
+	0E6053~7F	; (EXPANDED SPACE - OVERWRITES SPYING)
+	---------	-------------------------------------------------------------------------
+	8B 86 29010000	mov eax,[esi+129]	; frees space
+	5E		pop esi			; ""
+	C3		ret			; ""
 
-    3D 84000000	cmp eax,84		; unit ID 84 (Azure Dragons)?
-    7C 03 		jl 4E6065		; if below -> (displaced code)
-    31 D2		xor edx,edx		; EDX = -1 (no faction)
-    4A		dec edx			; ""
-    8D 73 74	lea esi,[ebx+74]	; (displaced code)
-    89 16		mov [esi],edx		; ""
-    C3		ret			; return
+	3D 84000000	cmp eax,84		; unit ID 84 (Azure Dragons)?
+	7C 03 		jl 4E6065		; if below -> (displaced code)
+	31 D2		xor edx,edx		; EDX = -1 (no faction)
+	4A		dec edx			; ""
+	8D 73 74	lea esi,[ebx+74]	; (displaced code)
+	89 16		mov [esi],edx		; ""
+	C3		ret			; return
 
-    81 FF 84000000	cmp edi,84		; unit ID 84 (Azure Dragons)?
-    7C 03		jl 4E6076		; if below -> (displaced code)
-    31 C9		xor ecx,ecx		; EDX = -1 (no faction)
-    49		dec ecx			; ""
-    8B0C8D60296800	mov ecx,[ecx*4+682960]	; (displaced code)
-    C3		ret			; return
-    90 90		nop			; -
+	81 FF 84000000	cmp edi,84		; unit ID 84 (Azure Dragons)?
+	7C 03		jl 4E6076		; if below -> (displaced code)
+	31 C9		xor ecx,ecx		; EDX = -1 (no faction)
+	49		dec ecx			; ""
+	8B0C8D60296800	mov ecx,[ecx*4+682960]	; (displaced code)
+	C3		ret			; return
+	90 90		nop			; -
+
 
 One minor problem with this approach is that it does make growth weeks possible for the units that you
 assign factions to, but that will be addressed just below.
@@ -2267,81 +2268,81 @@ is eligible except for Conflux units. This is partly to balance the fact that Co
 monthly bonuses and partly to keep the code simple; in either case, there's plenty of leftover space to
 modify the below example to your liking should you want something different.
 
-    ---------	-------------------------------------------------------------------------
-    0C84A1~C7	; GROWTH WEEK BONUS TO 2X BASE GROWTH + CONFLUX UNITS ARE INELIGIBLE
-    ---------	-------------------------------------------------------------------------
-    BA 6F000000	mov edx,6F		; EDX = 6F (all units from the first 8 factions)
-    31 C9		xor ecx,ecx		; ECX = 0
-    E8 13430400	call 50C7C0		; EAX = 0~6F
-    D1 F8		sar eax,1		; EAX / 2 (drops remainder)
-    01 C0		add eax,eax		; EAX * 2 (base units only)
-    8B D8		mov ebx,eax		; EBX = EAX
-    6B DB 74	imul ebx,ebx,74		; EBX = data range
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    8B 4C 1A 44	mov ecx,[edx+ebx+44]	; ECX = unit's base growth
-    89 4D F4	mov [ebp-0C],ecx	; store ECX as bonus
-    E9 C0000000	jmp 4C8588		; -> [continue]
+	---------	-------------------------------------------------------------------------
+	0C84A1~C7	; GROWTH WEEK BONUS TO 2X BASE GROWTH + CONFLUX UNITS ARE INELIGIBLE
+	---------	-------------------------------------------------------------------------
+	BA 6F000000	mov edx,6F		; EDX = 6F (all units from the first 8 factions)
+	31 C9		xor ecx,ecx		; ECX = 0
+	E8 13430400	call 50C7C0		; EAX = 0~6F
+	D1 F8		sar eax,1		; EAX / 2 (drops remainder)
+	01 C0		add eax,eax		; EAX * 2 (base units only)
+	8B D8		mov ebx,eax		; EBX = EAX
+	6B DB 74	imul ebx,ebx,74		; EBX = data range
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	8B 4C 1A 44	mov ecx,[edx+ebx+44]	; ECX = unit's base growth
+	89 4D F4	mov [ebp-0C],ecx	; store ECX as bonus
+	E9 C0000000	jmp 4C8588		; -> [continue]
 
-    ---------	-------------------------------------------------------------------------
-    0C8D38~42	; GROWTH MONTH BONUS TO STATIC VALUE
-    ---------	-------------------------------------------------------------------------
-    83 04 33 XX	add [ebx+esi],XX	; XX = bonus
-    90 90 90 90	nop			; -
-    90 90 90	nop			; -
+	---------	-------------------------------------------------------------------------
+	0C8D38~42	; GROWTH MONTH BONUS TO STATIC VALUE
+	---------	-------------------------------------------------------------------------
+	83 04 33 XX	add [ebx+esi],XX	; XX = bonus
+	90 90 90 90	nop			; -
+	90 90 90	nop			; -
 
-    --------	-------------------------------------------------------------------------
-    1C0203~9	; WEEKLY GROWTH BONUS APPLIES TO BOTH BASE AND UPGRADED DWELLINGS
-    --------	-------------------------------------------------------------------------
-    E8 C082F0FF	call 4C84C8		; -> free space (growth week unit selection)
-    90 90		nop			; -
+	--------	-------------------------------------------------------------------------
+	1C0203~9	; WEEKLY GROWTH BONUS APPLIES TO BOTH BASE AND UPGRADED DWELLINGS
+	--------	-------------------------------------------------------------------------
+	E8 C082F0FF	call 4C84C8		; -> free space (growth week unit selection)
+	90 90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    0C84C8~D5	; (INLINE EDIT - OVERWRITES GROWTH WEEK UNIT SELECTION)
-    ---------	-------------------------------------------------------------------------
-    8B0C8DB4476700	mov ecx,[ecx*4+6747B4]	; ECX = unit ID for current dwelling
-    42		inc edx			; EDX = upgraded version of bonus week unit
-    39 D1		cmp ecx,edx		; is this an upgraded dwelling for that unit?
-    74 01		je 4C84D5		; if yes -> return (dwelling gets the bonus)
-    4A		dec edx			; EDX = bonus week unit
-    C3		ret			; return
+	---------	-------------------------------------------------------------------------
+	0C84C8~D5	; (INLINE EDIT - OVERWRITES GROWTH WEEK UNIT SELECTION)
+	---------	-------------------------------------------------------------------------
+	8B0C8DB4476700	mov ecx,[ecx*4+6747B4]	; ECX = unit ID for current dwelling
+	42		inc edx			; EDX = upgraded version of bonus week unit
+	39 D1		cmp ecx,edx		; is this an upgraded dwelling for that unit?
+	74 01		je 4C84D5		; if yes -> return (dwelling gets the bonus)
+	4A		dec edx			; EDX = bonus week unit
+	C3		ret			; return
 
-    ---------	-------------------------------------------------------------------------
-    0C8D2D~33	; MONTHLY GROWTH BONUS APPLIES TO BOTH BASE AND UPGRADED DWELLINGS
-    ---------	-------------------------------------------------------------------------
-    E8 A4F7FFFF	call 4C84D6		; -> free space (growth week unit selection)
-    90 90		nop			; -
+	---------	-------------------------------------------------------------------------
+	0C8D2D~33	; MONTHLY GROWTH BONUS APPLIES TO BOTH BASE AND UPGRADED DWELLINGS
+	---------	-------------------------------------------------------------------------
+	E8 A4F7FFFF	call 4C84D6		; -> free space (growth week unit selection)
+	90 90		nop			; -
 
-    ----------	-------------------------------------------------------------------------
-    0C84D6~513	; (INLINE EDIT - OVERWRITES GROWTH WEEK UNIT SELECTION)
-    ----------	-------------------------------------------------------------------------
-    8B148DB4476700	mov edx,[ecx*4+6747B4]	; EDX = unit ID for current dwelling
-    83 FA 7F	cmp edx,7F		; is this an upgraded Air Altar?
-    75 08		jne 4C84EA		; if no -> next dwelling check
-    83 F8 70	cmp eax,70		; month of the Air Elemental?
-    75 02		jne 4C84E9		; if no -> return
-    8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
-    C3		ret			; return
+	----------	-------------------------------------------------------------------------
+	0C84D6~513	; (INLINE EDIT - OVERWRITES GROWTH WEEK UNIT SELECTION)
+	----------	-------------------------------------------------------------------------
+	8B148DB4476700	mov edx,[ecx*4+6747B4]	; EDX = unit ID for current dwelling
+	83 FA 7F	cmp edx,7F		; is this an upgraded Air Altar?
+	75 08		jne 4C84EA		; if no -> next dwelling check
+	83 F8 70	cmp eax,70		; month of the Air Elemental?
+	75 02		jne 4C84E9		; if no -> return
+	8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
+	C3		ret			; return
 
-    83 FA 7D	cmp edx,7D		; is this an upgraded Earth Altar?
-    75 08		jne 4C84F7		; if no -> next dwelling check
-    83 F8 71	cmp eax,71		; month of the Earth Elemental?
-    75 02		jne 4C84F6		; if no -> return
-    8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
-    C3		ret			; return
+	83 FA 7D	cmp edx,7D		; is this an upgraded Earth Altar?
+	75 08		jne 4C84F7		; if no -> next dwelling check
+	83 F8 71	cmp eax,71		; month of the Earth Elemental?
+	75 02		jne 4C84F6		; if no -> return
+	8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
+	C3		ret			; return
 
-    81 FA 81000000	cmp edx,81		; is this an upgraded Fire Altar?
-    75 08		jne 4C8507		; if no -> next dwelling check
-    83 F8 72	cmp eax,72		; month of the Fire Elemental?
-    75 02		jne 4C8506		; if no -> return
-    8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
-    C3		ret			; return
+	81 FA 81000000	cmp edx,81		; is this an upgraded Fire Altar?
+	75 08		jne 4C8507		; if no -> next dwelling check
+	83 F8 72	cmp eax,72		; month of the Fire Elemental?
+	75 02		jne 4C8506		; if no -> return
+	8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
+	C3		ret			; return
 
-    83 FA 7B	cmp edx,7B		; is this an upgraded Water Altar?
-    75 07		jne 4C8513		; if no -> return
-    83 F8 73	cmp eax,73		; month of the Water Elemental?
-    75 02		jne 4C8513		; if no -> return
-    8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
-    C3		ret			; return (0C8514~87 is free space)
+	83 FA 7B	cmp edx,7B		; is this an upgraded Water Altar?
+	75 07		jne 4C8513		; if no -> return
+	83 F8 73	cmp eax,73		; month of the Water Elemental?
+	75 02		jne 4C8513		; if no -> return
+	8B C2		mov eax,edx		; EAX = EDX (dwelling gets the bonus)
+	C3		ret			; return (0C8514~87 is free space)
 
 -----------------------------------------------------------------------------------------
 
@@ -2349,36 +2350,36 @@ By default, the growth rate of random unit stacks on the map is 10% (minus any r
 is mostly serviceable, but its exponential nature gives it potential to get out of hand on any map that
 lasts too long. Let's look into implementing a more linear formula that incorporates player difficulty:
 
-	WEEKLY RANDOM UNIT GROWTH = 2 + Difficulty (1~5) + Month - Unit Lv. (1~7)
+		WEEKLY RANDOM UNIT GROWTH = 2 + Difficulty (1~5) + Month - Unit Lv. (1~7)
 
-    --------	-------------------------------------------------------------------------
-    0C8872~B8	; WEEKLY RANDOM UNIT GROWTH FORMULA
-    --------	-------------------------------------------------------------------------
-    8A 4E 22	mov cl,[esi+22]		; ECX = unit ID
-    6B C9 74	imul ecx,ecx,74		; ECX = data range
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    8B 4C 11 04	mov ecx,[ecx+edx+04]	; ECX = unit lv. (0~6)
+	--------	-------------------------------------------------------------------------
+	0C8872~B8	; WEEKLY RANDOM UNIT GROWTH FORMULA
+	--------	-------------------------------------------------------------------------
+	8A 4E 22	mov cl,[esi+22]		; ECX = unit ID
+	6B C9 74	imul ecx,ecx,74		; ECX = data range
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	8B 4C 11 04	mov ecx,[ecx+edx+04]	; ECX = unit lv. (0~6)
 
-    8B 15 38956900	mov edx,[699538]	; EDX = main index
-	0FBE82D8F60100	movsx eax, [edx+1F6D8]	; EAX = player difficulty (0~4)
-    83 C0 02	add eax,02		; EAX +2
-    29 C8		sub eax,ecx		; EAX - ECX
+	8B 15 38956900	mov edx,[699538]	; EDX = main index
+ 	0FBE82D8F60100	movsx eax, [edx+1F6D8]	; EAX = player difficulty (0~4)
+	83 C0 02	add eax,02		; EAX +2
+	29 C8		sub eax,ecx		; EAX - ECX
 
-    8A 8A 42F60100	mov cl,[edx+1F642]	; ECX = month
-    80BA40F6010005	cmp byte [edx+1F640],05	; month rollover?
-    75 01		jne 4C88A4		; if no -> EAX + ECX
-    41		inc ecx			; ECX +1
-    01 C8		add eax,ecx		; EAX + ECX
+	8A 8A 42F60100	mov cl,[edx+1F642]	; ECX = month
+	80BA40F6010005	cmp byte [edx+1F640],05	; month rollover?
+	75 01		jne 4C88A4		; if no -> EAX + ECX
+	41		inc ecx			; ECX +1
+	01 C8		add eax,ecx		; EAX + ECX
 
-    83 F8 00	cmp eax,00		; growth should be at least +1
-    7F 03		jg 4C88AE		; ""
-    6A 01		push 01			; ""
-    58		pop eax			; ""
+	83 F8 00	cmp eax,00		; growth should be at least +1
+	7F 03		jg 4C88AE		; ""
+	6A 01		push 01			; ""
+	58		pop eax			; ""
 
-    8B 16		mov edx,[esi]		; EDX = random unit data
-    01 C2		add edx,eax		; add growth
-    89 16		mov [esi],edx		; update random unit data
-    E9 D1000000	jmp 4C898A		; -> [continue] (0C88B9~C6 is free)
+	8B 16		mov edx,[esi]		; EDX = random unit data
+	01 C2		add edx,eax		; add growth
+	89 16		mov [esi],edx		; update random unit data
+	E9 D1000000	jmp 4C898A		; -> [continue] (0C88B9~C6 is free)
 
 This new formula sticks relatively close to the vanilla growth rates on Hard (the mid-range difficulty)
 while making the easier difficulties easier and the harder difficulties, well... harder. Feel free to
@@ -2392,21 +2393,21 @@ effect is actually deterministic based on the stack's map coordinates (in a pres
 random too the unobservant eye). We can make this effect more appropriately random as well as tie it to
 the chosen difficulty level by tying it to the stack's aggression with the below code:
 
-    ---------	-------------------------------------------------------------------------
-    0AC288~A7	; RANDOM UNIT UPSTACK TIED TO DIFFICULTY AND AGGRESSION
-    ---------	-------------------------------------------------------------------------
-    31 C0		xor eax,eax		; EAX = 0
-    8A 46 01	mov al,[esi+01]		; EAX = random stack sata
-    C1 E8 04	shr eax,04		; shift to "aggression" value
-    8B 15 38956900	mov edx,[699538]	; EDX = main index
-    8A 92 D8F60100	mov dl,[edx+1F6D8]	; DL = player difficulty (0~4)
-    00 D2 		add dl,dl		; DL * 2
-    42		inc edx			; DL + 1
-    31 C9		xor ecx,ecx		; ECX = 0 (upstack)
-    38 D0		cmp al,dl		; is stack's aggression greater than DL?
-    7F 31		jg 4AC2D6		; if yes -> [continue]
-    41		inc ecx			; ECX = 1 (no upstack)
-    EB 2E		jmp 4AC2D6		; -> [continue] (0AC2A8~D5 is free space)
+	---------	-------------------------------------------------------------------------
+	0AC288~A7	; RANDOM UNIT UPSTACK TIED TO DIFFICULTY AND AGGRESSION
+	---------	-------------------------------------------------------------------------
+	31 C0		xor eax,eax		; EAX = 0
+	8A 46 01	mov al,[esi+01]		; EAX = random stack sata
+	C1 E8 04	shr eax,04		; shift to "aggression" value
+	8B 15 38956900	mov edx,[699538]	; EDX = main index
+	8A 92 D8F60100	mov dl,[edx+1F6D8]	; DL = player difficulty (0~4)
+	00 D2 		add dl,dl		; DL * 2
+	42		inc edx			; DL + 1
+	31 C9		xor ecx,ecx		; ECX = 0 (upstack)
+	38 D0		cmp al,dl		; is stack's aggression greater than DL?
+	7F 31		jg 4AC2D6		; if yes -> [continue]
+	41		inc ecx			; ECX = 1 (no upstack)
+	EB 2E		jmp 4AC2D6		; -> [continue] (0AC2A8~D5 is free space)
 
 What we are effectively doing with this code is specifying a minimum aggression threshold for an upstack
 to occur based on the difficulty setting, else there will be no upstack. The thresholds are as follows:

@@ -5,130 +5,130 @@ major, relic, etc.) equipment slot, and descriptions of artifacts. Most of their
 throughout the .exe. The primary attribute bonuses are found in a table starting at 23E758, with 4 bytes
 per artifact - 1 each for Attack, Defense, Spell Power, and Knowledge, respectively.
 
-		ATTACK (WEAPONS)			    DEFENSE (SHIELDS)
-	--------------------------------	--------------------------------
-	23E774	Centaur's Axe			    23E78C	Shield of the Dwarven Lords
-	23E778	Blackshard of the Dead Knight	23E790	Shield of the Yawning Dead
-	23E77C	Greater Gnoll's Flail		23E794	Buckler of the Gnoll King
-	23E780	Ogre's Club of Havoc		23E798	Targe of the Rampaging Ogre
-	23E784	Sword of Hellfire		    23E79C	Shield of the Damned
-	23E788	Titan's Gladius			    23E7A0	Sentinel's Shield
+			ATTACK (WEAPONS)			DEFENSE (SHIELDS)
+		--------------------------------	--------------------------------
+		23E774	Centaur's Axe			23E78C	Shield of the Dwarven Lords
+		23E778	Blackshard of the Dead Knight	23E790	Shield of the Yawning Dead
+		23E77C	Greater Gnoll's Flail		23E794	Buckler of the Gnoll King
+		23E780	Ogre's Club of Havoc		23E798	Targe of the Rampaging Ogre
+		23E784	Sword of Hellfire		23E79C	Shield of the Damned
+		23E788	Titan's Gladius			23E7A0	Sentinel's Shield
 
-		KNOWLEDGE (HELMETS)			    SPELL POWER (ARMOR)
-	--------------------------------	--------------------------------
-	23E7A4	Helm of the Alabaster Unicorn	23E7BC	Breastplate of Petrified Wood
-	23E7A8	Skull Helmet			    23E7C0	Rib Cage
-	23E7AC	Helm of Chaos			    23E7C4	Scales of the Greater Basilisk
-	23E7B0	Crown of the Supreme Magi	23E7C8	Tunic of the Cyclops King
-	23E7B4	Hellstorm Helmet		    23E7CC	Breastplate of Brimstone
-	23E7B8	Thunder Helmet			    23E7D0	Titan's Cuirass
+			KNOWLEDGE (HELMETS)			SPELL POWER (ARMOR)
+		--------------------------------	--------------------------------
+		23E7A4	Helm of the Alabaster Unicorn	23E7BC	Breastplate of Petrified Wood
+		23E7A8	Skull Helmet			23E7C0	Rib Cage
+		23E7AC	Helm of Chaos			23E7C4	Scales of the Greater Basilisk
+		23E7B0	Crown of the Supreme Magi	23E7C8	Tunic of the Cyclops King
+		23E7B4	Hellstorm Helmet		23E7CC	Breastplate of Brimstone
+		23E7B8	Thunder Helmet			23E7D0	Titan's Cuirass
 
-		ANGELIC ALLIANCE			    DRAGON FATHER
-	--------------------------------	--------------------------------
-	23E7D4	Armor of Wonder			    23E7EC	Quiet Eye of the Dragon
-	23E7D8	Sandals of the Saint		23E7F0	Red Dragon Flame Tongue
-	23E7DC	Celestial Necklace of Bliss	23E7F4	Dragon Scale Shield
-	23E7E0	Lion's Shield of Courage	23E7F8	Dragon Scale Armor
-	23E7E4	Sword of Judgement		    23E7FC	Dragonbone Greaves
-	23E7E8	Helm of Heavenly Enlightenment	23E800	Dragon Wing Tabard
-	------	------------------------------	23E804	Necklace of Dragonteeth
-	------	------------------------------	23E808	Crown of Dragontooth
-	------	------------------------------	23E80C	Still Eye of the Dragon
+			ANGELIC ALLIANCE			DRAGON FATHER
+		--------------------------------	--------------------------------
+		23E7D4	Armor of Wonder			23E7EC	Quiet Eye of the Dragon
+		23E7D8	Sandals of the Saint		23E7F0	Red Dragon Flame Tongue
+		23E7DC	Celestial Necklace of Bliss	23E7F4	Dragon Scale Shield
+		23E7E0	Lion's Shield of Courage	23E7F8	Dragon Scale Armor
+		23E7E4	Sword of Judgement		23E7FC	Dragonbone Greaves
+		23E7E8	Helm of Heavenly Enlightenment	23E800	Dragon Wing Tabard
+		------	------------------------------	23E804	Necklace of Dragonteeth
+		------	------------------------------	23E808	Crown of Dragontooth
+		------	------------------------------	23E80C	Still Eye of the Dragon
 
-		LUCK MODIFIERS				    MORALE MODIFIERS
-	--------------------------------	--------------------------------
-	23E810	Clover of Fortune		    23E81C	Badge of Courage
-	23E814	Cards of Prophecy		    23E820	Crest of Valor
-	23E818	Ladybird of Luck		    23E824	Glyph of Gallantry
-	23E8AC	Hourglass of the Evil Hour	23E8A8	Spirit of Oppression
+			LUCK MODIFIERS				MORALE MODIFIERS
+		--------------------------------	--------------------------------
+		23E810	Clover of Fortune		23E81C	Badge of Courage
+		23E814	Cards of Prophecy		23E820	Crest of Valor
+		23E818	Ladybird of Luck		23E824	Glyph of Gallantry
+		23E8AC	Hourglass of the Evil Hour	23E8A8	Spirit of Oppression
 
-			    --- 23E908 Pendant of Courage ---
+				    --- 23E908 Pendant of Courage ---
 
-		MOVEMENT (LAND)				    MOVEMENT (SEA)
-	--------------------------------	--------------------------------
-	23E870	Equestrian's Gloves		    23E874	Necklace of Ocean Guidance
-	23E8E0	Boots of Speed			    23E944	Sea Captain's Hat
-	23E878	Angel Wings			        23E8C0	Boots of Levitation
+			MOVEMENT (LAND)				MOVEMENT (SEA)
+		--------------------------------	--------------------------------
+		23E870	Equestrian's Gloves		23E874	Necklace of Ocean Guidance
+		23E8E0	Boots of Speed			23E944	Sea Captain's Hat
+		23E878	Angel Wings			23E8C0	Boots of Levitation
 
-		UNIT SPEED BONUS			    ELIXIR OF LIFE
-	--------------------------------	--------------------------------
-	23E8DC	Necklace of Swiftness		23E8D0	Ring of Vitality
-	23E86C	Ring of the Wayfarer		23E8D4	Ring of Life
-	23E8E4	Cape of Velocity		    23E8D8	Vial of Lifeblood
+			UNIT SPEED BONUS			ELIXIR OF LIFE
+		--------------------------------	--------------------------------
+		23E8DC	Necklace of Swiftness		23E8D0	Ring of Vitality
+		23E86C	Ring of the Wayfarer		23E8D4	Ring of Life
+		23E8E4	Cape of Velocity		23E8D8	Vial of Lifeblood
 
-		WIZARD'S WELL				    RING OF THE MAGI
-	--------------------------------	--------------------------------
-	23E87C	Charm of Mana			    23E888	Collar of Conjuring
-	23E880	Talisman of Mana		    23E88C	Ring of Conjuring
-	23E884	Mystic Orb of Mana		    23E890	Cape of Conjuring
+			WIZARD'S WELL				RING OF THE MAGI
+		--------------------------------	--------------------------------
+		23E87C	Charm of Mana			23E888	Collar of Conjuring
+		23E880	Talisman of Mana		23E88C	Ring of Conjuring
+		23E884	Mystic Orb of Mana		23E890	Cape of Conjuring
 
-		SPELL BOOSTERS				    SPELL KNOWLEDGE
-	--------------------------------	--------------------------------
-	23E894	Orb of the Firmament		23E8B0	Tome of Fire Magic
-	23E898	Orb of Silt			        23E8B4	Tome of Air Magic
-	23E89C	Orb of Tempestuous Fire		23E8B8	Tome of Water Magic
-	23E8A0	Orb of Driving Rain		    23E8BC	Tome of Earth Magic
-	------	-------------------		    23E948	Spellbinder's Hat
+			SPELL BOOSTERS				SPELL KNOWLEDGE
+		--------------------------------	--------------------------------
+		23E894	Orb of the Firmament		23E8B0	Tome of Fire Magic
+		23E898	Orb of Silt			23E8B4	Tome of Air Magic
+		23E89C	Orb of Tempestuous Fire		23E8B8	Tome of Water Magic
+		23E8A0	Orb of Driving Rain		23E8BC	Tome of Earth Magic
+		------	-------------------		23E948	Spellbinder's Hat
 
-		SPELL IMMUNITY				    RESOURCE PRODUCTION
-	--------------------------------	--------------------------------
-	23E8C8	Sphere of Permanence		23E90C	Everflowing Crystal Cloak
-	23E8E8	Pendant of Dispassion		23E910	Ring of Infinite Gems
-	23E8EC	Pendant of Second Sight		23E914	Everpouring Vial of Mercury
-	23E8F0	Pendant of Holiness		    23E918	Inexhaustible Cart of Ore
-	23E8F4	Pendant of Life			    23E91C	Eversmoking Ring of Sulfur
-	23E8F8	Pendant of Death		    23E920	Inexhaustible Cart of Lumber
-	23E8FC	Pendant of Free Will		23E924	Endless Sack of Gold
-	23E900	Pendant of Negativity		23E928	Endless Bag of Gold
-	23E904	Pendant of Total Recall		23E92C	Endless Purse of Gold
+			SPELL IMMUNITY				RESOURCE PRODUCTION
+		--------------------------------	--------------------------------
+		23E8C8	Sphere of Permanence		23E90C	Everflowing Crystal Cloak
+		23E8E8	Pendant of Dispassion		23E910	Ring of Infinite Gems
+		23E8EC	Pendant of Second Sight		23E914	Everpouring Vial of Mercury
+		23E8F0	Pendant of Holiness		23E918	Inexhaustible Cart of Ore
+		23E8F4	Pendant of Life			23E91C	Eversmoking Ring of Sulfur
+		23E8F8	Pendant of Death		23E920	Inexhaustible Cart of Lumber
+		23E8FC	Pendant of Free Will		23E924	Endless Sack of Gold
+		23E900	Pendant of Negativity		23E928	Endless Bag of Gold
+		23E904	Pendant of Total Recall		23E92C	Endless Purse of Gold
 
-		MAGIC SUPPRESSION			    STATUE OF LEGION
-	--------------------------------	--------------------------------
-	23E8A4	Recanter's Cloak		    23E930	Legs of Legion
-	23E950	Orb of Inhibition		    23E934	Loins of Legion
-	------	-----------------		    23E938	Torso of Legion
-	------	-----------------		    23E93C	Arms of Legion
-	------	-----------------		    23E940	Head of Legion
+			MAGIC SUPPRESSION			STATUE OF LEGION
+		--------------------------------	--------------------------------
+		23E8A4	Recanter's Cloak		23E930	Legs of Legion
+		23E950	Orb of Inhibition		23E934	Loins of Legion
+		------	-----------------		23E938	Torso of Legion
+		------	-----------------		23E93C	Arms of Legion
+		------	-----------------		23E940	Head of Legion
 
-		NECROMANCY				        ARCHERY
-	--------------------------------	--------------------------------
-	23E830	Amulet of the Undertaker	23E848	Bow of Elven Cherrywood
-	23E834	Vampire's Cowl			    23E84C	Unicorn's Mane Bowstring
-	23E838	Dead Man's Boots		    23E850	Angel Feather Arrows
-	------	----------------		    23E8C4	Golden Bow
+			NECROMANCY				ARCHERY
+		--------------------------------	--------------------------------
+		23E830	Amulet of the Undertaker	23E848	Bow of Elven Cherrywood
+		23E834	Vampire's Cowl			23E84C	Unicorn's Mane Bowstring
+		23E838	Dead Man's Boots		23E850	Angel Feather Arrows
+		------	----------------		23E8C4	Golden Bow
 
-		SCOUTING				        EAGLE EYE
-	--------------------------------	--------------------------------
-	23E828	Speculum			        23E854	Bird of Perception
-	23E82C	Spyglass			        23E858	Stoic Watchman
-	------	--------			        23E85C	Emblem of Cognizance
+			SCOUTING				EAGLE EYE
+		--------------------------------	--------------------------------
+		23E828	Speculum			23E854	Bird of Perception
+		23E82C	Spyglass			23E858	Stoic Watchman
+		------	--------			23E85C	Emblem of Cognizance
 
-		RESISTANCE				        DIPLOMACY
-	--------------------------------	--------------------------------
-	23E83C	Garniture of Interference	23E860	Statesman's Medal
-	23E840	Surcoat of Counterpoise		23E864	Diplomat's Ring
-	23E844	Boots of Polarity		    23E868	Ambassador's Sash
+			RESISTANCE				DIPLOMACY
+		--------------------------------	--------------------------------
+		23E83C	Garniture of Interference	23E860	Statesman's Medal
+		23E840	Surcoat of Counterpoise		23E864	Diplomat's Ring
+		23E844	Boots of Polarity		23E868	Ambassador's Sash
 
-		MISCELLAENOUS				    CAMPAIGN-EXCLUSIVE
-	--------------------------------	--------------------------------
-	23E8CC	Orb of Vulnerability		23E954	Vial of Dragon Blood
-	23E94C	Shackles of War			    23E958	Armageddon's Blade
+			MISCELLAENOUS				CAMPAIGN-EXCLUSIVE
+		--------------------------------	--------------------------------
+		23E8CC	Orb of Vulnerability		23E954	Vial of Dragon Blood
+		23E94C	Shackles of War			23E958	Armageddon's Blade
 
-				COMBINATION ARTIFACTS
-	------------------------------------------------------------------------
-	23E95C	Angelic Alliance		    23E974	Titan's Thunder
-	23E960	Cloak of the Undead King	23E978	Admiral's Hat
-	23E964	Elixir of Life			    23E97C	Sharpshooter's Bow
-	23E968	Armor of the Damned		    23E980	Wizard's Well
-	23E96C	Statue of Legion		    23E984	Ring of the Magi
-	23E970	Power of the Dragon Father	23E988	Cornucopia
+					COMBINATION ARTIFACTS
+		------------------------------------------------------------------------
+		23E95C	Angelic Alliance		23E974	Titan's Thunder
+		23E960	Cloak of the Undead King	23E978	Admiral's Hat
+		23E964	Elixir of Life			23E97C	Sharpshooter's Bow
+		23E968	Armor of the Damned		23E980	Wizard's Well
+		23E96C	Statue of Legion		23E984	Ring of the Magi
+		23E970	Power of the Dragon Father	23E988	Cornucopia
 
-				WAR MACHINES & STUFF
-	------------------------------------------------------------------------
-	23E758	Spell Book			    23E768	Ballista
-	23E75C	Spell Scroll			23E76C	Ammo Cart
-	23E760	The Grail			    23E770	First Aid Tent
-	23E764	Catapult			    ------	--------------
+					WAR MACHINES & STUFF
+		------------------------------------------------------------------------
+		23E758	Spell Book			23E768	Ballista
+		23E75C	Spell Scroll			23E76C	Ammo Cart
+		23E760	The Grail			23E770	First Aid Tent
+		23E764	Catapult			------	--------------
 
 Values specified here can either be positive (most are) or negative (as seen on the Titan's equipment).
 Remember that combination artifacts possess all the properties of their individual components, and that
@@ -272,312 +272,311 @@ but in this case the code which checks to see if a given artifact is equipped is
 unoptimized and doing so will not only make them much easier to edit, but will clear up
 more free space than you'll know what to do with. Let's have a look:
 
-    ---------	-------------------------------------------------------------------------
-    0E3C9E~F7	; MORALE ARTIFACTS
-    ---------	-------------------------------------------------------------------------
-    6A 31		push 31			; 31 = Badge of Courage
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 B957FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E3CAE		; if no -> next check
-    83 C3 01	add ebx,01		; +1 Morale
+	0E3C9E~F7	; MORALE ARTIFACTS
+	---------	-------------------------------------------------------------------------
+	6A 31		push 31			; 31 = Badge of Courage
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 B957FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E3CAE		; if no -> next check
+	83 C3 01	add ebx,01		; +1 Morale
 
-    6A 32		push 32			; 32 = Crest of Valor
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 A957FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E3CBE		; if no -> next check
-    83 C3 01	add ebx,01		; +1 Morale
+	6A 32		push 32			; 32 = Crest of Valor
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 A957FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E3CBE		; if no -> next check
+	83 C3 01	add ebx,01		; +1 Morale
 
-    6A 33		push 33			; 33 = Glyph of Gallantry
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 9957FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E3CCE		; if no -> next check
-    83 C3 01	add ebx,01		; +1 Morale
+	6A 33		push 33			; 33 = Glyph of Gallantry
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 9957FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E3CCE		; if no -> next check
+	83 C3 01	add ebx,01		; +1 Morale
 
-    6A 2D		push 2D			; 2D = Still Eye of the Dragon
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 8957FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E3CDE		; if no -> next check
-    83 C3 01	add ebx,01		; +1 Morale
+	6A 2D		push 2D			; 2D = Still Eye of the Dragon
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 8957FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E3CDE		; if no -> next check
+	83 C3 01	add ebx,01		; +1 Morale
 
-    6A 53		push 6C			; 6C = Pendant of Courage
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 7957FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E3CEE		; if no -> next check
-    83 C3 03	add ebx,03		; +3 Morale
+	6A 53		push 6C			; 6C = Pendant of Courage
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 7957FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E3CEE		; if no -> next check
+	83 C3 03	add ebx,03		; +3 Morale
 
-    89 5D 0C	mov [ebp+0C],ebx	; store morale
-    56		push esi		; (cleanup)
-    E9 E8000000	jmp 4E3DDF		; -> [continue] (0E3CF8~DDE is free space)
+	89 5D 0C	mov [ebp+0C],ebx	; store morale
+	56		push esi		; (cleanup)
+	E9 E8000000	jmp 4E3DDF		; -> [continue] (0E3CF8~DDE is free space)
 
-    ----------	-------------------------------------------------------------------------
-    0DC606~71D	; MORALE ARTIFACTS (RIGHT-CLICK INFO)
-    ----------	-------------------------------------------------------------------------
-    6A 31		push 31			; 31 = Badge of Courage
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 51CEFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DC633		; if no -> next check
-    8B 15 38586A00	mov edx,[6A5838]	; ArrayTxt, line 91
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 71ECF3FF	call 41B2A0		; ""
-    83 45 F0 01	add [ebp-10],01		; +1 Morale
+	----------	-------------------------------------------------------------------------
+	0DC606~71D	; MORALE ARTIFACTS (RIGHT-CLICK INFO)
+	----------	-------------------------------------------------------------------------
+	6A 31		push 31			; 31 = Badge of Courage
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 51CEFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DC633		; if no -> next check
+	8B 15 38586A00	mov edx,[6A5838]	; ArrayTxt, line 91
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 71ECF3FF	call 41B2A0		; ""
+	83 45 F0 01	add [ebp-10],01		; +1 Morale
 
-    6A 32		push 32			; 32 = Crest of Valor
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 24CEFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DC660		; if no -> next check
-    8B 15 3C586A00	mov edx,[6A583C]	; ArrayTxt, line 92
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 44ECF3FF	call 41B2A0		; ""
-    83 45 F0 01	add [ebp-10],01		; +1 Morale
+	6A 32		push 32			; 32 = Crest of Valor
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 24CEFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DC660		; if no -> next check
+	8B 15 3C586A00	mov edx,[6A583C]	; ArrayTxt, line 92
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 44ECF3FF	call 41B2A0		; ""
+	83 45 F0 01	add [ebp-10],01		; +1 Morale
 
-    6A 33		push 33			; 33 = Glyph of Gallantry
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 F7CDFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DC68D		; if no -> next check
-    8B 15 40586A00	mov edx,[6A5840]	; ArrayTxt, line 93
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 17ECF3FF	call 41B2A0		; ""
-    83 45 F0 02	add [ebp-10],01		; +1 Morale
+	6A 33		push 33			; 33 = Glyph of Gallantry
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 F7CDFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DC68D		; if no -> next check
+	8B 15 40586A00	mov edx,[6A5840]	; ArrayTxt, line 93
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 17ECF3FF	call 41B2A0		; ""
+	83 45 F0 02	add [ebp-10],01		; +1 Morale
 
-    68 86000000	push 86			; 86 = Power of the Dragon Father
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 C7CDFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 22		je 4DC6BF		; if no -> next check
-    8B 15 1C5F6A00	mov edx,[6A5F1C]	; ArrayTxt, line 17
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 E7EBF3FF	call 41B2A0		; ""
-    83 45 F0 02	add [ebp-10],01		; +1 Morale
-    EB 5A		jmp 4DC719		;
+	68 86000000	push 86			; 86 = Power of the Dragon Father
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 C7CDFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 22		je 4DC6BF		; if no -> next check
+	8B 15 1C5F6A00	mov edx,[6A5F1C]	; ArrayTxt, line 17
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 E7EBF3FF	call 41B2A0		; ""
+	83 45 F0 02	add [ebp-10],01		; +1 Morale
+	EB 5A		jmp 4DC719		;
 
-    6A 20		push 2D			; 2D = Still Eye of the Dragon
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 98CDFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DC6EC		; if no -> next check
-    8B 15 34586A00	mov edx,[6A5834]	; ArrayTxt, line 90
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 B8EBF3FF	call 41B2A0		; ""
-    83 45 F0 01	add [ebp-10],01		; +1 Morale
+	6A 20		push 2D			; 2D = Still Eye of the Dragon
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 98CDFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DC6EC		; if no -> next check
+	8B 15 34586A00	mov edx,[6A5834]	; ArrayTxt, line 90
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 B8EBF3FF	call 41B2A0		; ""
+	83 45 F0 01	add [ebp-10],01		; +1 Morale
 
-    6A 6A		push 6A			; 53 = Pendant of Courage
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 3ECDFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DC746		; if no -> [continue]
-    8B 15 8C586A00	mov edx,[6A588C]	; ArrayTxt, line 112
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 5EEBF3FF	call 41B2A0		; ""
-    83 45 F0 03	add [ebp-10],03		; +3 Morale
-    E9 AE000000	jmp 004DC7CC		; -> [continue] (0DC71E~CB is free space)
+	6A 6A		push 6A			; 53 = Pendant of Courage
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 3ECDFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DC746		; if no -> [continue]
+	8B 15 8C586A00	mov edx,[6A588C]	; ArrayTxt, line 112
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 5EEBF3FF	call 41B2A0		; ""
+	83 45 F0 03	add [ebp-10],03		; +3 Morale
+	E9 AE000000	jmp 004DC7CC		; -> [continue] (0DC71E~CB is free space)
 
-    ---------	-------------------------------------------------------------------------
-    0E3A46~9F	; LUCK ARTIFACTS
-    ---------	-------------------------------------------------------------------------
-    6A 2E		push 2E			; 2E = Clover of Fortune
-    8B CE		mov ecx,esi		; ECX = hero data
-    E8 115AFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 04		je 4E3A57		; if no -> next check
-    83 45 0C 01	add [ebp+0C],01		; +1 Luck
+	---------	-------------------------------------------------------------------------
+	0E3A46~9F	; LUCK ARTIFACTS
+	---------	-------------------------------------------------------------------------
+	6A 2E		push 2E			; 2E = Clover of Fortune
+	8B CE		mov ecx,esi		; ECX = hero data
+	E8 115AFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 04		je 4E3A57		; if no -> next check
+	83 45 0C 01	add [ebp+0C],01		; +1 Luck
 
-    6A 2F		push 2F			; 2F = Cards of Prophecy
-    8B CE		mov ecx,esi		; ECX = hero data
-    E8 005AFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 04		je 4E3A68		; if no -> next check
-    83 45 0C 01	add [ebp+0C],01		; +1 Luck
+	6A 2F		push 2F			; 2F = Cards of Prophecy
+	8B CE		mov ecx,esi		; ECX = hero data
+	E8 005AFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 04		je 4E3A68		; if no -> next check
+	83 45 0C 01	add [ebp+0C],01		; +1 Luck
 
-    6A 30		push 30			; 30 = Ladybird of Luck
-    8B CE		mov ecx,esi		; ECX = hero data
-    E8 EF59FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 04		je 4E3A79		; if no -> next check
-    83 45 0C 01	add [ebp+0C],01		; +1 Luck
+	6A 30		push 30			; 30 = Ladybird of Luck
+	8B CE		mov ecx,esi		; ECX = hero data
+	E8 EF59FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 04		je 4E3A79		; if no -> next check
+	83 45 0C 01	add [ebp+0C],01		; +1 Luck
 
-    6A 25		push 25			; 25 = Quiet Eye of the Dragon
-    8B CE		mov ecx,esi		; ECX = hero data
-    E8 DE59FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 04		je 4E3A8A		; if no -> next check
-    83 45 0C 01	add [ebp+0C],01		; +1 Luck
+	6A 25		push 25			; 25 = Quiet Eye of the Dragon
+	8B CE		mov ecx,esi		; ECX = hero data
+	E8 DE59FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 04		je 4E3A8A		; if no -> next check
+	83 45 0C 01	add [ebp+0C],01		; +1 Luck
 
-    6A 53		push 6C			; 6C = Pendant of Courage
-    8B CE		mov ecx,esi		; ECX = hero data
-    E8 BC59FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 04		je 4E3AAC		; if no -> [continue]
-    83 45 0C 03	add [ebp+0C],03		; +3 Luck
-    E9 B2000000	jmp 4E3B52		; -> [continue] (0E3AA0~B51 is free space)
+	6A 53		push 6C			; 6C = Pendant of Courage
+	8B CE		mov ecx,esi		; ECX = hero data
+	E8 BC59FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 04		je 4E3AAC		; if no -> [continue]
+	83 45 0C 03	add [ebp+0C],03		; +3 Luck
+	E9 B2000000	jmp 4E3B52		; -> [continue] (0E3AA0~B51 is free space)
 
-    ----------	-------------------------------------------------------------------------
-    0DCDA6~EBD	; LUCK ARTIFACTS (RIGHT-CLICK INFO)
-    ----------	-------------------------------------------------------------------------
-    6A 2E		push 2E			; 2E = Clover of Fortune
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 B1C6FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DCDD3		; if no -> next check
-    8B 15 A8536A00	mov edx,[6A53A8]	; ArrayTxt, line 65
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 D1E4F3FF	call 41B2A0		; ""
-    83 45 F0 01	add [ebp-10],01		; +1 Luck
+	----------	-------------------------------------------------------------------------
+	0DCDA6~EBD	; LUCK ARTIFACTS (RIGHT-CLICK INFO)
+	----------	-------------------------------------------------------------------------
+	6A 2E		push 2E			; 2E = Clover of Fortune
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 B1C6FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DCDD3		; if no -> next check
+	8B 15 A8536A00	mov edx,[6A53A8]	; ArrayTxt, line 65
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 D1E4F3FF	call 41B2A0		; ""
+	83 45 F0 01	add [ebp-10],01		; +1 Luck
 
-    6A 2F		push 2F			; 2F = Cards of Prophecy
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 84C6FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DCE00		; if no -> next check
-    8B 15 AC536A00	mov edx,[6A53AC]	; ArrayTxt, line 66
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 A4E4F3FF	call 41B2A0		; ""
-    83 45 F0 01	add [ebp-10],01		; +1 Luck
+	6A 2F		push 2F			; 2F = Cards of Prophecy
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 84C6FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DCE00		; if no -> next check
+	8B 15 AC536A00	mov edx,[6A53AC]	; ArrayTxt, line 66
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 A4E4F3FF	call 41B2A0		; ""
+	83 45 F0 01	add [ebp-10],01		; +1 Luck
 
-    6A 30		push 30			; 30 = Ladybird of Luck
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 57C6FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DCE2D		; if no -> next check
-    8B 15 B0536A00	mov edx,[6A53B0]	; ArrayTxt, line 67
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 77E4F3FF	call 41B2A0		; ""
-    83 45 F0 02	add [ebp-10],02		; +2 Luck
+	6A 30		push 30			; 30 = Ladybird of Luck
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 57C6FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DCE2D		; if no -> next check
+	8B 15 B0536A00	mov edx,[6A53B0]	; ArrayTxt, line 67
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 77E4F3FF	call 41B2A0		; ""
+	83 45 F0 02	add [ebp-10],02		; +2 Luck
 
-    68 86000000	push 86			; 86 = Power of the Dragon Father
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 27C6FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 22		je 4DCE5F		; if no -> next check
-    8B 15 F8556A00	mov edx,[6A55F8]	; ArrayTxt, line 9
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 47E4F3FF	call 41B2A0		; ""
-    83 45 F0 02	add [ebp-10],01		; +1 Luck
-    EB 5A		jmp 4DCEB9		;
+	68 86000000	push 86			; 86 = Power of the Dragon Father
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 27C6FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 22		je 4DCE5F		; if no -> next check
+	8B 15 F8556A00	mov edx,[6A55F8]	; ArrayTxt, line 9
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 47E4F3FF	call 41B2A0		; ""
+	83 45 F0 02	add [ebp-10],01		; +1 Luck
+	EB 5A		jmp 4DCEB9		;
 
-    6A 25		push 25			; 25 = Quiet Eye of the Dragon
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 F8C5FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DCE8C		; if no -> next check
-    8B 15 A4536A00	mov edx,[6A53A4]	; ArrayTxt, line 64
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 18E4F3FF	call 41B2A0		; ""
-    83 45 F0 01	add [ebp-10],01		; +1 Luck
+	6A 25		push 25			; 25 = Quiet Eye of the Dragon
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 F8C5FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DCE8C		; if no -> next check
+	8B 15 A4536A00	mov edx,[6A53A4]	; ArrayTxt, line 64
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 18E4F3FF	call 41B2A0		; ""
+	83 45 F0 01	add [ebp-10],01		; +1 Luck
 
-    6A 53		push 6C			; 6C = Pendant of Courage
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 CBC5FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 20		je 4DCEB9		; if no -> next check
-    8B 15 E8536A00	mov edx,[6A53E8]	;
-    83 C9 FF	or ecx,-01		; (text bullshit)
-    8B FA		mov edi,edx		; ""
-    31 C0		xor eax,eax		; ""
-    F2 AE		repne scasb		; ""
-    F7 D1		not ecx			; ""
-    49		dec ecx			; ""
-    51		push ecx		; ""
-    52		push edx		; ""
-    8D 4D D8	lea ecx,[ebp-28]	; ""
-    E8 EBE3F3FF	call 41B2A0		; ""
-    83 45 F0 03	add [ebp-10],03		; +3 Luck
-    E9 AE000000	jmp 4DCF6C		; -> [continue]
+	6A 53		push 6C			; 6C = Pendant of Courage
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 CBC5FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 20		je 4DCEB9		; if no -> next check
+	8B 15 E8536A00	mov edx,[6A53E8]	;
+	83 C9 FF	or ecx,-01		; (text bullshit)
+	8B FA		mov edi,edx		; ""
+	31 C0		xor eax,eax		; ""
+	F2 AE		repne scasb		; ""
+	F7 D1		not ecx			; ""
+	49		dec ecx			; ""
+	51		push ecx		; ""
+	52		push edx		; ""
+	8D 4D D8	lea ecx,[ebp-28]	; ""
+	E8 EBE3F3FF	call 41B2A0		; ""
+	83 45 F0 03	add [ebp-10],03		; +3 Luck
+	E9 AE000000	jmp 4DCF6C		; -> [continue]
 
 ArrayTxt.txt from the h3bitmap.lod archive is where all of the right-click messages for
 morale and luck bonuses are stored, which leads us to our snag. Yes, in this particular
@@ -615,48 +614,46 @@ The speed-boosting artifacts and their bonuses are specified at the following ad
 
 Again, we can optimize this substantially like so:
 
-    ----------	-------------------------------------------------------------------------
-    0E65F3~626	; SPEED ARTIFACTS OPTIMIZED
-    ----------	-------------------------------------------------------------------------
-    33 FF		xor edi,edi		; EDI = 0
-    6A 61		push 61			; 61 = Necklace of Swiftness
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 622EFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E6605		; if no -> next check
-    83 C7 01	add edi,01		; +1 Speed
+	----------	-------------------------------------------------------------------------
+	0E65F3~626	; SPEED ARTIFACTS OPTIMIZED
+	----------	-------------------------------------------------------------------------
+	33 FF		xor edi,edi		; EDI = 0
+	6A 61		push 61			; 61 = Necklace of Swiftness
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 622EFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E6605		; if no -> next check
+	83 C7 01	add edi,01		; +1 Speed
 
-    6A 45		push 45			; 45 = Seven League Boots
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 522EFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E6615		; if no -> next check
-    83 C7 01	add edi,01		; +1 Speed
+	6A 45		push 45			; 45 = Seven League Boots
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 522EFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E6615		; if no -> next check
+	83 C7 01	add edi,01		; +1 Speed
 
-    6A 63		push 63			; 63 = Cape of Velocity
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 422EFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 4E6625		; if no -> next check
-    83 C7 02	add edi,02		; +2 Speed
-    EB 2F		jmp 4E6656		; -> [continue] (0E6627~55 is free space)
+	6A 63		push 63			; 63 = Cape of Velocity
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 422EFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 4E6625		; if no -> next check
+	83 C7 02	add edi,02		; +2 Speed
+	EB 2F		jmp 4E6656		; -> [continue] (0E6627~55 is free space)
 
 -----------------------------------------------------------------------------------------
 
 The four artifacts which grant movement bonuses can be edited in Movement.txt, but there
 will be some confusion as this document is mislabeled as follows:
 
-	• The Boots of Speed are mislabeled as Ring of the Wayfarer
-
-	• The Sea Captain's Hat uses the Lighthouse bonus (this setting affects both)
-
-	• Angel Wings do not actually give a bonus (this setting does nothing)
+- The Boots of Speed are mislabeled as Ring of the Wayfarer
+- The Sea Captain's Hat uses the Lighthouse bonus (this setting affects both)
+- Angel Wings do not actually give a bonus (this setting does nothing)
 
 The movement-based artifacts are named at the following addresses:
 
 	0E4F56 (62 = Boots of Speed)		0E4D82 (47 = Necklace of Ocean Guidance)
 	0E4F99 (46 = Equestrian's Gloves)	0E4CAF (7B = Sea Captain's Hat)
-	16B77E (48 = Angel Wings)		    16B793 (5A = Boots of Levitation)
+	16B77E (48 = Angel Wings)		16B793 (5A = Boots of Levitation)
 
 -----------------------------------------------------------------------------------------
 
@@ -664,21 +661,21 @@ The movement-based artifacts are named at the following addresses:
 
 The artifacts which provide bonuses to skills are specified at the following addresses:
 
-   NECROMANCY		   RESISTANCE		     ARCHERY		    EAGLE EYE
------------------	-----------------	-----------------	-----------------
-0E3FAE (Amulet)		0E49B9 (Garniture)	0E443D (Bow)		0E46FD (Bird)
-0E3FF4 (Cowl)		0E49FF (Surcoat)	0E4483 (Bowstring)	0E4743 (Watchman)
-0E403A (Boots)		0E4A46 (Boots)		0E44CA (Arrows)		0E478A (Emblem)
------------------	-----------------	-----------------	-----------------
-0E3FE7 (05% Bonus)	0E49F2 (05% Bonus)	0E4476 (05% Bonus)	0E4736 (05% Bonus)
-0E402D (10% Bonus)	0E4A38 (10% Bonus)	0E44BC (10% Bonus)	0E477C (10% Bonus)
-0E4074 (15% Bonus)	0E4A80 (15% Bonus)	0E4504 (15% Bonus)	0E47C4 (15% Bonus)
+        NECROMANCY		   RESISTANCE		     ARCHERY		    EAGLE EYE
+        -----------------	-----------------	-----------------	-----------------
+        0E3FAE (Amulet)		0E49B9 (Garniture)	0E443D (Bow)		0E46FD (Bird)
+        0E3FF4 (Cowl)		0E49FF (Surcoat)	0E4483 (Bowstring)	0E4743 (Watchman)
+        0E403A (Boots)		0E4A46 (Boots)		0E44CA (Arrows)		0E478A (Emblem)
+        -----------------	-----------------	-----------------	-----------------
+        0E3FE7 (05% Bonus)	0E49F2 (05% Bonus)	0E4476 (05% Bonus)	0E4736 (05% Bonus)
+        0E402D (10% Bonus)	0E4A38 (10% Bonus)	0E44BC (10% Bonus)	0E477C (10% Bonus)
+        0E4074 (15% Bonus)	0E4A80 (15% Bonus)	0E4504 (15% Bonus)	0E47C4 (15% Bonus)
 
 The percentages above are DWORD pointers, which we may be familiar with from having dealt
 with them in the skill specialty code. Other options we have for these values include:
 
-05% - E4 AE 63 00	10% - D0 B8 63 00	15% - 28 EB 63 00	20% - B4 B8 63 00
-25% - 9C 05 64 00	30% - 24 EB 63 00	40% - B0 B8 63 00	50% - CC B8 63 00
+        05% - E4 AE 63 00	10% - D0 B8 63 00	15% - 28 EB 63 00	20% - B4 B8 63 00
+        25% - 9C 05 64 00	30% - 24 EB 63 00	40% - B0 B8 63 00	50% - CC B8 63 00
 
 (Or we can just make our own floating value as we learned in the "Skills" section above)
 
@@ -731,143 +728,143 @@ In fact, scrapping it will free up quite a bit of space: 0E47CB~EF & 0E4689~EF
 
 With that out of the way, let's get to optimizing!
 
-    ---------	-------------------------------------------------------------------------
-    0E4430~82	; ARCHERY ARTIFACTS
-    ---------	-------------------------------------------------------------------------
-    6A 3C		push 3C			; 3C = Elven Cherrywood Bow
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 2750FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E4449		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Archery skill
-    D8 05 E4EA6300	fadd [63EAE4]		; Archery + 05%
-    D9 5D FC	fstp [ebp-04]		; store Archery skill
+	---------	-------------------------------------------------------------------------
+	0E4430~82	; ARCHERY ARTIFACTS
+	---------	-------------------------------------------------------------------------
+	6A 3C		push 3C			; 3C = Elven Cherrywood Bow
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 2750FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E4449		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Archery skill
+	D8 05 E4EA6300	fadd [63EAE4]		; Archery + 05%
+	D9 5D FC	fstp [ebp-04]		; store Archery skill
 
-    6A 3D		push 3D			; 3D = Unicorn Mane Bowstring
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 0E50FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E4462		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Archery skill
-    D8 05 D0B86300	fadd [63B8D0]		; Archery + 10%
-    D9 5D FC	fstp [ebp-04]		; store Archery skill
+	6A 3D		push 3D			; 3D = Unicorn Mane Bowstring
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 0E50FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E4462		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Archery skill
+	D8 05 D0B86300	fadd [63B8D0]		; Archery + 10%
+	D9 5D FC	fstp [ebp-04]		; store Archery skill
 
-    6A 3E		push 3E			; 3E = Angel Feather Arrows
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 F54FFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E447B		; if no -> (cleanup)
-    D9 45 FC	fld [ebp-04]		; load Archery skill
-    D8 05 28EB6300	fadd [63EB28]		; Archery + 15%
-    D9 5D FC	fstp [ebp-04]		; store Archery skill
+	6A 3E		push 3E			; 3E = Angel Feather Arrows
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 F54FFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E447B		; if no -> (cleanup)
+	D9 45 FC	fld [ebp-04]		; load Archery skill
+	D8 05 28EB6300	fadd [63EB28]		; Archery + 15%
+	D9 5D FC	fstp [ebp-04]		; store Archery skill
 
-    D9 45 FC	fld [ebp-04]		; (cleanup)
-    5F		pop edi			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C3		ret			; return (0E4484~51F is free space)
+	D9 45 FC	fld [ebp-04]		; (cleanup)
+	5F		pop edi			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C3		ret			; return (0E4484~51F is free space)
 
-    0E43F0 > 87 00	; update jump to cleanup (artifacts will require skill)
+	0E43F0 > 87 00	; update jump to cleanup (artifacts will require skill)
 
-    ---------	-------------------------------------------------------------------------
-    0E49AC~FF	; RESISTANCE ARTIFACTS
-    ---------	-------------------------------------------------------------------------
-    EB 05		jmp 4E49B3		; -> first artifact check
-    E9 D4000000	jmp 4E4A87		; (no skill) -> (cleanup)
+	---------	-------------------------------------------------------------------------
+	0E49AC~FF	; RESISTANCE ARTIFACTS
+	---------	-------------------------------------------------------------------------
+	EB 05		jmp 4E49B3		; -> first artifact check
+	E9 D4000000	jmp 4E4A87		; (no skill) -> (cleanup)
 
-    6A 39		push 39			; 39 = Garniture of Interference
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 A44AFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E49CC		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Resistance skill
-    D8 05 E4EA6300	fadd [63EAE4]		; Resistance +05%
-    D9 5D FC	fstp [ebp-04]		; store Resistance skill
+	6A 39		push 39			; 39 = Garniture of Interference
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 A44AFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E49CC		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Resistance skill
+	D8 05 E4EA6300	fadd [63EAE4]		; Resistance +05%
+	D9 5D FC	fstp [ebp-04]		; store Resistance skill
 
-    6A 3A		push 3A			; 3A = Surcoat of Counterpoise
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 8B4AFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E49E5		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Resistance skill
-    D8 05 D0B86300	fadd [63B8D0]		; Resistance +10%
-    D9 5D FC	fstp [ebp-04]		; store Resistance skill
+	6A 3A		push 3A			; 3A = Surcoat of Counterpoise
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 8B4AFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E49E5		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Resistance skill
+	D8 05 D0B86300	fadd [63B8D0]		; Resistance +10%
+	D9 5D FC	fstp [ebp-04]		; store Resistance skill
 
-    6A 3B		push 3B			; 3B = Boots of Polarity
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 724AFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E49FE		; if no -> [continue]
-    D9 45 FC	fld [ebp-04]		; load Resistance skill
-    D8 05 28EB6300	fadd [63EB28]		; Resistance +15%
-    D9 5D FC	fstp [ebp-04]		; store Resistance skill
-    EB AE		jmp 4E49AE		; -> [continue] (0E4A00~86 is free space)
+	6A 3B		push 3B			; 3B = Boots of Polarity
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 724AFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E49FE		; if no -> [continue]
+	D9 45 FC	fld [ebp-04]		; load Resistance skill
+	D8 05 28EB6300	fadd [63EB28]		; Resistance +15%
+	D9 5D FC	fstp [ebp-04]		; store Resistance skill
+	EB AE		jmp 4E49AE		; -> [continue] (0E4A00~86 is free space)
 
-    0E496F > 3E	; Resistance artifacts require skill to work
+	0E496F > 3E	; Resistance artifacts require skill to work
 
-    ----------	-------------------------------------------------------------------------
-    0E46F0~73F	; LEARNING/EAGLE EYE ARTIFACTS
-    ----------	-------------------------------------------------------------------------
-    6A 3F		push 3F			; 3F = Bird of Perception
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 674DFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E4709		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Learning skill
-    D8 05 E4EA6300	fadd [63EAE4]		; Learning +05%
-    D9 5D FC	fstp [ebp-04]		; store Learning skill
+	----------	-------------------------------------------------------------------------
+	0E46F0~73F	; LEARNING/EAGLE EYE ARTIFACTS
+	----------	-------------------------------------------------------------------------
+	6A 3F		push 3F			; 3F = Bird of Perception
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 674DFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E4709		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Learning skill
+	D8 05 E4EA6300	fadd [63EAE4]		; Learning +05%
+	D9 5D FC	fstp [ebp-04]		; store Learning skill
 
-    6A 40		push 40			; 40 = Stoic Watchman
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 4E4DFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E4722		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Learning skill
-    D8 05 D0B86300	fadd [63B8D0]		; Learning +10%
-    D9 5D FC	fstp [ebp-04]		; store Learning skill
+	6A 40		push 40			; 40 = Stoic Watchman
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 4E4DFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E4722		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Learning skill
+	D8 05 D0B86300	fadd [63B8D0]		; Learning +10%
+	D9 5D FC	fstp [ebp-04]		; store Learning skill
 
-    6A 41		push 41			; 41 = Emblem of Cognizance
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 354DFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E473B		; if no -> [continue]
-    D9 45 FC	fld [ebp-04]		; load Learning skill
-    D8 05 28EB6300	fadd [63EB28]		; Learning +15%
-    D9 5D FC	fstp [ebp-04]		; store Learning skill
-    E9 8B000000(*)	jmp 4E47CB		; -> [continue] (0E4740~CA is free space)
+	6A 41		push 41			; 41 = Emblem of Cognizance
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 354DFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E473B		; if no -> [continue]
+	D9 45 FC	fld [ebp-04]		; load Learning skill
+	D8 05 28EB6300	fadd [63EB28]		; Learning +15%
+	D9 5D FC	fstp [ebp-04]		; store Learning skill
+	E9 8B000000(*)	jmp 4E47CB		; -> [continue] (0E4740~CA is free space)
 
-    	    (*For Learning artifacts, replace this instruction with C3)
+		    (*For Learning artifacts, replace this instruction with C3)
 
-    ---------	-------------------------------------------------------------------------
-    0E3FA2~F1	; NECROMANCY ARTIFACTS
-    ---------	-------------------------------------------------------------------------
-    6A 38		push 38			; 38 = Dead Man's Boots
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 B554FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E3FBB		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Necromancy skill
-    D8 05 E4EA6300	fadd [63EAE4]		; Necromancy +05%
-    D9 5D FC	fstp [ebp-04]		; store Necromancy skill
+	---------	-------------------------------------------------------------------------
+	0E3FA2~F1	; NECROMANCY ARTIFACTS
+	---------	-------------------------------------------------------------------------
+	6A 38		push 38			; 38 = Dead Man's Boots
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 B554FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E3FBB		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Necromancy skill
+	D8 05 E4EA6300	fadd [63EAE4]		; Necromancy +05%
+	D9 5D FC	fstp [ebp-04]		; store Necromancy skill
 
-    6A 37		push 37			; 37 = Vampire's Cowl
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 9C54FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E3FD4		; if no -> next check
-    D9 45 FC	fld [ebp-04]		; load Necromancy skill
-    D8 05 D0B86300	fadd [63B8D0]		; Necromancy +10%
-    D9 5D FC	fstp [ebp-04]		; store Necromancy skill
+	6A 37		push 37			; 37 = Vampire's Cowl
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 9C54FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E3FD4		; if no -> next check
+	D9 45 FC	fld [ebp-04]		; load Necromancy skill
+	D8 05 D0B86300	fadd [63B8D0]		; Necromancy +10%
+	D9 5D FC	fstp [ebp-04]		; store Necromancy skill
 
-    6A 36		push 36			; 36 = Death's Head Pendant
-    8B CF		mov ecx,edi		; ECX = hero data
-    E8 8354FFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 4E3FED		; if no -> [continue]
-    D9 45 FC	fld [ebp-04]		; load Necromancy skill
-    D8 05 28EB6300	fadd [63EB28]		; Necromancy +15%
-    D9 5D FC	fstp [ebp-04]		; store Necromancy skill
-    E9 89000000	jmp 4E407B		; -> [continue] (0E3FF2~407A is free space)
+	6A 36		push 36			; 36 = Death's Head Pendant
+	8B CF		mov ecx,edi		; ECX = hero data
+	E8 8354FFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 4E3FED		; if no -> [continue]
+	D9 45 FC	fld [ebp-04]		; load Necromancy skill
+	D8 05 28EB6300	fadd [63EB28]		; Necromancy +15%
+	D9 5D FC	fstp [ebp-04]		; store Necromancy skill
+	E9 89000000	jmp 4E407B		; -> [continue] (0E3FF2~407A is free space)
 
 -----------------------------------------------------------------------------------------
 
@@ -929,18 +926,18 @@ signed pushes (6A XX); remember than in order to name an artifact with an ID hig
 get a little cheeky with it like with the below example where we move the mind immunity
 effect of the Badge of Courage to Titan's Thunder:
 
-    --------	-------------------------------------------------------------------------
-    04A462~79	; O-Mind to Titan's Thunder
-    --------	-------------------------------------------------------------------------
-    75 31		jne 44A495		; -> [immunity] (moved jump)
-    85 DB		test ebx,ebx		; (unchanged)
-    74 1F		je 44A487		; ""
-    68 87000000	push 87			; 87 = Titan's Thunder
-    8B CB		mov ecx,ebx		; ECX = hero data
-    E8 ECEF0800	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0C		je 44A484		; if no -> [continue]
-    EB 1B		jmp 44A495		; -> [immunity] (04A47A~83 is free)
+	--------	-------------------------------------------------------------------------
+	04A462~79	; O-Mind to Titan's Thunder
+	--------	-------------------------------------------------------------------------
+	75 31		jne 44A495		; -> [immunity] (moved jump)
+	85 DB		test ebx,ebx		; (unchanged)
+	74 1F		je 44A487		; ""
+	68 87000000	push 87			; 87 = Titan's Thunder
+	8B CB		mov ecx,ebx		; ECX = hero data
+	E8 ECEF0800	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0C		je 44A484		; if no -> [continue]
+	EB 1B		jmp 44A495		; -> [immunity] (04A47A~83 is free)
 
 Essentially, this edit takes advantage of the fact that the artifact spell immunity block
 contains a lot of the same code copy/pasted for each check, and so we can free up space
@@ -1027,47 +1024,47 @@ inconsequential for higher-level ones, which is why the First Aid overhaul we sa
 multiplied its effect by the unit's level. And that's pretty much the exact same thing
 that we'll be doing with the three Elixir of Life components in the code below:
 
-    ---------	-----------------------------------------------------------------------
-    0E666D~D8	; HEALTH BONUS ARTIFACTS
-    ---------	-----------------------------------------------------------------------
-    31 DB		xor ebx,ebx		; EBX = 0
-    8B 0D B0476700	mov ecx,[6747B0]	; ECX = unit index
-    8B 7D 08	mov edi,[ebp+08]	; EDI = unit ID
-    6B FF 74	imul edi,74		; EDI = data range
-    F6 44 39 10 10	test byte[ecx+edi+10],10; is unit living?
-    74 59		je 4E66DB		; if no -> [exit]
+	---------	-----------------------------------------------------------------------
+	0E666D~D8	; HEALTH BONUS ARTIFACTS
+	---------	-----------------------------------------------------------------------
+	31 DB		xor ebx,ebx		; EBX = 0
+	8B 0D B0476700	mov ecx,[6747B0]	; ECX = unit index
+	8B 7D 08	mov edi,[ebp+08]	; EDI = unit ID
+	6B FF 74	imul edi,74		; EDI = data range
+	F6 44 39 10 10	test byte[ecx+edi+10],10; is unit living?
+	74 59		je 4E66DB		; if no -> [exit]
 
-    6A 5E		push 5E			; 5E = Ring of Vitality
-    8B 4D FC	mov ecx,[ebp-04]	; ECX = hero data
-    E8 D42DFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 0B		je 4E669B		; if no -> next check
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    03 5C 3A 04	add ebx,[edx+edi+04]	; Health bonus (EBX) + unit's level (0~6)
-    43		inc ebx			; EBX +1
+	6A 5E		push 5E			; 5E = Ring of Vitality
+	8B 4D FC	mov ecx,[ebp-04]	; ECX = hero data
+	E8 D42DFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 0B		je 4E669B		; if no -> next check
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	03 5C 3A 04	add ebx,[edx+edi+04]	; Health bonus (EBX) + unit's level (0~6)
+	43		inc ebx			; EBX +1
 
-    6A 5F		push 5F			; 5F = Ring of Life
-    8B 4D FC	mov ecx,[ebp-04]	; ECX = hero data
-    E8 BB2DFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 10		je 4E66B9		; if no -> next check
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    8B 54 3A 04	mov edx,[edx+edi+04]	; EDX = unit's level (0~6)
-    42		inc edx			; EDX +1
-    6B D2 02	imul edx,edx,02		; EDX *2
-    01 D3		add ebx,edx		; add EDX to health bonus (EBX)
+	6A 5F		push 5F			; 5F = Ring of Life
+	8B 4D FC	mov ecx,[ebp-04]	; ECX = hero data
+	E8 BB2DFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 10		je 4E66B9		; if no -> next check
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	8B 54 3A 04	mov edx,[edx+edi+04]	; EDX = unit's level (0~6)
+	42		inc edx			; EDX +1
+	6B D2 02	imul edx,edx,02		; EDX *2
+	01 D3		add ebx,edx		; add EDX to health bonus (EBX)
 
-    6A 60		push 60			; 60 = Vial of Troll's Blood
-    8B 4D FC	mov ecx,[ebp-04]	; ECX = hero data
-    E8 9D2DFFFF	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 10		je 4E66D7		; if no -> [exit]
-    8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
-    8B 54 3A 04	mov edx,[edx+edi+04]	; EDX = unit's level (0~6)
-    42		inc edx			; EDX +1
-    6B D2 03	imul edx,03		; EDX *3
-    01 D3		add ebx,edx		; add EDX to health bonus (EBX)
-    EB 44		jmp 4E671D		; -> [exit] (0E66D9~71D is free space)
+	6A 60		push 60			; 60 = Vial of Troll's Blood
+	8B 4D FC	mov ecx,[ebp-04]	; ECX = hero data
+	E8 9D2DFFFF	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 10		je 4E66D7		; if no -> [exit]
+	8B 15 B0476700	mov edx,[6747B0]	; EDX = unit index
+	8B 54 3A 04	mov edx,[edx+edi+04]	; EDX = unit's level (0~6)
+	42		inc edx			; EDX +1
+	6B D2 03	imul edx,03		; EDX *3
+	01 D3		add ebx,edx		; add EDX to health bonus (EBX)
+	EB 44		jmp 4E671D		; -> [exit] (0E66D9~71D is free space)
 
 I opted not to have an additional health boost for the Elixir (though this is certainly
 easy enough to change by tweaking the above code) since it already adds in regeneration.
@@ -1155,31 +1152,31 @@ the below code hijacks it for Armageddon's Blade. Since we'll need to add some m
 to temporarily flag our own units with Armageddon immunity, this will end up running into
 the Armor of the Damned spellcast code - this example thus assumes you're trashing both.
 
-    064FC9 > 39	; extends existing jump to exit
-    064FE3 > 1F	; ""
+ 	064FC9 > 39	; extends existing jump to exit
+	064FE3 > 1F	; ""
 
-    ------		-------------------------------------------------------------------------
-    064FF2		; ARMAGEDDON'S BLADE CASTS ARMAGEDDON ON FOES AT THE START OF COMBAT
-    ------		-------------------------------------------------------------------------
-    FF 05 013B6700	inc [673B01]		; set "temp" flag (for Armageddon immunity)
-    E8 41B11300	call 5A013E		; -> Armageddon immunity routine
-    FF 0D 013B6700	dec [673B01]		; clear "temp" flag
-    E9 B7000000	jmp 4650BF		; -> [exit]
+	------		-------------------------------------------------------------------------
+	064FF2		; ARMAGEDDON'S BLADE CASTS ARMAGEDDON ON FOES AT THE START OF COMBAT
+	------		-------------------------------------------------------------------------
+	FF 05 013B6700	inc [673B01]		; set "temp" flag (for Armageddon immunity)
+	E8 41B11300	call 5A013E		; -> Armageddon immunity routine
+	FF 0D 013B6700	dec [673B01]		; clear "temp" flag
+	E9 B7000000	jmp 4650BF		; -> [exit]
 
-    ------		-------------------------------------------------------------------------
-    1A8700		; (ARMAGEDDON IMMUNITY ROUTINE NOW USED ONLY FOR THIS PURPOSE)
-    ------		-------------------------------------------------------------------------
-    E9 03C9EBFF	jmp 465008		; -> free space (angelic alliance/damned armor)
-    90		nop			; -
+	------		-------------------------------------------------------------------------
+	1A8700		; (ARMAGEDDON IMMUNITY ROUTINE NOW USED ONLY FOR THIS PURPOSE)
+	------		-------------------------------------------------------------------------
+	E9 03C9EBFF	jmp 465008		; -> free space (angelic alliance/damned armor)
+	90		nop			; -
 
-    ---------	-------------------------------------------------------------------------
-    065008~1F	; (EXPANDED SPACE - OVERWRITES ANGELIC ALLIANCE/DAMNED ARMOR SPELLS)
-    ---------	-------------------------------------------------------------------------
-    A0 013B6700	mov al,[673B01]		; AL = "temp" flag
-    84 C0		test al,al		; are we immune?
-    0F84 8D381400	je 5A88A2		; if no -> [exit]
-    D9 05 64AC6300	fld dword ptr [63AC64]	; immunity (load "0" value)
-    E9 E6361400	jmp 5A8706		; -> [exit] (065020~BE is free space)
+	---------	-------------------------------------------------------------------------
+	065008~1F	; (EXPANDED SPACE - OVERWRITES ANGELIC ALLIANCE/DAMNED ARMOR SPELLS)
+	---------	-------------------------------------------------------------------------
+	A0 013B6700	mov al,[673B01]		; AL = "temp" flag
+	84 C0		test al,al		; are we immune?
+	0F84 8D381400	je 5A88A2		; if no -> [exit]
+	D9 05 64AC6300	fld dword ptr [63AC64]	; immunity (load "0" value)
+	E9 E6361400	jmp 5A8706		; -> [exit] (065020~BE is free space)
 
 So far as the blade teaching Armageddon, removing it (so far as I know, anyway) will be a
 package deal along with removing the spell from Titan's Thunder (see below).
@@ -1212,20 +1209,20 @@ Changing the effects of the legion statue artifacts requires a bit of work, but 
 result is complete control over how they operate. First off, we'll need some patches to
 allow us to change the growth bonuses (XX) for each component:
 
-    	 Legs of Legion					 Loins of Legion
-    -----------------------------------------	--------------------------------------
-    1BFE37 > 84 C0 74 06 83 C7 XX 90 90 90		1BFE74 > 84 C0 74 06 83 C7 XX 90 90 90
-    1BFE53 > 84 C0 74 07 83 C7 XX 90 90 90 90	1BFE90 > 84 C0 74 04 83 C7 XX 90
+		 Legs of Legion					 Loins of Legion
+	-----------------------------------------	--------------------------------------
+	1BFE37 > 84 C0 74 06 83 C7 XX 90 90 90		1BFE74 > 84 C0 74 06 83 C7 XX 90 90 90
+	1BFE53 > 84 C0 74 07 83 C7 XX 90 90 90 90	1BFE90 > 84 C0 74 04 83 C7 XX 90
 
-    	 Torso of Legion				 Arms of Legion
-    -----------------------------------------	--------------------------------------
-    1BFEAE > 84 C0 74 06 83 C7 XX 90 90 90		1BFEE7 > 84 C0 74 05 83 C7 XX 90 90
-    1BFEC6 > 84 C0 74 07 83 C7 XX 90 90 90 90	1BFEFE > 84 C0 74 04 83 C7 XX 90
+		 Torso of Legion				 Arms of Legion
+	-----------------------------------------	--------------------------------------
+	1BFEAE > 84 C0 74 06 83 C7 XX 90 90 90		1BFEE7 > 84 C0 74 05 83 C7 XX 90 90
+	1BFEC6 > 84 C0 74 07 83 C7 XX 90 90 90 90	1BFEFE > 84 C0 74 04 83 C7 XX 90
 
-    	 Head of Legion			 (Artifact IDs are named at these addresses)
-    -----------------------------		----------------------------------------------
-    1BFF1C > 84 C0 74 03 83 C7 XX		1BFE31 (Legs)	1BFEE1 (Arms)	1BFF16 (Head)
-    1BFF31 > 84 C0 74 03 83 C7 XX		1BFE6E (Ass)	1BFEA8 (Torso)	-------------
+		 Head of Legion			 (Artifact IDs are named at these addresses)
+	-----------------------------		----------------------------------------------
+	1BFF1C > 84 C0 74 03 83 C7 XX		1BFE31 (Legs)	1BFEE1 (Arms)	1BFF16 (Head)
+	1BFF31 > 84 C0 74 03 83 C7 XX		1BFE6E (Ass)	1BFEA8 (Torso)	-------------
 
 ----------------------------------------------------------------------------------------
 
@@ -1280,31 +1277,31 @@ just created a lot of a few entries back. The below example uses space from the 
 Alliance/Armor of the Damned code block, but can be placed anywhere you want to - again,
 all that you'll need to update are the long jumps/calls and the DWORD pointer above.
 
-    ---------	-------------------------------------------------------------------------
-    065020~5B	; STATUE OF LEGION TO ACT LIKE COMPONENTS (OVERWRITES AA/DAMNED ARMOR)
-    ---------	-------------------------------------------------------------------------
-    85 C9		test ecx,ecx		; ???
-    74 11		je 465035		; ???
-    68 85000000	push 85			; 85 = Head of Legion
-    E8 32440700	call 4D9460		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 465035 		; if no -> ???
-    83 C7 XX	add edi,XX		; XX = growth bonus
-    8B 4D 08	mov ecx,[ebp+08]	; ???
-    85 C9		test ecx,ecx		; ???
-    0F84 F8AE1500	je 5BFF38		; ???
-    68 85000000	push 85			; 85 = Head of Legion
-    E8 16440700	call 4D9460 		; check for artifact
-    84 C0		test al,al		; do we have it?
-    74 03		je 465051		; if no -> (cleanup)
-    83 C7 XX	add edi,XX		; XX = growth bonus
-    8B C7		mov eax,edi		; (cleanup)
-    5F		pop edi			; ""
-    5E		pop esi			; ""
-    5B		pop ebx			; ""
-    8B E5		mov esp,ebp		; ""
-    5D		pop ebp			; ""
-    C2 04 00	ret 0004		; return (06505C~BE is free space)
+	---------	-------------------------------------------------------------------------
+	065020~5B	; STATUE OF LEGION TO ACT LIKE COMPONENTS (OVERWRITES AA/DAMNED ARMOR)
+	---------	-------------------------------------------------------------------------
+	85 C9		test ecx,ecx		; ???
+	74 11		je 465035		; ???
+	68 85000000	push 85			; 85 = Head of Legion
+	E8 32440700	call 4D9460		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 465035 		; if no -> ???
+	83 C7 XX	add edi,XX		; XX = growth bonus
+	8B 4D 08	mov ecx,[ebp+08]	; ???
+	85 C9		test ecx,ecx		; ???
+	0F84 F8AE1500	je 5BFF38		; ???
+	68 85000000	push 85			; 85 = Head of Legion
+	E8 16440700	call 4D9460 		; check for artifact
+	84 C0		test al,al		; do we have it?
+	74 03		je 465051		; if no -> (cleanup)
+	83 C7 XX	add edi,XX		; XX = growth bonus
+	8B C7		mov eax,edi		; (cleanup)
+	5F		pop edi			; ""
+	5E		pop esi			; ""
+	5B		pop ebx			; ""
+	8B E5		mov esp,ebp		; ""
+	5D		pop ebp			; ""
+	C2 04 00	ret 0004		; return (06505C~BE is free space)
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -1315,48 +1312,48 @@ artifact which is inappropriate/useless for your starting faction. Specifically,
 the Amulet of the Undertaker on any faction other than Necropolis and the Ring of Vitality or any morale
 artifact for either Necropolis or Conflux and replacing them with something more appropriate.
 
-    ------		-------------------------------------------------------------------------
-    0C0058		; PREVENT STARTING ARTIFACTS THAT ARE INAPPROPRIATE FOR YOUR FACTION
-    ------		-------------------------------------------------------------------------
-    E9 9F520200 	jmp 4E52FC		; -> free space (Armageddon's Blade master cast)
+	------		-------------------------------------------------------------------------
+	0C0058		; PREVENT STARTING ARTIFACTS THAT ARE INAPPROPRIATE FOR YOUR FACTION
+	------		-------------------------------------------------------------------------
+	E9 9F520200 	jmp 4E52FC		; -> free space (Armageddon's Blade master cast)
 
-    ----------	-------------------------------------------------------------------------
-    0E52FC~342	; (EXPANDED SPACE - OVERWRITES ARMAGEDDON'S BLADE MASTER CAST)
-    ----------	-------------------------------------------------------------------------
-    8A 4E 30	mov cl,[esi+30]		; CL = starting hero class
-    D0 E9		shr cl,1		; CL = starting faction
+	----------	-------------------------------------------------------------------------
+	0E52FC~342	; (EXPANDED SPACE - OVERWRITES ARMAGEDDON'S BLADE MASTER CAST)
+	----------	-------------------------------------------------------------------------
+	8A 4E 30	mov cl,[esi+30]		; CL = starting hero class
+	D0 E9		shr cl,1		; CL = starting faction
 
-    80 F9 04	cmp cl,04		; Necropolis?
-    75 14		jne 4E531A		; if no -> Conflux?
-    83 F8 31	cmp eax,31		; Badge of Courage? (if yes -> replace)
-    74 0A		je 4E5315		; ""
-    83 F8 32	cmp eax,32		; Crest of Valor? (if yes -> replace)
-    74 05		je 4E5315		; ""
-    83 F8 5e	cmp eax,5E		; Ring of Vitality?
-    75 24		jne 4E5339		; if no -> (displaced code)
-    6A 36		push 36			; replace with Undertaker's Amulet
-    58		pop eax			; ""
-    EB 1F		jmp 4E5339		; -> (displaced code)
+	80 F9 04	cmp cl,04		; Necropolis?
+	75 14		jne 4E531A		; if no -> Conflux?
+	83 F8 31	cmp eax,31		; Badge of Courage? (if yes -> replace)
+	74 0A		je 4E5315		; ""
+	83 F8 32	cmp eax,32		; Crest of Valor? (if yes -> replace)
+	74 05		je 4E5315		; ""
+	83 F8 5e	cmp eax,5E		; Ring of Vitality?
+	75 24		jne 4E5339		; if no -> (displaced code)
+	6A 36		push 36			; replace with Undertaker's Amulet
+	58		pop eax			; ""
+	EB 1F		jmp 4E5339		; -> (displaced code)
 
-    80 F9 08	cmp cl,08		; Conflux?
-    75 12		jne 4E5331		; if no -> Dead Man's Boots?
-    83 F8 31	cmp eax,31		; Badge of Courage? (if yes -> replace)
-    74 0A		je 4E532E		; ""
-    83 F8 32	cmp eax,32		; Crest of Valor? (if yes -> replace)
-    74 05		je 4E532E		; ""
-    83 F8 5E	cmp eax,5E		; Ring of Vitality?
-    75 03		jne 4E5331		; if no -> Dead Man's Boots?
-    6A 2E		push 2E			; replace with Clover of Fortune
-    58		pop eax			; ""
+	80 F9 08	cmp cl,08		; Conflux?
+	75 12		jne 4E5331		; if no -> Dead Man's Boots?
+	83 F8 31	cmp eax,31		; Badge of Courage? (if yes -> replace)
+	74 0A		je 4E532E		; ""
+	83 F8 32	cmp eax,32		; Crest of Valor? (if yes -> replace)
+	74 05		je 4E532E		; ""
+	83 F8 5E	cmp eax,5E		; Ring of Vitality?
+	75 03		jne 4E5331		; if no -> Dead Man's Boots?
+	6A 2E		push 2E			; replace with Clover of Fortune
+	58		pop eax			; ""
 
-    83 F8 36	cmp eax,36		; Undertaker's Amulet?
-    75 03		jne 4E5339		; if no -> (displaced code)
-    6A 2E		push 2E			; replace with Clover of Fortune
-    58		pop eax			; ""
+	83 F8 36	cmp eax,36		; Undertaker's Amulet?
+	75 03		jne 4E5339		; if no -> (displaced code)
+	6A 2E		push 2E			; replace with Clover of Fortune
+	58		pop eax			; ""
 
-    6A 01		push 01			; (displaced code)
-    8D 4D E8	lea ecx,[ebp-18]	; ""
-    E9 1AADFDFF	jmp 4C005D		; return
+	6A 01		push 01			; (displaced code)
+	8D 4D E8	lea ecx,[ebp-18]	; ""
+	E9 1AADFDFF	jmp 4C005D		; return
 
 One warning regarding the code above is that it's a hard override and thus won't care if it's providing
 an artifact that has been banned on the selected map for whatever reason. If you choose to modify which

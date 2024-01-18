@@ -77,27 +77,25 @@ unit rewards to any bank that originally doesn't have one by editing the below a
 add up to four types of guards (total) for banks which only have one by moving "FF FF FF FF" ahead by 4,
 8, or 12 bytes and then specifying more IDs (4 bytes each) in the resulting space.
 
-	CREATURE BANK		FIGHT			REWARD
-	----------------------------------------------------------------
-	Cyclops Stockpile	2702A0 (Cyclopses)	27037C (-)
-	Dwarven Treasury	2702B4 (Dwarves)	270380 (-)
-	Griffin Conservatory	2702C8 (Griffins)	270384 (Angels)
-	Imp Cache		2702DC (Imps)		270388 (-)
-	Medusa Store		2702F0 (Medusas)	27038C (-)
-	Naga Bank		270304 (Nagas)		270390 (-)
-	Dragonfly Hive		270318 (Dragonflies)	270394 (Wyverns)
-	Shipwreck		27032C (Wights)		270398 (-)
-	Derelict Ship		270340 (Water Dudes)	27039C (-)
-
-	Crypt			270354 (Skeletons)	2703A0 (-)
-	""			270358 (Walking Dead)	------
-	""			27035C (Wights)		------
-	""			270360 (Vampires)	------
-
-	Dragon Utopia		270368 (Green Dragons)	2703A4 (-)
-	""			27036C (Red Dragons)	------
-	""			270370 (Gold Dragons)	------
-	""			270374 (Black Dragons)	------
+| CREATURE BANK       | FIGHT              | REWARD      |
+|--------------------|--------------------|-------------|
+| Cyclops Stockpile  | 2702A0 (Cyclopses) | 27037C (-) |
+| Dwarven Treasury   | 2702B4 (Dwarves)   | 270380 (-) |
+| Griffin Conservatory | 2702C8 (Griffins) | 270384 (Angels) |
+| Imp Cache          | 2702DC (Imps)      | 270388 (-) |
+| Medusa Store       | 2702F0 (Medusas)   | 27038C (-) |
+| Naga Bank          | 270304 (Nagas)     | 270390 (-) |
+| Dragonfly Hive     | 270318 (Dragonflies) | 270394 (Wyverns) |
+| Shipwreck          | 27032C (Wights)    | 270398 (-) |
+| Derelict Ship      | 270340 (Water Dudes) | 27039C (-) |
+| Crypt              | 270354 (Skeletons) | 2703A0 (-) |
+|                    | 270358 (Walking Dead) | ------ |
+|                    | 27035C (Wights)    | ------ |
+|                    | 270360 (Vampires)  | ------ |
+| Dragon Utopia      | 270368 (Green Dragons) | 2703A4 (-) |
+|                    | 27036C (Red Dragons) | ------ |
+|                    | 270370 (Gold Dragons) | ------ |
+|                    | 270374 (Black Dragons) | ------ |
 
      If editing the units in a bank, be sure to update the AI column [total AI value of units/50])
 
@@ -114,37 +112,38 @@ Disappointingly, Pyramids contain no actual mummies. Unfortunately, the unit ID 
 as we learned earlier will require more space for a long push. Thankfully, there's a completely needless
 luck penalty for visiting an already-looted Pyramid just nearby that we can axe to make that space:
 
-      ------		-------------------------------------------------------------------------
-      0A3FA6		; PYRAMIDS TO HAVE MUMMIES INSTEAD OF DIAMOND GOLEMS
-      ------		-------------------------------------------------------------------------
-      EB DC		jmp 4A3F84		; -> free space (empty Pyramid luck penalty)
+
+	------		-------------------------------------------------------------------------
+	0A3FA6		; PYRAMIDS TO HAVE MUMMIES INSTEAD OF DIAMOND GOLEMS
+	------		-------------------------------------------------------------------------
+	EB DC		jmp 4A3F84		; -> free space (empty Pyramid luck penalty)
+
+	------		-------------------------------------------------------------------------
+	0A3F82~8F	; (EXPANDED SPACE - OVERWRITES EMPTY PYRAMID LUCK PENALTY)
+	------		-------------------------------------------------------------------------
+	EB 0C		jmp 4A3F90		; frees space: 0A3F84~F
+	68 8D000000	push 8D			; 8D = Mummies
+	EB 1D		jmp 4A3FA8		; -> [continue]
+	90 90 90 90 90	nop			; -
       
-      ------		-------------------------------------------------------------------------
-      0A3F82~8F	; (EXPANDED SPACE - OVERWRITES EMPTY PYRAMID LUCK PENALTY)
-      ------		-------------------------------------------------------------------------
-      EB 0C		jmp 4A3F90		; frees space: 0A3F84~F
-      68 8D000000	push 8D			; 8D = Mummies
-      EB 1D		jmp 4A3FA8		; -> [continue]
-      90 90 90 90 90	nop			; -
+Finally, a fifth-level spell is a rather odd choice of reward. There's a lot of options we can go with
+here, but in the end I decided on cold, hard cash. This will overwrite/invalidate the earlier edit for
+Pyramids to skip checking the visiting hero's Wisdom and free up a lot of space in the process.
       
-      Finally, a fifth-level spell is a rather odd choice of reward. There's a lot of options we can go with
-      here, but in the end I decided on cold, hard cash. This will overwrite/invalidate the earlier edit for
-      Pyramids to skip checking the visiting hero's Wisdom and free up a lot of space in the process.
-      
-      ---------	-------------------------------------------------------------------------
-      0A4024~4B	; PYRAMIDS TO GOLD REWARD
-      ---------	-------------------------------------------------------------------------
-      09 D1		or ecx,edx		 ; (shifted code)
-      89 08		mov [eax],ecx		 ; ""
-      0FBE 47 22	movsx eax,[edi+22]	 ; EAX = visiting hero's owner
-      6B C0 2D	imul eax,2D		 ; EAX = data range
-      8B 35 38956900	mov esi,[699538]	 ; ESI = main index
-      8D84C6D00A0200	lea eax,[esi+eax*8+20AD0]; EAX = player data
-      BE 10270000	mov esi,61A8		 ; ESI = 25,000 (gold reward)
-      01 B0 B4000000	add [eax+B4],esi	 ; update player's gold
-      E9 AB000000	jmp 4A40F7		 ; -> [continue] (0A404C~F6 is free space)
-      
-      0A410C > 06	; dialogue box GFX to gold
+	---------	-------------------------------------------------------------------------
+	0A4024~4B	; PYRAMIDS TO GOLD REWARD
+	---------	-------------------------------------------------------------------------
+	09 D1		or ecx,edx		 ; (shifted code)
+	89 08		mov [eax],ecx		 ; ""
+	0FBE 47 22	movsx eax,[edi+22]	 ; EAX = visiting hero's owner
+	6B C0 2D	imul eax,2D		 ; EAX = data range
+	8B 35 38956900	mov esi,[699538]	 ; ESI = main index
+	8D84C6D00A0200	lea eax,[esi+eax*8+20AD0]; EAX = player data
+	BE 10270000	mov esi,61A8		 ; ESI = 25,000 (gold reward)
+	01 B0 B4000000	add [eax+B4],esi	 ; update player's gold
+	E9 AB000000	jmp 4A40F7		 ; -> [continue] (0A404C~F6 is free space)
+
+	0A410C > 06	; dialogue box GFX to gold
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -355,7 +354,7 @@ just free code space we need: we're also stealing the Magic Spring SRAM space in
 	51		push ecx		; push Hero ID
 	8B CB		mov ecx,ebx		; ECX = EBX
 	E8 CA90F6FF	call 4317D0		; EAX = hero data
-	 F7800501000000000200	test [eax+105],20000	; does hero have "in tavern" flag set? (~~~necessary?)
+  F7800501000000000200	test [eax+105],20000	; does hero have "in tavern" flag set? (~~~necessary?)
 	75 0D		jne 4C871F		; if no -> EAX = slot count
 	6A FF		push -01		; AL = FF
 	58		pop eax			; ""
