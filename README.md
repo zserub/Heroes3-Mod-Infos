@@ -1,24 +1,26 @@
 # Heroes3-Mod-Infos
 Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" guide.
 
-I formatted BTB's guide for easier use.
+*I formatted BTB's guide for easier use.*
 
 ## Online sources:
+**[ERM-Help](https://www.h3wog.com/erm_help/index.html)**   &nbsp;  *([Azethmeron's version](https://azethmeron.github.io/))*
 
 [Heroes Community forum - Modding/Scripting](http://heroescommunity.com/viewthread.php3?TID=32519)
 
 [Easiest ERM script tutorial](http://heroescommunity.com/viewthread.php3?TID=46589)
 
-[Front-end modding](http://heroescommunity.com/viewthread.php3?TID=39062)
+[Community Mod collection](http://heroescommunity.com/viewthread.php3?TID=39062)
+
+[HoMMDB - Mod guide](http://www.hommdb.com/guides/homm-3-mod-guide/)
 
 [Archer's repo](https://github.com/Archer30/Erm-Scripts)
-
-[ERM-Help (RU)](https://h3era.github.io/ERM-Help/)
 
 ## Repository
 
 &nbsp;[HERO TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/hero_table.md#hero-table)&nbsp;&nbsp;&nbsp;
-[UNIT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_table.md) &nbsp;&nbsp;&nbsp;
+[UNITS' code TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_table.md) &nbsp;&nbsp;&nbsp;
+[UNITS' .def TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_def_table.md) &nbsp;&nbsp;&nbsp;
 [SKILL TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/skill_table.md) &nbsp;&nbsp;&nbsp;
 [ARTIFACT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/artifact_table.md) &nbsp;&nbsp;&nbsp;
 [ID REFERENCES](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/0_IDreferences.md)
@@ -182,6 +184,11 @@ I formatted BTB's guide for easier use.
 ### [ID References](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/BTB's%20Heroes%20III%20Modding%20Guide/0_IDreferences.md)
 
 <br>
+
+## Download sources
+
+### [Heroes 3.5: In the Wake of Gods Portal](https://heroes3wog.net/era-3/)
+
 
 ## Gameplay guides
 
