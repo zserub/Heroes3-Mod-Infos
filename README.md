@@ -1,7 +1,9 @@
 # Heroes3-Mod-Infos
-Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" guide.
+A big collection of self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" guide.
 
 *I formatted BTB's guide for easier use.*
+
+**If you are new to *Heroes of Might \& Magic III - In the Wake of Gods* modding first check out the ERM-Help**
 
 ## Online sources:
 **[ERM-Help](https://www.h3wog.com/erm_help/index.html)**   &nbsp;  *([Azethmeron's version](https://azethmeron.github.io/))*
@@ -19,7 +21,7 @@ Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" 
 ## Repository
 
 &nbsp;[HERO TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/hero_table.md#hero-table)&nbsp;&nbsp;&nbsp;
-[UNITS' code TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_table.md) &nbsp;&nbsp;&nbsp;
+[UNITS' CODE TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_table.md) &nbsp;&nbsp;&nbsp;
 [UNITS' .def TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/unit_def_table.md) &nbsp;&nbsp;&nbsp;
 [SKILL TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/skill_table.md) &nbsp;&nbsp;&nbsp;
 [ARTIFACT TABLE](https://github.com/zserub/Heroes3-Mod-Infos/blob/main/artifact_table.md) &nbsp;&nbsp;&nbsp;
@@ -192,4 +194,4 @@ Self and non-self made resources about Heroes3 Mods, comprehensive "How to mod" 
 
 ## Gameplay guides
 
-### [https://steamcommunity.com/sharedfiles/filedetails/?id=503993419](https://steamcommunity.com/sharedfiles/filedetails/?id=503993419)
+ [https://steamcommunity.com/sharedfiles/filedetails/?id=503993419](https://steamcommunity.com/sharedfiles/filedetails/?id=503993419)

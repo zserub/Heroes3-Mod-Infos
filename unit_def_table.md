@@ -3,7 +3,7 @@
 **Legend:**
 DEFNAME.DEF - Normal Name | Unused/Beta Name ([Comment])
 
-| Faction   | Unit Code     | Unit Name                               |
+| Faction   | Unit File     | Unit Name                               |
 |-----------|---------------|-----------------------------------------|
 | Castle    | CPKMAN.def    | Pikeman                                 |
 | Castle    | chalbd.def    | Halberdier                              |
@@ -149,7 +149,7 @@ DEFNAME.DEF - Normal Name | Unused/Beta Name ([Comment])
 
 ## WoG Units
 
-| Unit Code     | Unit Name                              |
+| Unit File     | Unit Name                              |
 |---------------|----------------------------------------|
 | ZM150Z.DEF    | Supreme Archangel \| Seraphim           |
 | ZM151Z.DEF    | Diamond Dragon                         |
@@ -200,7 +200,7 @@ DEFNAME.DEF - Normal Name | Unused/Beta Name ([Comment])
 | SMtent.def     | First Aid Tent \| First-Aid Tent       |
 
 ## Heroes on the battlefield
-| Hero Code    | Hero Class       |
+| Hero File    | Hero Class       |
 |--------------|------------------|
 | CH00.def     | Knight           |
 | CH01.def     | Cleric           |
@@ -222,7 +222,7 @@ DEFNAME.DEF - Normal Name | Unused/Beta Name ([Comment])
 | CH17.DEF     | Planeswalker     |
 
 ## Units on the Map
-| Unit Code    | Unit Name                               |
+| Unit File    | Unit Name                               |
 |--------------|-----------------------------------------|
 | AvWAngl.def  | Angel                                   |
 | AvWArch.def  | Archangel                               |
@@ -334,7 +334,7 @@ DEFNAME.DEF - Normal Name | Unused/Beta Name ([Comment])
 | AVWorcx0.def | Orc Chiefan                             |
 
 ## Units on the Map from WoG
-| Unit Code     | Unit Name                              |
+| Unit File     | Unit Name                              |
 |---------------|----------------------------------------|
 | ZMM150Z.DEF   | Supreme Archangel \| Seraphim           |
 | ZMM151Z.DEF   | Diamond Dragon                         |
